@@ -6,17 +6,18 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import {
   Activity, BarChart3, Bell, Bot, BookOpen, Briefcase, Calendar, CalendarDays, ClipboardCheck, Columns3, Contact,
-  FilePlus, FileSignature, GraduationCap, HeartPulse, LayoutDashboard, LogOut, Menu, MessageCircle, PlaneTakeoff,
+  FilePlus, FileSignature, GraduationCap, HeartPulse, Inbox, LayoutDashboard, LogOut, Menu, MessageCircle, PlaneTakeoff,
   ScanSearch, ScrollText, Settings, ShieldCheck, Sparkles, Target, Users, X,
 } from 'lucide-react';
 import type { Role } from '@/lib/types';
 import { navFor } from '@/lib/rbac';
+import { AGENTS } from '@/lib/agents/registry';
 import { ROLE_LABEL } from '@/lib/auth';
 import { Avatar } from './ui';
 
 const ICONS: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   'layout-dashboard': LayoutDashboard, sparkles: Sparkles, bot: Bot, activity: Activity, briefcase: Briefcase,
-  'file-plus': FilePlus, users: Users, 'scan-search': ScanSearch, 'columns-3': Columns3, calendar: Calendar,
+  'file-plus': FilePlus, inbox: Inbox, users: Users, 'scan-search': ScanSearch, 'columns-3': Columns3, calendar: Calendar,
   'clipboard-check': ClipboardCheck, 'file-signature': FileSignature, 'plane-takeoff': PlaneTakeoff, contact: Contact,
   'message-circle': MessageCircle, 'calendar-days': CalendarDays, target: Target, 'graduation-cap': GraduationCap,
   'log-out': LogOut, 'book-open': BookOpen, 'heart-pulse': HeartPulse, 'bar-chart-3': BarChart3,
@@ -136,7 +137,7 @@ export default function Shell({
             <span className="flex h-1.5 w-1.5 rounded-full bg-mint-500" />
             Agent runtime online
             <span className="text-[#d5dae6]">·</span>
-            <span>16 agents registered</span>
+            <span>{AGENTS.length} agents registered</span>
           </div>
           <div className="flex items-center gap-2">
             <Link href="/command-center" className="hidden rounded-lg bg-ink-950 px-3 py-1.5 text-[12.5px] font-medium text-white transition hover:bg-ink-800 sm:inline-flex">

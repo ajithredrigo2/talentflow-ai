@@ -20,6 +20,7 @@ export const NAV: NavItem[] = [
   { href: '/agents', label: 'AI Agents', icon: 'bot', group: 'Overview', roles: ALL },
   { href: '/agent-activity', label: 'Agent Activity', icon: 'activity', group: 'Overview', roles: HR_REC_HM },
 
+  { href: '/inbox', label: 'Recruitment Inbox', icon: 'inbox', group: 'Recruitment', roles: HR_REC_HM },
   { href: '/jobs', label: 'Jobs', icon: 'briefcase', group: 'Recruitment', roles: HR_REC_HM },
   { href: '/jobs/new', label: 'Job Creation', icon: 'file-plus', group: 'Recruitment', roles: HR_REC },
   { href: '/candidates', label: 'Candidates', icon: 'users', group: 'Recruitment', roles: HR_REC_HM },

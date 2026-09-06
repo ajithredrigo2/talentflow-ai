@@ -4,7 +4,9 @@
 
 **Builders Pitch Fest 2026 — HR Automation Agents**
 
-TalentFlow AI is an autonomous multi-agent HR platform. Sixteen specialised AI agents, coordinated by a single orchestrator, run workflows across the complete employee lifecycle — while every employment decision stops at a named human approver.
+TalentFlow AI is an autonomous multi-agent HR platform. Twenty-one specialised AI agents, coordinated by a single orchestrator, run workflows across the complete employee lifecycle — while every employment decision stops at a named human approver.
+
+Its **Zero-Touch Candidate Intake** module turns a recruitment inbox into screened, structured applications: a candidate emails a CV, and it arrives in the recruiter's queue parsed, matched to a vacancy, scored and explained — with nobody having touched a keyboard.
 
 > **Live prototype:** `<DEPLOYMENT_URL>`
 > **Demo access:** `demo@talentflow.ai` / `Demo@2026`
@@ -64,6 +66,17 @@ TalentFlow AI is a **system of action**, not a system of record.
 ---
 
 ## Features
+
+### Zero-Touch Candidate Intake
+- **Recruitment Inbox** — an inbox-style queue of inbound applications with eleven status filters, live match scores and one-click recruiter decisions
+- **Email client integration** — Microsoft 365 / Outlook (Microsoft Graph), Gmail / Google Workspace (Gmail API) and generic IMAP as a fallback, all OAuth 2.0 and entirely server-side
+- **Attachment security** — extension, MIME type, magic-number signature, size, double-extension and executable checks; suspicious files are quarantined, never parsed or executed
+- **Résumé parsing** — 18 structured fields extracted per CV with an extraction-confidence score
+- **Job identification** — a fixed priority order (requisition code in subject → title in subject → code in body → title in body → skills inference), which refuses to guess below its confidence bar and parks the application in *Unassigned* instead
+- **Duplicate detection** — five signals (email, phone, résumé hash, name, application history) keep one profile per person with many applications
+- **Automatic screening** — the existing Screening Agent scores the application against the vacancy's approved criteria the moment a vacancy is known
+- **Acknowledgement emails** — per-mailbox toggle, worded to confirm receipt only and never imply shortlisting
+- **Demo mode** — *Simulate Incoming Application* sends realistic candidate emails through the **identical** pipeline used for live mail; there is no separate demo path in the codebase
 
 ### Talent acquisition
 - **AI HR Command Center** — one natural-language box that plans and runs multi-agent workflows
@@ -132,6 +145,11 @@ TalentFlow AI is a **system of action**, not a system of record.
 | 2 | Workforce Planning | — | Headcount approval remains a human budget decision |
 | 3 | Job Description | ✅ | Never publishes without human approval; flags exclusionary phrasing |
 | 4 | Talent Acquisition | — | Protected attributes dropped at parse time |
+| 4a | Email Intake | — | Mailbox credentials server-side only; least-privilege scopes; simulated mail uses the identical pipeline |
+| 4b | Document Processing | — | Uploaded files are never executed; declared MIME type never trusted alone |
+| 4c | Résumé Parsing | — | Never extracts or infers gender, age, race, religion, nationality, marital status or disability |
+| 4d | Candidate Profile | — | Never merges two people on a weak signal alone; all match signals shown |
+| 4e | Job Matching | — | Stated intent beats inference; below the confidence bar it assigns nothing |
 | 5 | Resume Screening | ✅ | Cannot reject; every score ships with evidence |
 | 6 | Interview Intelligence | — | No questions touching protected attributes |
 | 7 | Interview Evaluation | ✅ | Hiring decision authority stays with the manager |
@@ -238,7 +256,28 @@ Seven agents run in sequence:
 
 Then: **Approvals** → approve the shortlist → **Candidate profile** → generate the interview guide, find slots, book, evaluate → draft the offer → approve → **Onboarding**.
 
-### 2 · Employee leave request
+### 2 · Zero-touch candidate intake
+
+Sign in as **HR Administrator** → **Recruitment Inbox** → *Simulate Incoming Application*.
+
+An email arrives from `john.doe@example.com`, subject `Application – DEVOPS-2026-004`, with `John_Doe_Resume.pdf` attached. Nine agent tasks run in front of you:
+
+| Step | Agent | Output |
+| --- | --- | --- |
+| 1 | Email Intake | Message read from `careers@talentflow.demo`, 1 attachment detected |
+| 2 | Document Processing | All 8 attachment security checks passed, SHA-256 recorded, text extracted without executing the file |
+| 3 | Résumé Parsing | 17/18 fields at 97% confidence — 22 technical skills, 3 certifications, 6 years |
+| 4 | Candidate Profile | No existing match on five duplicate signals → new profile created |
+| 5 | Job Matching | `DEVOPS-2026-004` → Senior DevOps Engineer at 99% via *Job ID in subject* |
+| 6 | Resume Screening | **92% match** with per-dimension evidence — **approval gate** |
+| 7 | HR Coordinator | Application `APP-2026-00128` routed to the recruiter review queue |
+| 8 | Email Intake | Acknowledgement issued (receipt only — no shortlisting implied) |
+
+Then open the application: view or download the real CV as a PDF, read the parsed profile and the score breakdown, and click **Shortlist** — which triggers the Interview Intelligence Agent to generate a tailored 7-question guide and raise an interview approval.
+
+Six scenarios are provided, each exercising a different path: exact code match, title-only match, inference-based match, a genuinely unassignable application, a returning candidate (deduplication), a message with no CV, and a disguised executable (quarantine).
+
+### 3 · Employee leave request
 
 Sign in as **Employee** → **HR AI Assistant**:
 
@@ -246,7 +285,7 @@ Sign in as **Employee** → **HR AI Assistant**:
 
 Identify employee → check balance → calculate working days (Gulf weekend excluded) → detect team-coverage conflicts → identify manager → create request → route for approval → return status.
 
-### 3 · Internal succession
+### 4 · Internal succession
 
 Sign in as **HR Administrator** → **AI HR Command Center**:
 
@@ -302,6 +341,9 @@ Copy `.env.example` → `.env.local`. **Every variable is optional** — the pla
 | `AUTH_SECRET` | Session signing secret (use a long random string) | dev fallback |
 | `DATABASE_URL` | Reserved for the PostgreSQL/Supabase adapter | unset |
 | `RATE_LIMIT_PER_MINUTE` | Per-IP, per-endpoint limit | `60` |
+| `MS_GRAPH_TENANT_ID` / `MS_GRAPH_CLIENT_ID` / `MS_GRAPH_CLIENT_SECRET` | Microsoft 365 mailbox intake (Mail.Read, Mail.Send) | unset → demo mailbox |
+| `GMAIL_CLIENT_ID` / `GMAIL_CLIENT_SECRET` / `GMAIL_REFRESH_TOKEN` | Gmail / Workspace mailbox intake (gmail.readonly, gmail.send) | unset |
+| `IMAP_HOST` / `IMAP_PORT` / `IMAP_USER` / `IMAP_PASSWORD` | Generic IMAP fallback (requires the polling worker deployment) | unset |
 
 **No secret is ever committed, and no key is ever sent to the browser.** All model calls originate from server-side route handlers.
 
@@ -381,9 +423,9 @@ talentflow-ai/
 
 ## Data model
 
-25 entities, defined in `src/lib/types.ts` and mapped 1:1 to the production PostgreSQL schema:
+34 entities, defined in `src/lib/types.ts` and mapped 1:1 to the production PostgreSQL schema:
 
-`User` · `Employee` · `Department` · `Job` · `Candidate` · `CandidateSkill` · `Resume` · `Interview` · `InterviewFeedback` · `Offer` · `OnboardingTask` · `LeaveRequest` · `PerformanceReview` · `EmployeeGoal` · `Skill` · `EmployeeSkill` · `TrainingCourse` · `LearningRecommendation` · `Policy` · `EmployeeFeedback` · `AgentTask` · `AgentRun` · `AIRecommendation` · `ApprovalRequest` · `AuditLog` · `Notification`
+`EmailConnection` · `RecruitmentMailbox` · `IncomingEmail` · `EmailAttachment` · `JobApplication` · `ResumeParsingResult` · `JobMatch` · `EmailAcknowledgement` · `User` · `Employee` · `Department` · `Job` · `Candidate` · `CandidateSkill` · `Resume` · `Interview` · `InterviewFeedback` · `Offer` · `OnboardingTask` · `LeaveRequest` · `PerformanceReview` · `EmployeeGoal` · `Skill` · `EmployeeSkill` · `TrainingCourse` · `LearningRecommendation` · `Policy` · `EmployeeFeedback` · `AgentTask` · `AgentRun` · `AIRecommendation` · `ApprovalRequest` · `AuditLog` · `Notification`
 
 The prototype persists to a process-local store behind a repository interface so that swapping in Prisma, Supabase or Firestore is a single-file change (`src/lib/store.ts`).
 
@@ -405,6 +447,10 @@ The prototype persists to a process-local store behind a repository interface so
 | PII protection | Candidate contact details masked in list views; agents receive task-relevant fields only |
 | Data minimisation | Agents receive the minimum fields the task requires |
 | Consent management | Candidate consent flag and 12-month retention window tracked on the record |
+| Mailbox OAuth 2.0 | Microsoft Graph client-credentials and Gmail refresh-token flows, executed server-side only; no token reaches the browser |
+| Least-privilege mailbox scopes | `Mail.Read` / `gmail.readonly` for intake; Send requested only where acknowledgements are enabled |
+| Attachment validation | Extension, MIME type, magic-number signature, size ceiling, double-extension and executable checks before any parsing |
+| Attachment quarantine | Suspicious files are quarantined and never parsed, served or executed |
 
 ---
 
@@ -443,6 +489,8 @@ Deterministically generated so every environment renders identically:
 | Training programmes | 10 |
 | Skills | 32 across 9 categories |
 | HR policies | 12, retrieval-indexed |
+| Recruitment mailboxes | 3 (`careers@`, `jobs@`, `recruitment@`) |
+| Demo intake scenarios | 7, each exercising a different pipeline path |
 | Performance reviews | 18 |
 | Engagement feedback | ~150 anonymised entries across 4 quarters |
 
@@ -460,6 +508,7 @@ Deterministically generated so every environment renders identically:
 | **70%** | faster employee HR query resolution |
 | **30%** | less onboarding administration |
 | **100%** | of AI recommendations delivered with an explanation |
+| **≈18 min** | of manual handling removed per inbound application (open, read, download, retype, match, score, file) |
 
 Qualitative: improved candidate experience, improved workforce skill visibility, lower HR operational cost.
 

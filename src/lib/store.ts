@@ -3,14 +3,18 @@ import type {
   ApprovalRequest,
   AuditLog,
   Candidate,
+  EmailAcknowledgement,
   Employee,
+  IncomingEmail,
   Interview,
   Job,
+  JobApplication,
   LeaveRequest,
   Notification,
   Offer,
   OnboardingTask,
   PerformanceReview,
+  RecruitmentMailbox,
   Role,
 } from './types';
 import {
@@ -48,7 +52,18 @@ export interface DataStore {
   audit: AuditLog[];
   runs: AgentRun[];
   notifications: Notification[];
+  /* Zero-Touch Candidate Intake */
+  mailboxes: RecruitmentMailbox[];
+  emails: IncomingEmail[];
+  applications: JobApplication[];
+  acknowledgements: EmailAcknowledgement[];
 }
+
+const SEED_MAILBOXES: RecruitmentMailbox[] = [
+  { id: 'mbx-careers', address: 'careers@talentflow.demo', connectionId: 'conn-demo', label: 'Careers — general applications', enabled: true, autoAcknowledge: true, receivedCount: 0 },
+  { id: 'mbx-jobs', address: 'jobs@talentflow.demo', connectionId: 'conn-demo', label: 'Jobs — advertised vacancies', enabled: true, autoAcknowledge: true, receivedCount: 0 },
+  { id: 'mbx-recruitment', address: 'recruitment@talentflow.demo', connectionId: 'conn-demo', label: 'Recruitment — agency and speculative', enabled: true, autoAcknowledge: false, receivedCount: 0 },
+];
 
 function bootstrap(): DataStore {
   return {
@@ -63,6 +78,10 @@ function bootstrap(): DataStore {
     approvals: structuredClone(seedApprovals),
     audit: structuredClone(seedAuditLogs),
     runs: [],
+    mailboxes: structuredClone(SEED_MAILBOXES),
+    emails: [],
+    applications: [],
+    acknowledgements: [],
     notifications: [
       {
         id: 'ntf-1',

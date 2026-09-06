@@ -65,8 +65,10 @@ export async function PUT(req: NextRequest) {
   const jd = body.jd;
   if (!jd?.title) return badRequest('Nothing to publish.');
 
+  const code = `${sanitize(jd.title, 100).replace(/[^A-Za-z]/g, '').slice(0, 6).toUpperCase()}-${new Date().getFullYear()}-${String(db.jobs.length + 1).padStart(3, '0')}`;
   const job: Job = {
     id: uid('job'),
+    jobCode: code,
     title: sanitize(jd.title, 100),
     departmentId: db.jobs.find((j) => j.id)?.departmentId ?? 'dep-eng',
     location: sanitize(jd.location, 80),

@@ -6,6 +6,7 @@ import { NAV } from '@/lib/rbac';
 import { ROLE_LABEL, DEMO_ACCOUNTS } from '@/lib/auth';
 import { EXCLUDED_ATTRIBUTES } from '@/lib/agents/screening';
 import { Badge, Card, GuardrailNote, PageHeader, Table } from '@/components/ui';
+import MailboxSettings from '@/components/MailboxSettings';
 import type { Role } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
@@ -22,6 +23,10 @@ const SECURITY = [
   ['Rate limiting', 'Per-IP, per-endpoint token bucket (default 60 requests/minute, configurable).'],
   ['Secure headers', 'X-Frame-Options, X-Content-Type-Options, Referrer-Policy and Permissions-Policy set on every response.'],
   ['Audit logging', 'Every agent run, recommendation, human decision and denied access attempt is recorded.'],
+  ['Mailbox OAuth 2.0', 'Microsoft Graph client-credentials and Gmail refresh-token flows run server-side. Tokens are never returned to the browser.'],
+  ['Least-privilege mailbox scopes', 'Mail.Read / gmail.readonly for intake; Send is requested only where acknowledgements are enabled.'],
+  ['Attachment validation', 'Extension, MIME type, magic-number signature, size ceiling, double-extension and executable checks before any parsing.'],
+  ['Attachment quarantine', 'Suspicious files are quarantined and never parsed, served or executed.'],
   ['PII protection', 'Candidate contact details are masked in list views; agents receive only task-relevant fields.'],
 ];
 
@@ -77,6 +82,8 @@ export default async function SettingsPage() {
           </div>
         </Card>
       </div>
+
+      <MailboxSettings canEdit={user.role === 'HR_ADMIN'} />
 
       <Card title="Role-based access matrix" subtitle="Enforced in navigation, page guards and API handlers" className="mt-4">
         <Table head={['Surface', ...ROLES.map((r) => ROLE_LABEL[r])]}>

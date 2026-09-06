@@ -39,6 +39,10 @@ export type Intent =
   | 'ENGAGEMENT'
   | 'PERFORMANCE_SUMMARY'
   | 'OFFBOARDING'
+  | 'EMAIL_APPLICATIONS'
+  | 'UNASSIGNED_APPLICATIONS'
+  | 'SCREEN_NEW_APPLICATIONS'
+  | 'HIGH_MATCH_CANDIDATES'
   | 'UNKNOWN';
 
 export interface ResultBlock {
@@ -49,12 +53,16 @@ export interface ResultBlock {
 
 const RULES: { intent: Intent; re: RegExp; label: string }[] = [
   { intent: 'RECRUITMENT_REPORT', re: /(recruitment report|hiring report|pipeline report|monthly report|hr report|metrics report|this month.s .*report)/i, label: 'Recruitment reporting' },
-  { intent: 'RECRUIT_ROLE', re: /\b(recruit\w*|hire|hiring for|need to hire|we need a|open a (req|role|position)|fill (the|a) (role|position))\b/i, label: 'End-to-end recruitment' },
+  { intent: 'RECRUIT_ROLE', re: /\b(recruit|recruiting|hire|hiring for|need to hire|we need a|open a (req|role|position)|fill (the|a) (role|position))\b/i, label: 'End-to-end recruitment' },
   { intent: 'WORKFORCE_PLAN', re: /(workforce plan|moving .*(to |into )?cloud|restructur\w*|expand\w*|scal(e|ing) (the )?team|capacity plan|what roles do we need|skill shortage)/i, label: 'Workforce planning' },
   { intent: 'INTERNAL_CANDIDATES', re: /(internal candidate|from within|succession|who (in|on) (the|our) team|best internal|promote from)/i, label: 'Internal talent matching' },
   { intent: 'SKILL_GAPS', re: /(skill.?gaps?|upskill\w*|learning (plan|path|roadmap)|training (plan|recommend\w*)|development plan)/i, label: 'Skills & learning' },
   { intent: 'ONBOARDING_PLAN', re: /(onboard\w*|joining plan|first (30|ninety|90) days|induction)/i, label: 'Onboarding orchestration' },
   { intent: 'OFFBOARDING', re: /(offboard\w*|resign\w*|exit process|exit checklist|leaving the company|last working day)/i, label: 'Offboarding' },
+  { intent: 'UNASSIGNED_APPLICATIONS', re: /(unassigned|unmatched|needs? (recruiter )?assignment|which .*(cvs?|applications?).* (unassigned|no job))/i, label: 'Unassigned applications' },
+  { intent: 'SCREEN_NEW_APPLICATIONS', re: /(screen all|screen the new|process (all )?new applications?|run screening on)/i, label: 'Bulk screening of new applications' },
+  { intent: 'HIGH_MATCH_CANDIDATES', re: /(more than|above|over|greater than)\s*\d{1,3}\s*%|match(es)? (above|over)/i, label: 'High-match candidates' },
+  { intent: 'EMAIL_APPLICATIONS', re: /(email applications?|applications? (received|by email|via email|today)|recruitment inbox|candidate emails?|cvs? (received|by email)|inbox|recruiter attention|need(s)? (recruiter )?(attention|review)|awaiting review)/i, label: 'Email applications' },
   { intent: 'TOP_CANDIDATES', re: /(top candidates?|best candidates?|find candidates?|shortlist\w*|who (are|is) the (best|top)|rank candidates?|screen candidates?|compare candidates?)/i, label: 'Candidate screening & ranking' },
   { intent: 'INTERVIEW_QUESTIONS', re: /(interview questions?|questions for|prepare .*interview|interview guide)/i, label: 'Interview preparation' },
   { intent: 'INTERVIEW_SCHEDULE_VIEW', re: /(interviews? (scheduled|this week|today|coming up|next week)|show .*interviews|list .*interviews)/i, label: 'Interview schedule' },
@@ -183,6 +191,22 @@ const PLANS: Record<Intent, { agentId: string; label: string }[]> = {
   OFFBOARDING: [
     { agentId: 'coordinator', label: 'Resolve leaver and last working day' },
     { agentId: 'offboarding', label: 'Generate exit checklist and owners' },
+  ],
+  EMAIL_APPLICATIONS: [
+    { agentId: 'coordinator', label: 'Resolve inbox scope' },
+    { agentId: 'email-intake', label: 'Retrieve processed applications' },
+  ],
+  UNASSIGNED_APPLICATIONS: [
+    { agentId: 'coordinator', label: 'Resolve scope' },
+    { agentId: 'job-matching', label: 'List applications with no confident vacancy match' },
+  ],
+  SCREEN_NEW_APPLICATIONS: [
+    { agentId: 'coordinator', label: 'Collect unscreened applications' },
+    { agentId: 'screening', label: 'Score each against its approved criteria' },
+  ],
+  HIGH_MATCH_CANDIDATES: [
+    { agentId: 'coordinator', label: 'Parse the score threshold' },
+    { agentId: 'screening', label: 'Filter applications above the threshold' },
   ],
   UNKNOWN: [{ agentId: 'coordinator', label: 'Interpret request' }],
 };
@@ -481,6 +505,103 @@ export async function runCoordinator(ctx: RunContext): Promise<{ run: AgentRun; 
       add('offboarding', 'Generate exit checklist and owners', `${plan2.tasks.length} tasks generated across HR, IT, Payroll and the line manager.`, { output: plan2 });
       blocks.push({ kind: 'offboarding', title: `Offboarding plan — ${emp.name}`, data: plan2 });
       narrative = `An ${plan2.tasks.length}-task offboarding plan for ${emp.name} is ready, sequenced against a last working day of ${lastDay} and assigned across HR Operations, the line manager, IT Service Desk, IT Security and Payroll. ${plan2.note}`;
+      break;
+    }
+
+    case 'EMAIL_APPLICATIONS':
+    case 'UNASSIGNED_APPLICATIONS':
+    case 'SCREEN_NEW_APPLICATIONS':
+    case 'HIGH_MATCH_CANDIDATES': {
+      const rows = db.emails.map((e) => {
+        const app = db.applications.find((a) => a.id === e.applicationId);
+        const cand = db.candidates.find((c) => c.id === e.candidateId);
+        const jb = db.jobs.find((j) => j.id === e.jobId);
+        return {
+          id: e.id,
+          candidate: cand?.name ?? e.fromName,
+          fromEmail: e.fromEmail,
+          subject: e.subject,
+          mailbox: e.mailboxAddress,
+          receivedAt: e.receivedAt,
+          status: e.status,
+          reference: app?.reference ?? null,
+          jobTitle: jb?.title ?? null,
+          jobCode: jb?.jobCode ?? null,
+          score: app?.screening?.overall ?? null,
+          recommendation: app?.screening?.recommendation ?? null,
+          attachment: e.attachments[0]?.filename ?? null,
+          duplicate: Boolean(e.duplicateOf),
+        };
+      });
+
+      if (intent === 'UNASSIGNED_APPLICATIONS') {
+        const unassigned = rows.filter((r) => r.status === 'Needs Assignment');
+        add('job-matching', 'List applications with no confident vacancy match', `${unassigned.length} application(s) awaiting recruiter assignment.`, {
+          status: unassigned.length ? 'Needs Approval' : 'Completed',
+          requiresApproval: unassigned.length > 0,
+        });
+        blocks.push({ kind: 'email-applications', title: 'Unassigned applications', data: { rows: unassigned, scope: 'Unassigned — awaiting recruiter assignment' } });
+        approvals = unassigned.length ? ['Vacancy assignment'] : [];
+        narrative = unassigned.length
+          ? `${unassigned.length} application${unassigned.length === 1 ? '' : 's'} could not be matched to a vacancy with enough confidence, so the Job Matching Agent parked them rather than guessing: ${unassigned.map((r) => r.candidate).join(', ')}. Open each one in the Recruitment Inbox to assign the correct requisition — screening then runs against that requisition's approved criteria.`
+          : 'Every application currently in the inbox has been matched to a vacancy. Nothing is waiting for assignment.';
+        break;
+      }
+
+      if (intent === 'SCREEN_NEW_APPLICATIONS') {
+        let scored = 0;
+        db.applications.forEach((a) => {
+          if (a.screening || !a.jobId) return;
+          const jb = db.jobs.find((j) => j.id === a.jobId);
+          const cand = db.candidates.find((c) => c.id === a.candidateId);
+          if (!jb || !cand) return;
+          const sc = screenCandidate({ ...cand, jobId: jb.id }, jb);
+          a.screening = sc;
+          cand.screening = sc;
+          scored++;
+        });
+        const screened = rows.filter((r) => r.score !== null || true).filter((r) => r.jobTitle);
+        add('screening', 'Score each against its approved criteria', `${scored} newly scored; ${screened.length} application(s) now carry a match score. Shortlisting still requires human approval.`, {
+          status: 'Needs Approval',
+          requiresApproval: true,
+        });
+        blocks.push({ kind: 'email-applications', title: 'Screened applications', data: { rows: rows.filter((r) => r.jobTitle), scope: `${scored} newly screened this run` } });
+        approvals = ['Candidate shortlist'];
+        narrative = scored
+          ? `Screened ${scored} application${scored === 1 ? '' : 's'} that had a vacancy but no score yet. Each was scored against the evaluation criteria approved on its own requisition, with the evidence attached. Nobody has been advanced or rejected — the shortlist decision is yours.`
+          : 'Every application with an assigned vacancy already carries a score. Applications sitting in Unassigned need a requisition before screening is meaningful.';
+        break;
+      }
+
+      if (intent === 'HIGH_MATCH_CANDIDATES') {
+        const threshold = Number(ctx.request.match(/(\d{1,3})\s*%/)?.[1] ?? 85);
+        const above = rows.filter((r) => (r.score ?? 0) >= threshold);
+        add('screening', 'Filter applications above the threshold', `${above.length} application(s) at or above ${threshold}%.`);
+        blocks.push({ kind: 'email-applications', title: `Applications matching ${threshold}% or higher`, data: { rows: above, scope: `Threshold ${threshold}%` } });
+        narrative = above.length
+          ? `${above.length} application${above.length === 1 ? '' : 's'} scored at or above ${threshold}%: ${above.map((r) => `${r.candidate} ${r.score}%`).join(', ')}. Each score opens to a full per-dimension breakdown with the evidence behind it. A high score is a recommendation to look closely, not a decision.`
+          : `No application currently scores at or above ${threshold}%. The highest in the inbox is ${Math.max(0, ...rows.map((r) => r.score ?? 0))}%.`;
+        break;
+      }
+
+      // EMAIL_APPLICATIONS — default inbox view, optionally scoped to a role or to today
+      const today = new Date().toISOString().slice(0, 10);
+      const todayOnly = /today/i.test(ctx.request);
+      let scoped = rows;
+      let scope = 'All email applications';
+      if (todayOnly) {
+        scoped = rows.filter((r) => r.receivedAt.slice(0, 10) === today);
+        scope = "Received today";
+      }
+      if (ent.job) {
+        scoped = scoped.filter((r) => r.jobCode === ent.job!.jobCode);
+        scope = `${ent.job.title} (${ent.job.jobCode})`;
+      }
+      add('email-intake', 'Retrieve processed applications', `${scoped.length} application(s) in scope: ${scope}.`);
+      blocks.push({ kind: 'email-applications', title: `Email applications — ${scope}`, data: { rows: scoped, scope } });
+      narrative = scoped.length
+        ? `${scoped.length} application${scoped.length === 1 ? '' : 's'} in scope (${scope.toLowerCase()}). ${scoped.filter((r) => r.score !== null).length} carry a match score, ${scoped.filter((r) => r.status === 'Needs Assignment').length} are waiting for a vacancy assignment and ${scoped.filter((r) => r.status === 'Needs Review').length} are in the recruiter review queue. Each arrived by email and was parsed, matched and screened without a recruiter touching it.`
+        : `No applications in scope (${scope.toLowerCase()}). Open the Recruitment Inbox and use Simulate Incoming Application to run one through the pipeline, or connect a live recruitment mailbox.`;
       break;
     }
 

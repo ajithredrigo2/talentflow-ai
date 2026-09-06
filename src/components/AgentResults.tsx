@@ -114,6 +114,8 @@ function Block({ block }: { block: ResultBlock }) {
       return <InterviewsBlock data={d} />;
     case 'slots':
       return <SlotsBlock data={d} />;
+    case 'email-applications':
+      return <EmailApplicationsBlock data={d} />;
     default:
       return <pre className="overflow-x-auto text-[11px] text-[#616b85]">{JSON.stringify(d, null, 2)}</pre>;
   }
@@ -656,6 +658,41 @@ function SlotsBlock({ data }: { data: { candidate: Candidate; interviewer: Emplo
         {data.slots.map((s) => <span key={s.iso} className="rounded-lg border border-[#e6e9f2] bg-[#fafbfe] px-3 py-1.5 text-[12.5px] font-medium text-ink-800">{s.label}</span>)}
       </div>
       <Link href="/interviews" className="btn-primary">Book in Interview Management</Link>
+    </div>
+  );
+}
+
+function EmailApplicationsBlock({ data }: { data: { scope: string; rows: { id: string; candidate: string; fromEmail: string; mailbox: string; receivedAt: string; status: string; reference: string | null; jobTitle: string | null; jobCode: string | null; score: number | null; recommendation: string | null; attachment: string | null; duplicate: boolean }[] } }) {
+  if (!data.rows.length)
+    return <p className="text-[13px] text-[#7a839c]">No applications in scope. Open the Recruitment Inbox to simulate one through the intake pipeline.</p>;
+  return (
+    <div className="space-y-3">
+      <Table head={['Received', 'Candidate', 'Applied position', 'Job ID', 'CV', 'Match', 'Status']}>
+        {data.rows.map((r) => (
+          <tr key={r.id}>
+            <td className="td whitespace-nowrap text-[12px] text-[#7a839c]">
+              {new Date(r.receivedAt).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+            </td>
+            <td className="td">
+              <Link href={`/inbox/${r.id}`} className="font-medium text-ink-950 hover:text-brand-600">{r.candidate}</Link>
+              <div className="text-[11px] text-[#8b93a9]">{r.fromEmail} · {r.mailbox}</div>
+              {r.duplicate && <Badge tone="violet">Linked to existing profile</Badge>}
+            </td>
+            <td className="td text-[#616b85]">{r.jobTitle ?? <Badge tone="amber">Unassigned</Badge>}</td>
+            <td className="td font-mono text-[11.5px] text-[#7a839c]">{r.jobCode ?? '—'}</td>
+            <td className="td text-[11.5px] text-[#5a6480]">{r.attachment ?? <span className="text-rose-500">None</span>}</td>
+            <td className="td w-32">{r.score !== null ? <Meter value={r.score} right={`${r.score}%`} /> : <span className="text-[#c3c9d8]">—</span>}</td>
+            <td className="td"><Badge tone={stageTone(r.status === 'Needs Assignment' || r.status === 'Needs Review' ? 'Pending' : r.status)} dot>{r.status}</Badge></td>
+          </tr>
+        ))}
+      </Table>
+      <div className="flex flex-wrap gap-2">
+        <Link href="/inbox" className="btn-ghost">Open Recruitment Inbox</Link>
+      </div>
+      <GuardrailNote>
+        Every application above arrived by email and was parsed, matched and screened automatically. None has been
+        shortlisted or rejected — those decisions require a named recruiter.
+      </GuardrailNote>
     </div>
   );
 }

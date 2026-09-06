@@ -313,6 +313,7 @@ export const users: User[] = [
 export const jobs: Job[] = [
   {
     id: 'job-001',
+    jobCode: 'DEVOPS-2026-004',
     title: 'Senior DevOps Engineer',
     departmentId: 'dep-eng',
     location: 'Dubai, UAE',
@@ -351,6 +352,7 @@ export const jobs: Job[] = [
   },
   {
     id: 'job-002',
+    jobCode: 'CLDSEC-2026-002',
     title: 'Cloud Security Engineer',
     departmentId: 'dep-eng',
     location: 'Dubai, UAE',
@@ -379,6 +381,7 @@ export const jobs: Job[] = [
   },
   {
     id: 'job-003',
+    jobCode: 'CLOUD-2026-007',
     title: 'Cloud Engineer',
     departmentId: 'dep-eng',
     location: 'Abu Dhabi, UAE',
@@ -407,6 +410,7 @@ export const jobs: Job[] = [
   },
   {
     id: 'job-004',
+    jobCode: 'ITSEC-2026-001',
     title: 'IT Security Analyst',
     departmentId: 'dep-it',
     location: 'Dubai, UAE',
@@ -435,6 +439,7 @@ export const jobs: Job[] = [
   },
   {
     id: 'job-005',
+    jobCode: 'SYSADM-2026-003',
     title: 'Systems Administrator',
     departmentId: 'dep-it',
     location: 'Dubai, UAE',
@@ -462,6 +467,7 @@ export const jobs: Job[] = [
   },
   {
     id: 'job-006',
+    jobCode: 'FIN-2026-005',
     title: 'Finance Manager',
     departmentId: 'dep-fin',
     location: 'Dubai, UAE',
@@ -490,6 +496,7 @@ export const jobs: Job[] = [
   },
   {
     id: 'job-007',
+    jobCode: 'TA-2026-002',
     title: 'Talent Acquisition Specialist',
     departmentId: 'dep-hr',
     location: 'Dubai, UAE',
@@ -517,6 +524,7 @@ export const jobs: Job[] = [
   },
   {
     id: 'job-008',
+    jobCode: 'OPS-2026-006',
     title: 'Operations Manager',
     departmentId: 'dep-ops',
     location: 'Riyadh, KSA',
@@ -544,6 +552,7 @@ export const jobs: Job[] = [
   },
   {
     id: 'job-009',
+    jobCode: 'MKT-2026-004',
     title: 'Demand Generation Manager',
     departmentId: 'dep-mkt',
     location: 'Dubai, UAE',
@@ -571,6 +580,7 @@ export const jobs: Job[] = [
   },
   {
     id: 'job-010',
+    jobCode: 'SALES-2026-009',
     title: 'Account Executive',
     departmentId: 'dep-sales',
     location: 'Doha, Qatar',

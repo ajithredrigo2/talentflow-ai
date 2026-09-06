@@ -65,6 +65,8 @@ export type JobStatus = 'Draft' | 'Pending Approval' | 'Open' | 'On Hold' | 'Clo
 
 export interface Job {
   id: string;
+  /** Human-facing requisition code used in candidate email subjects, e.g. DEVOPS-2026-004 */
+  jobCode: string;
   title: string;
   departmentId: string;
   location: string;
@@ -383,4 +385,169 @@ export interface OffboardingCase {
   tasks: { task: string; owner: string; status: 'Pending' | 'Completed' }[];
   exitInterviewDone: boolean;
   completion: number;
+}
+
+/* ==================================================================== */
+/* Zero-Touch Candidate Intake — email client integration               */
+/* ==================================================================== */
+
+export type MailProvider = 'microsoft-graph' | 'gmail' | 'imap' | 'demo';
+
+export interface EmailConnection {
+  id: string;
+  provider: MailProvider;
+  displayName: string;
+  status: 'Connected' | 'Not configured' | 'Error' | 'Demo mode';
+  authMethod: 'OAuth 2.0' | 'App password (IMAP)' | 'Simulated';
+  scopes: string[];
+  detail: string;
+  lastSyncAt?: string;
+  envVars: string[];
+}
+
+export interface RecruitmentMailbox {
+  id: string;
+  address: string;
+  connectionId: string;
+  label: string;
+  enabled: boolean;
+  autoAcknowledge: boolean;
+  receivedCount: number;
+}
+
+export type IntakeStatus =
+  | 'New'
+  | 'Processing'
+  | 'Screening Complete'
+  | 'Needs Review'
+  | 'Shortlisted'
+  | 'Needs Assignment'
+  | 'Missing CV'
+  | 'Duplicate'
+  | 'Failed'
+  | 'Archived';
+
+export interface EmailAttachment {
+  id: string;
+  filename: string;
+  mimeType: string;
+  sizeBytes: number;
+  extension: string;
+  isResume: boolean;
+  sha256: string;
+  validation: {
+    passed: boolean;
+    checks: { check: string; passed: boolean; detail: string }[];
+    quarantined: boolean;
+  };
+  /** Extracted plain text. The original binary is never executed, only parsed. */
+  extractedText?: string;
+}
+
+export interface IncomingEmail {
+  id: string;
+  mailboxId: string;
+  mailboxAddress: string;
+  provider: MailProvider;
+  messageId: string;
+  fromName: string;
+  fromEmail: string;
+  subject: string;
+  body: string;
+  receivedAt: string;
+  attachments: EmailAttachment[];
+  status: IntakeStatus;
+  /** Resolved during processing */
+  candidateId?: string;
+  applicationId?: string;
+  jobId?: string;
+  jobMatch?: JobMatchResult;
+  parsing?: ResumeParsingResult;
+  duplicateOf?: string;
+  runId?: string;
+  failureReason?: string;
+  acknowledgementId?: string;
+  simulated: boolean;
+}
+
+export interface ResumeParsingResult {
+  name: string;
+  email: string;
+  phone?: string;
+  location?: string;
+  summary: string;
+  currentTitle?: string;
+  currentEmployer?: string;
+  previousEmployers: string[];
+  totalExperienceYears: number;
+  relevantExperience: string;
+  technicalSkills: string[];
+  softSkills: string[];
+  certifications: string[];
+  education: string[];
+  projects: string[];
+  languages: string[];
+  noticePeriodDays?: number;
+  expectedSalary?: string;
+  linkedinUrl?: string;
+  portfolioUrl?: string;
+  confidence: number;
+  parsedBy: string;
+  parsedAt: string;
+  fieldsFound: number;
+  fieldsAttempted: number;
+}
+
+export interface JobMatchResult {
+  primary?: { jobId: string; jobCode: string; title: string; confidence: number; reason: string };
+  alternatives: { jobId: string; jobCode: string; title: string; confidence: number; reason: string }[];
+  method:
+    | 'Job ID in subject'
+    | 'Job title in subject'
+    | 'Job ID in body'
+    | 'Job title in body'
+    | 'Skills & experience inference'
+    | 'No confident match';
+  explanation: string;
+  confidentEnough: boolean;
+}
+
+export type ApplicationSource =
+  | 'Email'
+  | 'Career Portal'
+  | 'LinkedIn'
+  | 'Referral'
+  | 'Agency'
+  | 'Recruiter'
+  | 'Internal Candidate'
+  | 'Manual Entry';
+
+export interface JobApplication {
+  id: string;
+  reference: string;
+  candidateId: string;
+  jobId?: string;
+  source: ApplicationSource;
+  sourceDetail?: string;
+  emailId?: string;
+  stage: CandidateStage | 'Needs Assignment';
+  receivedAt: string;
+  screening?: ScreeningResult;
+  recruiterDecision?: {
+    action: 'Shortlist' | 'Hold' | 'Reject' | 'Request More Information' | 'Assign to Different Job';
+    by: string;
+    at: string;
+    note?: string;
+  };
+}
+
+export interface EmailAcknowledgement {
+  id: string;
+  emailId: string;
+  applicationId: string;
+  to: string;
+  subject: string;
+  body: string;
+  sentAt: string;
+  delivery: 'Sent' | 'Simulated' | 'Disabled';
 }
