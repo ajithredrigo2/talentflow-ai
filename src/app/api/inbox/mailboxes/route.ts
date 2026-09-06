@@ -3,8 +3,14 @@ import { audit, db } from '@/lib/store';
 import { listConnections } from '@/lib/email/providers';
 import { badRequest, requireAuth, sanitize } from '@/lib/api';
 
+/**
+ * Recruitment mailbox configuration is recruitment infrastructure: which
+ * addresses are monitored, which providers are wired up and whether
+ * acknowledgements dispatch. It is scoped to the roles that run recruitment,
+ * matching the roles that can read the inbox itself.
+ */
 export async function GET(req: NextRequest) {
-  const { error } = requireAuth(req);
+  const { error } = requireAuth(req, ['HR_ADMIN', 'RECRUITER', 'HIRING_MANAGER']);
   if (error) return error;
   return NextResponse.json({ mailboxes: db.mailboxes, connections: listConnections() });
 }

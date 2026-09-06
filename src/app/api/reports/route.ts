@@ -17,7 +17,9 @@ export async function GET(req: NextRequest) {
       agentId,
       agentLabel,
     })),
-    total: REPORTS.length,
+    // Only the count this role may actually run — the size of the full
+    // catalogue is not disclosed to roles that cannot see it.
+    total: reportsFor(user!.role).length,
   });
 }
 
