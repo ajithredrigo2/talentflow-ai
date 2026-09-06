@@ -3,6 +3,7 @@
 import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { AGENTS } from '@/lib/agents/registry';
 import { DEMO_ACCOUNTS } from '@/lib/auth';
 
 function LoginForm() {
@@ -53,8 +54,8 @@ function LoginForm() {
             <span className="bg-gradient-to-r from-brand-400 via-accent-400 to-mint-400 bg-clip-text text-transparent">for HR</span>
           </h1>
           <p className="mt-5 text-[14.5px] leading-relaxed text-white/60">
-            Sixteen specialised agents across the employee lifecycle, coordinated by one orchestrator — with a named
-            human approver on every employment decision.
+            {AGENTS.length} specialised agents across the employee lifecycle, coordinated by one orchestrator — with a
+            named human approver on every employment decision.
           </p>
           <div className="mt-8 space-y-2.5">
             {['Recruit end to end from a single sentence', 'Explainable scoring with the evidence attached', 'Grounded policy answers with citations', 'Immutable audit trail on every agent run'].map((f) => (

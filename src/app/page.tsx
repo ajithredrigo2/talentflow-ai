@@ -129,7 +129,7 @@ export default function Landing() {
         <div className="mx-auto max-w-7xl px-6">
           <Eyebrow>The solution</Eyebrow>
           <h2 className="mt-3 max-w-3xl text-[32px] font-semibold leading-tight tracking-[-0.02em] text-ink-950">
-            A system of action: sixteen specialised agents, one coordinator, humans on every decision.
+            A system of action: {AGENTS.length} specialised agents, one coordinator, humans on every decision.
           </h2>
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {[
@@ -150,7 +150,7 @@ export default function Landing() {
       {/* -------------------------------------------------------- Agents */}
       <section id="agents" className="mx-auto max-w-7xl px-6 py-20">
         <Eyebrow>The agent workforce</Eyebrow>
-        <h2 className="mt-3 text-[32px] font-semibold leading-tight tracking-[-0.02em] text-ink-950">Sixteen agents, four functions</h2>
+        <h2 className="mt-3 text-[32px] font-semibold leading-tight tracking-[-0.02em] text-ink-950">{AGENTS.length} agents, four functions</h2>
         <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[#71697d]">
           Each agent owns a narrow, well-defined slice of HR work, with its own inputs, outputs and guardrails. The
           Coordinator composes them into workflows.

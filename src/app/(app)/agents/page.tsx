@@ -17,7 +17,7 @@ export default async function AgentsPage() {
       <PageHeader
         eyebrow="Agent registry"
         title="AI Agents"
-        subtitle="Sixteen specialised agents with defined missions, inputs, outputs and guardrails. The Coordinator composes them into workflows; each one is independently auditable."
+        subtitle={`${AGENTS.length} specialised agents with defined missions, inputs, outputs and guardrails. The Coordinator composes them into workflows; each one is independently auditable.`}
         actions={
           <Badge tone={engine === 'deterministic' ? 'neutral' : 'mint'} dot>
             Reasoning engine: {engine === 'deterministic' ? 'Deterministic (no API key configured)' : `${engine.toUpperCase()} + deterministic fallback`}
@@ -29,7 +29,10 @@ export default async function AgentsPage() {
         <section key={cat} className="mb-8">
           <div className="mb-3 flex items-center gap-2">
             <h2 className="text-[15px] font-semibold text-ink-950">{cat}</h2>
-            <Badge tone={TONE[cat]}>{AGENTS.filter((a) => a.category === cat).length} agents</Badge>
+            <Badge tone={TONE[cat]}>
+              {AGENTS.filter((a) => a.category === cat).length}
+              {AGENTS.filter((a) => a.category === cat).length === 1 ? ' agent' : ' agents'}
+            </Badge>
           </div>
           <div className="grid gap-4 lg:grid-cols-2">
             {AGENTS.filter((a) => a.category === cat).map((a) => (

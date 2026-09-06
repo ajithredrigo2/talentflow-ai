@@ -197,13 +197,26 @@ const GENDER_CODED = ['rockstar', 'ninja', 'aggressive', 'dominant', 'young', 'e
 export function buildJobDescription(input: JDInput) {
   const key = responsibilityKey(input.title);
   const responsibilities = RESPONSIBILITY_BANK[key];
-  const criteria = [
-    { criterion: 'Technical skills match', weight: 35 },
-    { criterion: 'Relevant experience', weight: 25 },
-    { criterion: /cloud|devops|platform|security/i.test(input.title) ? 'Cloud platform depth' : 'Domain depth', weight: 20 },
-    { criterion: 'Certifications', weight: 10 },
-    { criterion: 'Location & availability', weight: 10 },
-  ];
+  // The screening engine computes a platform-depth dimension only for cloud,
+  // DevOps, platform and security roles. Emitting a depth criterion it cannot
+  // score would silently drop that weight from every candidate's result — the
+  // approved requisition would say five dimensions while the score used four —
+  // so other roles distribute that weight across the dimensions actually evaluated.
+  const scoresPlatformDepth = /cloud|devops|platform|security/i.test(input.title);
+  const criteria = scoresPlatformDepth
+    ? [
+        { criterion: 'Technical skills match', weight: 35 },
+        { criterion: 'Relevant experience', weight: 25 },
+        { criterion: 'Cloud platform depth', weight: 20 },
+        { criterion: 'Certifications', weight: 10 },
+        { criterion: 'Location & availability', weight: 10 },
+      ]
+    : [
+        { criterion: 'Technical skills match', weight: 45 },
+        { criterion: 'Relevant experience', weight: 30 },
+        { criterion: 'Certifications', weight: 15 },
+        { criterion: 'Location & availability', weight: 10 },
+      ];
   const biasFlags = GENDER_CODED.filter((w) => `${input.title}`.toLowerCase().includes(w));
 
   const summary = `Join the ${input.department} function in ${input.location} as a ${input.title}. You will own ${
