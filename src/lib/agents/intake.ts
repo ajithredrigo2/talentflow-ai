@@ -355,7 +355,9 @@ export function detectDuplicate(parsing: ResumeParsingResult, fromEmail: string,
   const byHash = db.candidates.find((c) => (c as Candidate & { resumeHash?: string }).resumeHash === resumeHash);
   const byName = db.candidates.find((c) => norm(c.name) === norm(parsing.name));
 
-  const existing = byEmail ?? byHash ?? byPhone ?? byName;
+  // A shared name is not identity — two different people called Sarah Khan must
+  // not be merged. Name is reported as a signal but never resolves a match alone.
+  const existing = byEmail ?? byHash ?? byPhone;
   const priorApplications = existing ? db.applications.filter((a) => a.candidateId === existing.id) : [];
 
   const signals = [

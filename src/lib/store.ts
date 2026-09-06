@@ -108,8 +108,21 @@ function bootstrap(): DataStore {
 const globalRef = globalThis as unknown as { __talentflow?: DataStore };
 export const db: DataStore = globalRef.__talentflow ?? (globalRef.__talentflow = bootstrap());
 
+/**
+ * Restore the seeded dataset.
+ *
+ * `db` is a fixed binding that every module captured at import time, so
+ * reassigning `globalRef.__talentflow` would leave all of them pointing at the
+ * old object and silently do nothing. Each collection is therefore emptied and
+ * refilled in place.
+ */
 export function resetStore() {
-  globalRef.__talentflow = bootstrap();
+  const fresh = bootstrap();
+  (Object.keys(fresh) as (keyof DataStore)[]).forEach((key) => {
+    const target = db[key] as unknown[];
+    target.length = 0;
+    target.push(...(fresh[key] as unknown[]));
+  });
 }
 
 let counter = 0;
