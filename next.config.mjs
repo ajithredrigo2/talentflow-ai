@@ -9,6 +9,10 @@ const securityHeaders = [
 
 const nextConfig = {
   reactStrictMode: true,
+  // The dev tools indicator sits bottom-left, on top of the sidebar's user
+  // avatar, which makes demos and screenshots read as a UI defect. It only
+  // ever renders in development; production builds are unaffected either way.
+  devIndicators: false,
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }];
   },
