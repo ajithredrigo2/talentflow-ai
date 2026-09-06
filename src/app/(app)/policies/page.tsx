@@ -16,7 +16,7 @@ export default async function PoliciesPage() {
         subtitle="The governed corpus the HR Helpdesk Agent retrieves from. Every answer the assistant gives cites one of these documents and its version — nothing is answered from outside this corpus."
       />
 
-      <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-4">
         <Kpi label="Policies" value={policies.length} accent="brand" />
         <Kpi label="Categories" value={categories.length} accent="cyan" />
         <Kpi label="Indexed for retrieval" value={policies.length} hint="lexical + tag index" accent="mint" />
@@ -24,7 +24,7 @@ export default async function PoliciesPage() {
       </div>
 
       <div className="mb-4 flex flex-wrap gap-1.5">
-        {categories.map((c) => <span key={c} className="badge bg-[#f0f2f8] text-[#5a6480]">{c} ({policies.filter((p) => p.category === c).length})</span>)}
+        {categories.map((c) => <span key={c} className="badge bg-[#f4f2f6] text-[#6b6377]">{c} ({policies.filter((p) => p.category === c).length})</span>)}
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -33,11 +33,11 @@ export default async function PoliciesPage() {
             <div id={p.id} className="p-5">
               <div className="space-y-2.5">
                 {p.content.split('\n').map((line, i) => (
-                  <p key={i} className="text-[12.5px] leading-relaxed text-[#4a5470]">{line}</p>
+                  <p key={i} className="text-[12.5px] leading-relaxed text-[#5b5367]">{line}</p>
                 ))}
               </div>
               <div className="mt-3 flex flex-wrap gap-1">
-                {p.tags.map((t) => <span key={t} className="rounded bg-[#f6f7fb] px-1.5 py-0.5 text-[10.5px] text-[#7a839c]">{t}</span>)}
+                {p.tags.map((t) => <span key={t} className="rounded bg-[#f8f7fa] px-1.5 py-0.5 text-[10.5px] text-[#898294]">{t}</span>)}
               </div>
             </div>
           </Card>

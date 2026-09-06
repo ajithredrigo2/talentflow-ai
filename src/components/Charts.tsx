@@ -5,14 +5,14 @@ import {
   PolarAngleAxis, PolarGrid, Radar, RadarChart, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from 'recharts';
 
-const PALETTE = ['#375ef6', '#06b6d4', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#f43f5e', '#64748b'];
+const PALETTE = ['#7c3aed', '#06b6d4', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#f43f5e', '#6b6377'];
 
-const axis = { stroke: '#9aa2b8', fontSize: 11, tickLine: false, axisLine: false };
+const axis = { stroke: '#a7a1b1', fontSize: 11, tickLine: false, axisLine: false };
 const tooltipStyle = {
   contentStyle: {
     borderRadius: 10,
-    border: '1px solid #e6e9f2',
-    boxShadow: '0 12px 30px -12px rgba(10,14,26,0.25)',
+    border: '1px solid #ebe9ef',
+    boxShadow: '0 12px 30px -12px rgba(26,14,44,0.25)',
     fontSize: 12,
   },
 };
@@ -29,7 +29,7 @@ export function TrendChart({ data, x, series }: { data: Record<string, unknown>[
             </linearGradient>
           ))}
         </defs>
-        <CartesianGrid strokeDasharray="3 3" stroke="#eef0f6" vertical={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="#f2f0f4" vertical={false} />
         <XAxis dataKey={x} {...axis} />
         <YAxis {...axis} />
         <Tooltip {...tooltipStyle} />
@@ -46,11 +46,11 @@ export function BarsChart({ data, x, y, name, horizontal, color }: { data: Recor
   return (
     <ResponsiveContainer width="100%" height={horizontal ? Math.max(200, data.length * 34) : 230}>
       <BarChart data={data} layout={horizontal ? 'vertical' : 'horizontal'} margin={{ top: 8, right: 16, left: horizontal ? 30 : -18, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#eef0f6" vertical={!horizontal} horizontal={horizontal} />
+        <CartesianGrid strokeDasharray="3 3" stroke="#f2f0f4" vertical={!horizontal} horizontal={horizontal} />
         {horizontal ? <XAxis type="number" {...axis} /> : <XAxis dataKey={x} {...axis} />}
         {horizontal ? <YAxis type="category" dataKey={x} width={112} {...axis} /> : <YAxis {...axis} />}
-        <Tooltip {...tooltipStyle} cursor={{ fill: '#f6f7fb' }} />
-        <Bar dataKey={y} name={name ?? y} radius={horizontal ? [0, 5, 5, 0] : [5, 5, 0, 0]} fill={color ?? '#375ef6'} maxBarSize={horizontal ? 18 : 42} />
+        <Tooltip {...tooltipStyle} cursor={{ fill: '#f8f7fa' }} />
+        <Bar dataKey={y} name={name ?? y} radius={horizontal ? [0, 5, 5, 0] : [5, 5, 0, 0]} fill={color ?? '#7c3aed'} maxBarSize={horizontal ? 18 : 42} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -74,9 +74,9 @@ export function SkillRadar({ data }: { data: { subject: string; A: number; B?: n
   return (
     <ResponsiveContainer width="100%" height={260}>
       <RadarChart data={data} outerRadius="72%">
-        <PolarGrid stroke="#e6e9f2" />
-        <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10.5, fill: '#7a839c' }} />
-        <Radar name="Candidate A" dataKey="A" stroke="#375ef6" fill="#375ef6" fillOpacity={0.22} strokeWidth={2} />
+        <PolarGrid stroke="#ebe9ef" />
+        <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10.5, fill: '#898294' }} />
+        <Radar name="Candidate A" dataKey="A" stroke="#7c3aed" fill="#7c3aed" fillOpacity={0.22} strokeWidth={2} />
         {data[0]?.B !== undefined && <Radar name="Candidate B" dataKey="B" stroke="#06b6d4" fill="#06b6d4" fillOpacity={0.16} strokeWidth={2} />}
         {data[0]?.C !== undefined && <Radar name="Candidate C" dataKey="C" stroke="#10b981" fill="#10b981" fillOpacity={0.14} strokeWidth={2} />}
         <Legend iconType="circle" wrapperStyle={{ fontSize: 11 }} />
@@ -90,7 +90,7 @@ export function LinesChart({ data, x, series }: { data: Record<string, unknown>[
   return (
     <ResponsiveContainer width="100%" height={230}>
       <LineChart data={data} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#eef0f6" vertical={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="#f2f0f4" vertical={false} />
         <XAxis dataKey={x} {...axis} />
         <YAxis {...axis} />
         <Tooltip {...tooltipStyle} />
@@ -113,10 +113,10 @@ export function Funnel({ stages }: { stages: { name: string; value: number }[] }
         return (
           <div key={s.name}>
             <div className="mb-1 flex items-center justify-between text-[11.5px]">
-              <span className="font-medium text-[#5a6480]">{s.name}</span>
-              <span className="text-[#9aa2b8]">{i > 0 && `${conv}% ·`} <span className="font-semibold text-ink-900">{s.value}</span></span>
+              <span className="font-medium text-[#6b6377]">{s.name}</span>
+              <span className="text-[#a7a1b1]">{i > 0 && `${conv}% ·`} <span className="font-semibold text-ink-900">{s.value}</span></span>
             </div>
-            <div className="h-7 overflow-hidden rounded-md bg-[#f0f2f8]">
+            <div className="h-7 overflow-hidden rounded-md bg-[#f4f2f6]">
               <div
                 className="h-full rounded-md transition-all duration-700"
                 style={{ width: `${Math.max(6, (s.value / max) * 100)}%`, background: `linear-gradient(90deg, ${PALETTE[0]}, ${PALETTE[i % 3 === 0 ? 1 : 2]})` }}

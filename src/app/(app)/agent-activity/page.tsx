@@ -9,10 +9,10 @@ export const dynamic = 'force-dynamic';
 const STATUS_STYLE: Record<string, string> = {
   Completed: 'border-emerald-200 bg-emerald-50 text-emerald-700',
   Processing: 'border-brand-200 bg-brand-50 text-brand-700',
-  Waiting: 'border-[#e6e9f2] bg-[#f6f7fb] text-[#7a839c]',
+  Waiting: 'border-[#ebe9ef] bg-[#f8f7fa] text-[#898294]',
   'Needs Approval': 'border-amber-200 bg-amber-50 text-amber-700',
   Failed: 'border-rose-200 bg-rose-50 text-rose-600',
-  Idle: 'border-[#e6e9f2] bg-white text-[#9aa2b8]',
+  Idle: 'border-[#ebe9ef] bg-white text-[#a7a1b1]',
 };
 
 export default async function AgentActivity() {
@@ -56,12 +56,12 @@ export default async function AgentActivity() {
         <div className="space-y-4">
           {runs.map((run) => (
             <Card key={run.id}>
-              <div className="border-b border-[#eef0f6] px-5 py-3.5">
+              <div className="border-b border-[#f2f0f4] px-5 py-3.5">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <div className="text-[13.5px] font-semibold text-ink-950">{run.request}</div>
-                    <div className="mt-0.5 text-[11.5px] text-[#8b93a9]">
-                      {run.actor} · {new Date(run.createdAt).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })} · run {run.id.slice(0, 14)}
+                    <div className="mt-0.5 text-[11.5px] text-[#9892a2]">
+                      {run.actor} · {new Date(run.createdAt).toLocaleString('en-GB', { timeZone: 'Asia/Dubai', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })} · run {run.id.slice(0, 14)}
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
@@ -78,7 +78,7 @@ export default async function AgentActivity() {
                       <span className={`flex h-6 w-6 items-center justify-center rounded-full border text-[10px] font-bold ${STATUS_STYLE[t.status]}`}>
                         {t.status === 'Completed' ? '✓' : t.status === 'Failed' ? '!' : t.status === 'Needs Approval' ? '⏸' : i + 1}
                       </span>
-                      {i < run.tasks.length - 1 && <span className="my-0.5 w-px flex-1 bg-[#e6e9f2]" />}
+                      {i < run.tasks.length - 1 && <span className="my-0.5 w-px flex-1 bg-[#ebe9ef]" />}
                     </div>
                     <div className={`mb-1 flex-1 rounded-lg border px-3.5 py-2.5 ${STATUS_STYLE[t.status]}`}>
                       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -90,7 +90,7 @@ export default async function AgentActivity() {
                     </div>
                   </div>
                 ))}
-                <div className="mt-2 rounded-lg border border-[#e6e9f2] bg-[#fafbfe] px-3.5 py-2.5 text-[11.5px] leading-relaxed text-[#5a6480]">
+                <div className="mt-2 rounded-lg border border-[#ebe9ef] bg-[#fcfbfd] px-3.5 py-2.5 text-[11.5px] leading-relaxed text-[#6b6377]">
                   <span className="font-semibold text-ink-900">Coordinator reasoning: </span>{run.reasoning}
                 </div>
               </div>

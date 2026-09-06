@@ -37,7 +37,7 @@ export default async function AgentsPage() {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h3 className="text-[14.5px] font-semibold text-ink-950">{a.name}</h3>
-                    <p className="mt-1.5 text-[12.5px] leading-relaxed text-[#616b85]">{a.mission}</p>
+                    <p className="mt-1.5 text-[12.5px] leading-relaxed text-[#71697d]">{a.mission}</p>
                   </div>
                   {a.requiresApproval && <Badge tone="amber">Approval gate</Badge>}
                 </div>
@@ -47,7 +47,7 @@ export default async function AgentsPage() {
                     <div className="kpi-label mb-1.5">Capabilities</div>
                     <ul className="space-y-1">
                       {a.capabilities.map((c) => (
-                        <li key={c} className="flex gap-2 text-[12px] leading-snug text-[#5a6480]">
+                        <li key={c} className="flex gap-2 text-[12px] leading-snug text-[#6b6377]">
                           <span className="mt-[6px] h-1 w-1 shrink-0 rounded-full bg-brand-500" />{c}
                         </li>
                       ))}
@@ -57,7 +57,7 @@ export default async function AgentsPage() {
                     <div>
                       <div className="kpi-label mb-1.5">Inputs</div>
                       <div className="flex flex-wrap gap-1">
-                        {a.inputs.map((i) => <span key={i} className="rounded bg-[#f0f2f8] px-1.5 py-0.5 text-[10.5px] text-[#5a6480]">{i}</span>)}
+                        {a.inputs.map((i) => <span key={i} className="rounded bg-[#f4f2f6] px-1.5 py-0.5 text-[10.5px] text-[#6b6377]">{i}</span>)}
                       </div>
                     </div>
                     <div>
@@ -69,11 +69,11 @@ export default async function AgentsPage() {
                   </div>
                 </div>
 
-                <div className="mt-4 rounded-lg border border-[#e6e9f2] bg-[#fafbfe] p-3">
+                <div className="mt-4 rounded-lg border border-[#ebe9ef] bg-[#fcfbfd] p-3">
                   <div className="kpi-label mb-1.5">Guardrails</div>
                   <ul className="space-y-1">
                     {a.guardrails.map((g) => (
-                      <li key={g} className="flex gap-2 text-[11.5px] leading-snug text-[#5a6480]">
+                      <li key={g} className="flex gap-2 text-[11.5px] leading-snug text-[#6b6377]">
                         <span className="text-mint-600">✓</span>{g}
                       </li>
                     ))}

@@ -94,15 +94,15 @@ export default function CandidateActions({
         <Card title={`Interview guide — ${candidateName}`} subtitle="Interview Intelligence Agent">
           <div className="space-y-3 p-4">
             {questions.map((q, i) => (
-              <div key={i} className="rounded-lg border border-[#e6e9f2] p-3.5">
+              <div key={i} className="rounded-lg border border-[#ebe9ef] p-3.5">
                 <div className="mb-1.5 flex items-center gap-2">
                   <Badge tone={CATEGORY_TONE[q.category]}>{q.category}</Badge>
-                  <span className="text-[11px] text-[#9aa2b8]">Q{i + 1}</span>
+                  <span className="text-[11px] text-[#a7a1b1]">Q{i + 1}</span>
                 </div>
                 <p className="text-[13px] font-medium leading-relaxed text-ink-950">{q.question}</p>
-                <p className="mt-1.5 text-[11.5px] leading-relaxed text-[#7a839c]"><span className="font-semibold text-[#5a6480]">Why ask this: </span>{q.rationale}</p>
+                <p className="mt-1.5 text-[11.5px] leading-relaxed text-[#898294]"><span className="font-semibold text-[#6b6377]">Why ask this: </span>{q.rationale}</p>
                 <div className="mt-2 flex flex-wrap gap-1.5">
-                  {q.lookFor.map((l) => <span key={l} className="rounded bg-[#f6f7fb] px-1.5 py-0.5 text-[10.5px] text-[#5a6480]">✓ {l}</span>)}
+                  {q.lookFor.map((l) => <span key={l} className="rounded bg-[#f8f7fa] px-1.5 py-0.5 text-[10.5px] text-[#6b6377]">✓ {l}</span>)}
                 </div>
               </div>
             ))}
@@ -133,7 +133,7 @@ export default function CandidateActions({
                 <button
                   key={s.iso}
                   disabled={!!busy}
-                  className="rounded-lg border border-[#e6e9f2] bg-white px-3 py-1.5 text-[12.5px] font-medium text-ink-800 transition hover:border-brand-400 hover:bg-brand-50"
+                  className="rounded-lg border border-[#ebe9ef] bg-white px-3 py-1.5 text-[12.5px] font-medium text-ink-800 transition hover:border-brand-400 hover:bg-brand-50"
                   onClick={async () => {
                     const d = await call('/api/schedule', { candidateId, interviewerId: interviewer, slot: s.iso, round }, 'b');
                     if (d) {
@@ -161,7 +161,7 @@ export default function CandidateActions({
       {offer && (
         <Card title="Offer draft — awaiting human approval" subtitle={`${offer.baseSalary} · joining ${offer.joiningDate}`} actions={<Badge tone="amber">Pending approval</Badge>}>
           <div className="p-4">
-            <pre className="max-h-96 overflow-y-auto whitespace-pre-wrap rounded-lg border border-[#e6e9f2] bg-[#fafbfe] p-4 font-mono text-[11.5px] leading-relaxed text-[#4a5470]">{offer.letterDraft}</pre>
+            <pre className="max-h-96 overflow-y-auto whitespace-pre-wrap rounded-lg border border-[#ebe9ef] bg-[#fcfbfd] p-4 font-mono text-[11.5px] leading-relaxed text-[#5b5367]">{offer.letterDraft}</pre>
             <div className="mt-3">
               <GuardrailNote>An offer is never issued by an agent. This draft has been routed to the approvals queue for a named human approver.</GuardrailNote>
             </div>

@@ -44,7 +44,7 @@ export default async function SettingsPage() {
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card title="Your account">
-          <div className="divide-y divide-[#f2f4f9]">
+          <div className="divide-y divide-[#f5f4f7]">
             {[
               ['Name', user.name],
               ['Email', user.email],
@@ -53,14 +53,14 @@ export default async function SettingsPage() {
               ['Session', 'Signed HttpOnly cookie · 12-hour expiry'],
             ].map(([k, v]) => (
               <div key={k} className="flex items-center justify-between px-5 py-3 text-[12.5px]">
-                <span className="text-[#7a839c]">{k}</span><span className="font-medium text-ink-900">{v}</span>
+                <span className="text-[#898294]">{k}</span><span className="font-medium text-ink-900">{v}</span>
               </div>
             ))}
           </div>
         </Card>
 
         <Card title="AI configuration">
-          <div className="divide-y divide-[#f2f4f9]">
+          <div className="divide-y divide-[#f5f4f7]">
             {[
               ['Active reasoning engine', engine === 'deterministic' ? 'Deterministic agent engine' : `${engine.toUpperCase()} with deterministic fallback`],
               ['Provider key configured', engine === 'deterministic' ? 'No — running fully offline' : 'Yes — read from environment'],
@@ -70,13 +70,13 @@ export default async function SettingsPage() {
               ['Knowledge-base documents', '12 HR policies, lexically indexed'],
             ].map(([k, v]) => (
               <div key={k} className="flex items-center justify-between px-5 py-3 text-[12.5px]">
-                <span className="text-[#7a839c]">{k}</span><span className="font-medium text-ink-900">{v}</span>
+                <span className="text-[#898294]">{k}</span><span className="font-medium text-ink-900">{v}</span>
               </div>
             ))}
           </div>
-          <div className="border-t border-[#eef0f6] px-5 py-3.5 text-[11.5px] leading-relaxed text-[#7a839c]">
-            Set <code className="rounded bg-[#f0f2f8] px-1 font-mono text-[11px]">GEMINI_API_KEY</code> or{' '}
-            <code className="rounded bg-[#f0f2f8] px-1 font-mono text-[11px]">OPENAI_API_KEY</code> in the deployment
+          <div className="border-t border-[#f2f0f4] px-5 py-3.5 text-[11.5px] leading-relaxed text-[#898294]">
+            Set <code className="rounded bg-[#f4f2f6] px-1 font-mono text-[11px]">GEMINI_API_KEY</code> or{' '}
+            <code className="rounded bg-[#f4f2f6] px-1 font-mono text-[11px]">OPENAI_API_KEY</code> in the deployment
             environment to enable model-written narratives. Agent results stay grounded in platform data either way —
             the model rewrites the summary, it does not invent the findings.
           </div>
@@ -89,10 +89,10 @@ export default async function SettingsPage() {
         <Table head={['Surface', ...ROLES.map((r) => ROLE_LABEL[r])]}>
           {NAV.map((n) => (
             <tr key={n.href}>
-              <td className="td font-medium">{n.label}<div className="text-[11px] font-normal text-[#9aa2b8]">{n.href}</div></td>
+              <td className="td font-medium">{n.label}<div className="text-[11px] font-normal text-[#a7a1b1]">{n.href}</div></td>
               {ROLES.map((r) => (
                 <td key={r} className="td">
-                  {n.roles.includes(r) ? <span className="text-mint-600">✓</span> : <span className="text-[#d5dae6]">—</span>}
+                  {n.roles.includes(r) ? <span className="text-mint-600">✓</span> : <span className="text-[#ddd9e2]">—</span>}
                 </td>
               ))}
             </tr>
@@ -109,7 +109,7 @@ export default async function SettingsPage() {
                 {EXCLUDED_ATTRIBUTES.map((a) => <span key={a} className="rounded bg-rose-50 px-2 py-0.5 text-[11px] font-medium text-rose-600">✕ {a}</span>)}
               </div>
             </div>
-            <div className="divide-y divide-[#f2f4f9] rounded-lg border border-[#e6e9f2]">
+            <div className="divide-y divide-[#f5f4f7] rounded-lg border border-[#ebe9ef]">
               {[
                 ['Human-in-the-loop', 'Enforced'],
                 ['Explainability on every recommendation', 'Enforced'],
@@ -120,7 +120,7 @@ export default async function SettingsPage() {
                 ['Autonomous employment decisions', 'Disabled — not configurable'],
               ].map(([k, v]) => (
                 <div key={k} className="flex items-center justify-between px-3.5 py-2.5 text-[12.5px]">
-                  <span className="text-[#5a6480]">{k}</span><Badge tone="mint">{v}</Badge>
+                  <span className="text-[#6b6377]">{k}</span><Badge tone="mint">{v}</Badge>
                 </div>
               ))}
             </div>
@@ -128,11 +128,11 @@ export default async function SettingsPage() {
         </Card>
 
         <Card title="Security posture">
-          <div className="divide-y divide-[#f2f4f9]">
+          <div className="divide-y divide-[#f5f4f7]">
             {SECURITY.map(([k, v]) => (
               <div key={k} className="px-5 py-3">
                 <div className="text-[12.5px] font-medium text-ink-900">{k}</div>
-                <p className="mt-0.5 text-[11.5px] leading-relaxed text-[#7a839c]">{v}</p>
+                <p className="mt-0.5 text-[11.5px] leading-relaxed text-[#898294]">{v}</p>
               </div>
             ))}
           </div>
@@ -146,7 +146,7 @@ export default async function SettingsPage() {
               <td className="td font-medium">{a.label}</td>
               <td className="td font-mono text-[12px]">{a.email}</td>
               <td className="td font-mono text-[12px]">{a.password}</td>
-              <td className="td text-[12px] text-[#616b85]">{a.description}</td>
+              <td className="td text-[12px] text-[#71697d]">{a.description}</td>
             </tr>
           ))}
         </Table>

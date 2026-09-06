@@ -27,10 +27,10 @@ export function AgentFlow({ run }: { run: AgentRun }) {
   const statusStyle: Record<string, string> = {
     Completed: 'border-emerald-200 bg-emerald-50 text-emerald-700',
     Processing: 'border-brand-200 bg-brand-50 text-brand-700',
-    Waiting: 'border-[#e6e9f2] bg-[#f6f7fb] text-[#7a839c]',
+    Waiting: 'border-[#ebe9ef] bg-[#f8f7fa] text-[#898294]',
     'Needs Approval': 'border-amber-200 bg-amber-50 text-amber-700',
     Failed: 'border-rose-200 bg-rose-50 text-rose-600',
-    Idle: 'border-[#e6e9f2] bg-white text-[#7a839c]',
+    Idle: 'border-[#ebe9ef] bg-white text-[#898294]',
   };
   return (
     <div className="space-y-2">
@@ -40,7 +40,7 @@ export function AgentFlow({ run }: { run: AgentRun }) {
             <span className={`flex h-6 w-6 items-center justify-center rounded-full border text-[10px] font-bold ${statusStyle[t.status]}`}>
               {t.status === 'Completed' ? '✓' : t.status === 'Failed' ? '!' : t.status === 'Needs Approval' ? '⏸' : i + 1}
             </span>
-            {i < run.tasks.length - 1 && <span className="my-0.5 w-px flex-1 bg-[#e6e9f2]" />}
+            {i < run.tasks.length - 1 && <span className="my-0.5 w-px flex-1 bg-[#ebe9ef]" />}
           </div>
           <div className={`mb-1 flex-1 rounded-lg border px-3.5 py-2.5 ${statusStyle[t.status]}`}>
             <div className="flex flex-wrap items-center justify-between gap-2">
@@ -65,7 +65,7 @@ export function ResultBlocks({ blocks }: { blocks: ResultBlock[] }) {
     <div className="space-y-4">
       {blocks.map((b, i) => (
         <div key={i} className="card overflow-hidden fade-in" style={{ animationDelay: `${i * 80}ms` }}>
-          <header className="border-b border-[#eef0f6] bg-[#fbfcfe] px-5 py-3">
+          <header className="border-b border-[#f2f0f4] bg-[#fcfcfd] px-5 py-3">
             <h3 className="section-title">{b.title}</h3>
           </header>
           <div className="p-5">
@@ -117,7 +117,7 @@ function Block({ block }: { block: ResultBlock }) {
     case 'email-applications':
       return <EmailApplicationsBlock data={d} />;
     default:
-      return <pre className="overflow-x-auto text-[11px] text-[#616b85]">{JSON.stringify(d, null, 2)}</pre>;
+      return <pre className="overflow-x-auto text-[11px] text-[#71697d]">{JSON.stringify(d, null, 2)}</pre>;
   }
 }
 
@@ -132,19 +132,19 @@ function WorkforceBlock({ data }: { data: { driver: string; priority: string; ro
       </div>
       <div className="grid gap-3 md:grid-cols-3">
         {data.roles.map((r) => (
-          <div key={r.title} className="rounded-lg border border-[#e6e9f2] p-3.5">
+          <div key={r.title} className="rounded-lg border border-[#ebe9ef] p-3.5">
             <div className="flex items-start justify-between gap-2">
               <div>
                 <div className="text-[13.5px] font-semibold text-ink-950">{r.title}</div>
-                <div className="text-[11.5px] text-[#8b93a9]">{r.seniority} · {r.count} opening{r.count > 1 ? 's' : ''}</div>
+                <div className="text-[11.5px] text-[#9892a2]">{r.seniority} · {r.count} opening{r.count > 1 ? 's' : ''}</div>
               </div>
             </div>
             <div className="mt-2.5 flex flex-wrap gap-1">
               {r.skills.map((s) => (
-                <span key={s} className="rounded bg-[#f0f2f8] px-1.5 py-0.5 text-[10.5px] font-medium text-[#5a6480]">{s}</span>
+                <span key={s} className="rounded bg-[#f4f2f6] px-1.5 py-0.5 text-[10.5px] font-medium text-[#6b6377]">{s}</span>
               ))}
             </div>
-            <p className="mt-2.5 text-[12px] leading-relaxed text-[#7a839c]">{r.rationale}</p>
+            <p className="mt-2.5 text-[12px] leading-relaxed text-[#898294]">{r.rationale}</p>
           </div>
         ))}
       </div>
@@ -183,13 +183,13 @@ function JDBlock({ data }: { data: ReturnType<typeof Object> & Record<string, ne
         <Badge tone="neutral">{jd.employmentType}</Badge>
         <Badge tone="neutral">{jd.minExperience}+ yrs</Badge>
       </div>
-      <p className="text-[13.5px] leading-relaxed text-[#4a5470]">{jd.summary}</p>
+      <p className="text-[13.5px] leading-relaxed text-[#5b5367]">{jd.summary}</p>
       <div className="grid gap-4 md:grid-cols-2">
         <div>
           <div className="kpi-label mb-2">Responsibilities</div>
           <ul className="space-y-1.5">
             {jd.responsibilities.map((r) => (
-              <li key={r} className="flex gap-2 text-[12.5px] leading-relaxed text-[#4a5470]">
+              <li key={r} className="flex gap-2 text-[12.5px] leading-relaxed text-[#5b5367]">
                 <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-brand-500" />{r}
               </li>
             ))}
@@ -205,7 +205,7 @@ function JDBlock({ data }: { data: ReturnType<typeof Object> & Record<string, ne
           <div>
             <div className="kpi-label mb-1.5">Preferred skills</div>
             <div className="flex flex-wrap gap-1">
-              {jd.preferredSkills.map((s) => <span key={s} className="rounded bg-[#f0f2f8] px-2 py-0.5 text-[11px] font-medium text-[#5a6480]">{s}</span>)}
+              {jd.preferredSkills.map((s) => <span key={s} className="rounded bg-[#f4f2f6] px-2 py-0.5 text-[11px] font-medium text-[#6b6377]">{s}</span>)}
             </div>
           </div>
           <div>
@@ -221,7 +221,7 @@ function JDBlock({ data }: { data: ReturnType<typeof Object> & Record<string, ne
           <div className="mb-1 flex items-center gap-2 text-[12px] font-semibold text-ink-900">
             Inclusive-language check <Badge tone={jd.inclusiveLanguage.status === 'Passed' ? 'mint' : 'amber'}>{jd.inclusiveLanguage.status}</Badge>
           </div>
-          <p className="text-[12px] leading-relaxed text-[#5a6480]">{jd.inclusiveLanguage.note}</p>
+          <p className="text-[12px] leading-relaxed text-[#6b6377]">{jd.inclusiveLanguage.note}</p>
         </div>
         <GuardrailNote>{jd.notice}</GuardrailNote>
       </div>
@@ -234,13 +234,13 @@ function RankedBlock({ data }: { data: { job: Job; ranked: { candidate: Candidat
     <div className="space-y-4">
       <div className="space-y-3">
         {data.ranked.map((r, i) => (
-          <div key={r.candidate.id} className="rounded-lg border border-[#e6e9f2] p-4">
+          <div key={r.candidate.id} className="rounded-lg border border-[#ebe9ef] p-4">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="flex items-center gap-3">
-                <span className="flex h-6 w-6 items-center justify-center rounded-md bg-ink-950 text-[11px] font-bold text-white">{i + 1}</span>
+                <span className="flex h-6 w-6 items-center justify-center rounded-md bg-brand-600 text-[11px] font-bold text-white">{i + 1}</span>
                 <div>
                   <Link href={`/candidates/${r.candidate.id}`} className="text-[14px] font-semibold text-ink-950 hover:text-brand-600">{r.candidate.name}</Link>
-                  <div className="text-[12px] text-[#7a839c]">
+                  <div className="text-[12px] text-[#898294]">
                     {r.candidate.currentTitle} · {r.candidate.currentCompany} · {r.candidate.experienceYears} yrs · {r.candidate.location}
                   </div>
                 </div>
@@ -285,15 +285,15 @@ function QuestionsBlock({ data }: { data: { candidate: Candidate; questions: Int
   return (
     <div className="space-y-3">
       {data.questions.map((q, i) => (
-        <div key={i} className="rounded-lg border border-[#e6e9f2] p-4">
+        <div key={i} className="rounded-lg border border-[#ebe9ef] p-4">
           <div className="mb-2 flex items-center gap-2">
             <Badge tone={CATEGORY_TONE[q.category] ?? 'neutral'}>{q.category}</Badge>
-            <span className="text-[11px] text-[#9aa2b8]">Q{i + 1}</span>
+            <span className="text-[11px] text-[#a7a1b1]">Q{i + 1}</span>
           </div>
           <p className="text-[13.5px] font-medium leading-relaxed text-ink-950">{q.question}</p>
-          <p className="mt-2 text-[12px] leading-relaxed text-[#7a839c]"><span className="font-semibold text-[#5a6480]">Why ask this: </span>{q.rationale}</p>
+          <p className="mt-2 text-[12px] leading-relaxed text-[#898294]"><span className="font-semibold text-[#6b6377]">Why ask this: </span>{q.rationale}</p>
           <div className="mt-2.5 flex flex-wrap gap-1.5">
-            {q.lookFor.map((l) => <span key={l} className="rounded bg-[#f6f7fb] px-2 py-0.5 text-[11px] text-[#5a6480]">✓ {l}</span>)}
+            {q.lookFor.map((l) => <span key={l} className="rounded bg-[#f8f7fa] px-2 py-0.5 text-[11px] text-[#6b6377]">✓ {l}</span>)}
           </div>
         </div>
       ))}
@@ -308,11 +308,11 @@ function OnboardingBlock({ data }: { data: { tasks: { id: string; task: string; 
       <Table head={['Day', 'Task', 'Owner', 'Function', 'Due']}>
         {data.tasks.map((t) => (
           <tr key={t.id}>
-            <td className="td font-mono text-[12px] text-[#7a839c]">{t.day > 0 ? `D+${t.day}` : `D${t.day}`}</td>
+            <td className="td font-mono text-[12px] text-[#898294]">{t.day > 0 ? `D+${t.day}` : `D${t.day}`}</td>
             <td className="td font-medium">{t.task}</td>
-            <td className="td text-[#616b85]">{t.owner}</td>
+            <td className="td text-[#71697d]">{t.owner}</td>
             <td className="td"><Badge tone="neutral">{t.category}</Badge></td>
-            <td className="td text-[#7a839c]">{t.dueDate}</td>
+            <td className="td text-[#898294]">{t.dueDate}</td>
           </tr>
         ))}
       </Table>
@@ -334,23 +334,23 @@ function LeaveBlock({ data }: { data: { type: string; from: string; to: string; 
           ['To', data.to],
           ['Working days', String(data.days)],
         ].map(([k, v]) => (
-          <div key={k} className="rounded-lg border border-[#e6e9f2] px-3.5 py-2.5">
+          <div key={k} className="rounded-lg border border-[#ebe9ef] px-3.5 py-2.5">
             <div className="kpi-label">{k}</div>
             <div className="mt-0.5 text-[14px] font-semibold text-ink-950">{v}</div>
           </div>
         ))}
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
-        <div className="rounded-lg border border-[#e6e9f2] p-3.5">
+        <div className="rounded-lg border border-[#ebe9ef] p-3.5">
           <div className="kpi-label mb-2">Balance impact</div>
           <div className="flex items-center gap-3 text-[14px] font-semibold text-ink-950">
-            {data.balance} days <span className="text-[#9aa2b8]">→</span> <span className={data.balanceAfter < 0 ? 'text-rose-500' : 'text-mint-600'}>{data.balanceAfter} days</span>
+            {data.balance} days <span className="text-[#a7a1b1]">→</span> <span className={data.balanceAfter < 0 ? 'text-rose-500' : 'text-mint-600'}>{data.balanceAfter} days</span>
           </div>
         </div>
-        <div className="rounded-lg border border-[#e6e9f2] p-3.5">
+        <div className="rounded-lg border border-[#ebe9ef] p-3.5">
           <div className="kpi-label mb-2">Routed to</div>
           <div className="text-[14px] font-semibold text-ink-950">{data.approver.name}</div>
-          <div className="text-[12px] text-[#7a839c]">{data.approver.title}</div>
+          <div className="text-[12px] text-[#898294]">{data.approver.title}</div>
         </div>
       </div>
       {data.conflicts.length > 0 && <ExplainBlock items={data.conflicts} title="Conflicts detected" />}
@@ -362,7 +362,7 @@ function LeaveBlock({ data }: { data: { type: string; from: string; to: string; 
 function PolicyBlock({ data }: { data: { answer: string; citations: { id: string; title: string; version: string; passage: string }[]; confidence: number; escalate: boolean } }) {
   return (
     <div className="space-y-3.5">
-      <div className="prose-hr text-[13.5px] leading-relaxed text-[#3d4763]">
+      <div className="prose-hr text-[13.5px] leading-relaxed text-[#4e465a]">
         {data.answer.split('\n\n').map((p, i) => <p key={i} dangerouslySetInnerHTML={{ __html: p.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') }} />)}
       </div>
       {data.citations.length > 0 && (
@@ -370,12 +370,12 @@ function PolicyBlock({ data }: { data: { answer: string; citations: { id: string
           <div className="kpi-label mb-2">Sources retrieved from the HR knowledge base</div>
           <div className="space-y-2">
             {data.citations.map((c) => (
-              <Link key={c.id} href={`/policies#${c.id}`} className="block rounded-lg border border-[#e6e9f2] bg-[#fafbfe] p-3 transition hover:border-brand-200">
+              <Link key={c.id} href={`/policies#${c.id}`} className="block rounded-lg border border-[#ebe9ef] bg-[#fcfbfd] p-3 transition hover:border-brand-200">
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-[12.5px] font-semibold text-ink-900">{c.title}</span>
                   <Badge tone="neutral">{c.version}</Badge>
                 </div>
-                <p className="mt-1 text-[12px] leading-relaxed text-[#7a839c]">{c.passage}</p>
+                <p className="mt-1 text-[12px] leading-relaxed text-[#898294]">{c.passage}</p>
               </Link>
             ))}
           </div>
@@ -397,7 +397,7 @@ function GapsBlock({ data }: { data: { employee: Employee; analysis: { targetRol
         <ScoreRing value={a.readiness} size={70} label="Readiness" />
         <div>
           <div className="text-[15px] font-semibold text-ink-950">{data.employee.name} → {a.targetRole}</div>
-          <div className="text-[12.5px] text-[#7a839c]">{data.employee.title} · {a.gaps.length} skill gap{a.gaps.length === 1 ? '' : 's'} remaining</div>
+          <div className="text-[12.5px] text-[#898294]">{data.employee.title} · {a.gaps.length} skill gap{a.gaps.length === 1 ? '' : 's'} remaining</div>
         </div>
       </div>
       {a.gaps.length > 0 && (
@@ -413,11 +413,11 @@ function GapsBlock({ data }: { data: { employee: Employee; analysis: { targetRol
       )}
       <div className="grid gap-3 md:grid-cols-3">
         {a.roadmap.map((p) => (
-          <div key={p.phase} className="rounded-lg border border-[#e6e9f2] p-3.5">
+          <div key={p.phase} className="rounded-lg border border-[#ebe9ef] p-3.5">
             <div className="text-[12.5px] font-semibold text-ink-950">{p.phase}</div>
-            <div className="text-[11px] text-[#9aa2b8]">{p.weeks}</div>
+            <div className="text-[11px] text-[#a7a1b1]">{p.weeks}</div>
             <ul className="mt-2 space-y-1.5">
-              {p.items.map((i) => <li key={i} className="flex gap-2 text-[12px] leading-relaxed text-[#5a6480]"><span className="mt-[6px] h-1 w-1 shrink-0 rounded-full bg-accent-500" />{i}</li>)}
+              {p.items.map((i) => <li key={i} className="flex gap-2 text-[12px] leading-relaxed text-[#6b6377]"><span className="mt-[6px] h-1 w-1 shrink-0 rounded-full bg-accent-500" />{i}</li>)}
             </ul>
           </div>
         ))}
@@ -427,9 +427,9 @@ function GapsBlock({ data }: { data: { employee: Employee; analysis: { targetRol
           <div className="kpi-label mb-2">Matched interventions</div>
           <div className="grid gap-2 sm:grid-cols-2">
             {a.courses.map((c) => (
-              <div key={c.id} className="rounded-lg border border-[#e6e9f2] px-3.5 py-2.5">
+              <div key={c.id} className="rounded-lg border border-[#ebe9ef] px-3.5 py-2.5">
                 <div className="text-[12.5px] font-medium text-ink-950">{c.title}</div>
-                <div className="text-[11.5px] text-[#8b93a9]">{c.provider} · {c.hours}h · {c.format}</div>
+                <div className="text-[11.5px] text-[#9892a2]">{c.provider} · {c.hours}h · {c.format}</div>
               </div>
             ))}
           </div>
@@ -446,7 +446,7 @@ function GapCohortBlock({ data }: { data: { targetRole: string; cohort: { employ
       {data.cohort.map((c) => (
         <tr key={c.employee.id}>
           <td className="td font-medium"><Link href={`/employees/${c.employee.id}`} className="link">{c.employee.name}</Link></td>
-          <td className="td text-[#616b85]">{c.employee.title}</td>
+          <td className="td text-[#71697d]">{c.employee.title}</td>
           <td className="td w-40"><Meter value={c.analysis.readiness} right={`${c.analysis.readiness}%`} /></td>
           <td className="td">
             <div className="flex flex-wrap gap-1">
@@ -463,13 +463,13 @@ function InternalBlock({ data }: { data: { employee: Employee; score: number; re
   return (
     <div className="space-y-3">
       {data.map((r, i) => (
-        <div key={r.employee.id} className="rounded-lg border border-[#e6e9f2] p-4">
+        <div key={r.employee.id} className="rounded-lg border border-[#ebe9ef] p-4">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="flex items-center gap-3">
-              <span className="flex h-6 w-6 items-center justify-center rounded-md bg-ink-950 text-[11px] font-bold text-white">{i + 1}</span>
+              <span className="flex h-6 w-6 items-center justify-center rounded-md bg-brand-600 text-[11px] font-bold text-white">{i + 1}</span>
               <div>
                 <Link href={`/employees/${r.employee.id}`} className="text-[14px] font-semibold text-ink-950 hover:text-brand-600">{r.employee.name}</Link>
-                <div className="text-[12px] text-[#7a839c]">{r.employee.title} · performance {r.employee.performanceScore}/5 · {r.employee.tenureMonths} months tenure</div>
+                <div className="text-[12px] text-[#898294]">{r.employee.title} · performance {r.employee.performanceScore}/5 · {r.employee.tenureMonths} months tenure</div>
               </div>
             </div>
             <ScoreRing value={r.score} size={54} />
@@ -477,7 +477,7 @@ function InternalBlock({ data }: { data: { employee: Employee; score: number; re
           <div className="mt-3 flex flex-wrap gap-1.5">
             {r.gaps.map((g) => <span key={g.skill} className="rounded bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-700">{g.skill}: {g.current} → {g.required}</span>)}
           </div>
-          <p className="mt-2.5 text-[12px] leading-relaxed text-[#7a839c]">{r.explanation}</p>
+          <p className="mt-2.5 text-[12px] leading-relaxed text-[#898294]">{r.explanation}</p>
         </div>
       ))}
       <GuardrailNote>Internal matching supports succession planning. No promotion, demotion or role change is made automatically.</GuardrailNote>
@@ -498,7 +498,7 @@ function ReportBlock({ data }: { data: { openJobs: number; openings: number; fun
           ['Cost per hire', data.costPerHire],
           ['Offer acceptance', `${data.offerAcceptance}%`],
         ].map(([k, v]) => (
-          <div key={String(k)} className="rounded-lg border border-[#e6e9f2] px-3.5 py-2.5">
+          <div key={String(k)} className="rounded-lg border border-[#ebe9ef] px-3.5 py-2.5">
             <div className="kpi-label">{k}</div>
             <div className="mt-0.5 text-[16px] font-semibold text-ink-950">{v}</div>
           </div>
@@ -509,8 +509,8 @@ function ReportBlock({ data }: { data: { openJobs: number; openings: number; fun
         <div className="space-y-2">
           {stages.map(([k, v]) => (
             <div key={k} className="flex items-center gap-3">
-              <span className="w-28 shrink-0 text-[12px] text-[#5a6480]">{k}</span>
-              <div className="h-6 flex-1 overflow-hidden rounded bg-[#f0f2f8]">
+              <span className="w-28 shrink-0 text-[12px] text-[#6b6377]">{k}</span>
+              <div className="h-6 flex-1 overflow-hidden rounded bg-[#f4f2f6]">
                 <div className="flex h-full items-center justify-end rounded bg-gradient-to-r from-brand-500 to-accent-500 px-2 text-[11px] font-semibold text-white transition-all duration-700" style={{ width: `${Math.max(8, (v / max) * 100)}%` }}>{v}</div>
               </div>
             </div>
@@ -521,7 +521,7 @@ function ReportBlock({ data }: { data: { openJobs: number; openings: number; fun
         <div className="kpi-label mb-2">Open positions by department</div>
         <div className="flex flex-wrap gap-2">
           {Object.entries(data.byDepartment).map(([k, v]) => (
-            <span key={k} className="rounded-lg border border-[#e6e9f2] px-3 py-1.5 text-[12px] text-[#5a6480]">{k} · <span className="font-semibold text-ink-900">{v}</span></span>
+            <span key={k} className="rounded-lg border border-[#ebe9ef] px-3 py-1.5 text-[12px] text-[#6b6377]">{k} · <span className="font-semibold text-ink-900">{v}</span></span>
           ))}
         </div>
       </div>
@@ -539,26 +539,26 @@ function RetentionBlock({ data }: { data: { high: { employee: Employee; risk: { 
       </div>
       <div className="space-y-3">
         {data.high.map((h) => (
-          <div key={h.employee.id} className="rounded-lg border border-[#e6e9f2] p-4">
+          <div key={h.employee.id} className="rounded-lg border border-[#ebe9ef] p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <Link href={`/employees/${h.employee.id}`} className="text-[13.5px] font-semibold text-ink-950 hover:text-brand-600">{h.employee.name}</Link>
-                <div className="text-[12px] text-[#7a839c]">{h.employee.title}</div>
+                <div className="text-[12px] text-[#898294]">{h.employee.title}</div>
               </div>
               <Badge tone={h.risk.level === 'High' ? 'rose' : h.risk.level === 'Medium' ? 'amber' : 'mint'}>{h.risk.level} · {h.risk.score}</Badge>
             </div>
             <div className="mt-3 space-y-1.5">
               {h.risk.factors.map((f) => (
                 <div key={f.factor} className="flex items-start gap-2.5">
-                  <span className="mt-0.5 w-9 shrink-0 rounded bg-[#f0f2f8] px-1 py-0.5 text-center text-[10.5px] font-bold text-[#5a6480]">+{f.impact}</span>
-                  <div className="text-[12px] leading-relaxed"><span className="font-medium text-ink-900">{f.factor}</span> — <span className="text-[#7a839c]">{f.detail}</span></div>
+                  <span className="mt-0.5 w-9 shrink-0 rounded bg-[#f4f2f6] px-1 py-0.5 text-center text-[10.5px] font-bold text-[#6b6377]">+{f.impact}</span>
+                  <div className="text-[12px] leading-relaxed"><span className="font-medium text-ink-900">{f.factor}</span> — <span className="text-[#898294]">{f.detail}</span></div>
                 </div>
               ))}
             </div>
             <details className="mt-2.5">
               <summary className="cursor-pointer text-[12px] font-medium text-brand-600">Suggested supportive actions</summary>
               <ul className="mt-2 space-y-1">
-                {h.risk.supportiveActions.map((a) => <li key={a} className="flex gap-2 text-[12px] text-[#5a6480]"><span className="mt-[6px] h-1 w-1 shrink-0 rounded-full bg-mint-500" />{a}</li>)}
+                {h.risk.supportiveActions.map((a) => <li key={a} className="flex gap-2 text-[12px] text-[#6b6377]"><span className="mt-[6px] h-1 w-1 shrink-0 rounded-full bg-mint-500" />{a}</li>)}
               </ul>
             </details>
           </div>
@@ -574,7 +574,7 @@ function EngagementBlock({ data }: { data: { themes: { theme: string; responses:
     <div className="space-y-4">
       <div className="grid gap-2 sm:grid-cols-4">
         {data.trend.map((t) => (
-          <div key={t.quarter} className="rounded-lg border border-[#e6e9f2] px-3.5 py-2.5">
+          <div key={t.quarter} className="rounded-lg border border-[#ebe9ef] px-3.5 py-2.5">
             <div className="kpi-label">{t.quarter}</div>
             <div className={`mt-0.5 text-[18px] font-semibold ${t.sentiment >= 0.2 ? 'text-mint-600' : t.sentiment >= 0 ? 'text-amberx-500' : 'text-rose-500'}`}>{t.sentiment > 0 ? '+' : ''}{t.sentiment}</div>
           </div>
@@ -601,9 +601,9 @@ function PerformanceBlock({ data }: { data: { employee: Employee; pack: { summar
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <div className="rounded-lg border border-[#e6e9f2] px-3.5 py-2.5"><div className="kpi-label">Goals achieved</div><div className="mt-0.5 text-[18px] font-semibold text-ink-950">{p.goalsAchieved}/{p.goalsTotal}</div></div>
-        <div className="rounded-lg border border-[#e6e9f2] px-3.5 py-2.5"><div className="kpi-label">Suggested rating (advisory)</div><div className="mt-0.5 text-[18px] font-semibold text-ink-950">{p.suggestedRating}/5</div></div>
-        <div className="rounded-lg border border-[#e6e9f2] px-3.5 py-2.5"><div className="kpi-label">Cycle</div><div className="mt-0.5 text-[18px] font-semibold text-ink-950">H1 2026</div></div>
+        <div className="rounded-lg border border-[#ebe9ef] px-3.5 py-2.5"><div className="kpi-label">Goals achieved</div><div className="mt-0.5 text-[18px] font-semibold text-ink-950">{p.goalsAchieved}/{p.goalsTotal}</div></div>
+        <div className="rounded-lg border border-[#ebe9ef] px-3.5 py-2.5"><div className="kpi-label">Suggested rating (advisory)</div><div className="mt-0.5 text-[18px] font-semibold text-ink-950">{p.suggestedRating}/5</div></div>
+        <div className="rounded-lg border border-[#ebe9ef] px-3.5 py-2.5"><div className="kpi-label">Cycle</div><div className="mt-0.5 text-[18px] font-semibold text-ink-950">H1 2026</div></div>
       </div>
       <AIPanel title="Performance summary">{p.summary}</AIPanel>
       <div className="grid gap-3 md:grid-cols-3">
@@ -624,8 +624,8 @@ function OffboardingBlock({ data }: { data: { employee: string; lastDay: string;
         {data.tasks.map((t) => (
           <tr key={t.task}>
             <td className="td font-medium">{t.task}</td>
-            <td className="td text-[#616b85]">{t.owner}</td>
-            <td className="td text-[#7a839c]">{t.dueDate}</td>
+            <td className="td text-[#71697d]">{t.owner}</td>
+            <td className="td text-[#898294]">{t.dueDate}</td>
           </tr>
         ))}
       </Table>
@@ -635,14 +635,14 @@ function OffboardingBlock({ data }: { data: { employee: string; lastDay: string;
 }
 
 function InterviewsBlock({ data }: { data: Interview[] }) {
-  if (!data.length) return <p className="text-[13px] text-[#7a839c]">No interviews scheduled in this window.</p>;
+  if (!data.length) return <p className="text-[13px] text-[#898294]">No interviews scheduled in this window.</p>;
   return (
     <Table head={['When', 'Round', 'Mode', 'Status']}>
       {data.map((i) => (
         <tr key={i.id}>
           <td className="td font-medium">{new Date(i.scheduledAt).toLocaleString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Dubai' })}</td>
           <td className="td">{i.round}</td>
-          <td className="td text-[#616b85]">{i.mode}</td>
+          <td className="td text-[#71697d]">{i.mode}</td>
           <td className="td"><Badge tone={stageTone(i.status)}>{i.status}</Badge></td>
         </tr>
       ))}
@@ -653,9 +653,9 @@ function InterviewsBlock({ data }: { data: Interview[] }) {
 function SlotsBlock({ data }: { data: { candidate: Candidate; interviewer: Employee; slots: { iso: string; label: string }[] } }) {
   return (
     <div className="space-y-3">
-      <p className="text-[13px] text-[#616b85]">Conflict-free availability for <span className="font-semibold text-ink-900">{data.interviewer.name}</span> with <span className="font-semibold text-ink-900">{data.candidate.name}</span>:</p>
+      <p className="text-[13px] text-[#71697d]">Conflict-free availability for <span className="font-semibold text-ink-900">{data.interviewer.name}</span> with <span className="font-semibold text-ink-900">{data.candidate.name}</span>:</p>
       <div className="flex flex-wrap gap-2">
-        {data.slots.map((s) => <span key={s.iso} className="rounded-lg border border-[#e6e9f2] bg-[#fafbfe] px-3 py-1.5 text-[12.5px] font-medium text-ink-800">{s.label}</span>)}
+        {data.slots.map((s) => <span key={s.iso} className="rounded-lg border border-[#ebe9ef] bg-[#fcfbfd] px-3 py-1.5 text-[12.5px] font-medium text-ink-800">{s.label}</span>)}
       </div>
       <Link href="/interviews" className="btn-primary">Book in Interview Management</Link>
     </div>
@@ -664,24 +664,24 @@ function SlotsBlock({ data }: { data: { candidate: Candidate; interviewer: Emplo
 
 function EmailApplicationsBlock({ data }: { data: { scope: string; rows: { id: string; candidate: string; fromEmail: string; mailbox: string; receivedAt: string; status: string; reference: string | null; jobTitle: string | null; jobCode: string | null; score: number | null; recommendation: string | null; attachment: string | null; duplicate: boolean }[] } }) {
   if (!data.rows.length)
-    return <p className="text-[13px] text-[#7a839c]">No applications in scope. Open the Recruitment Inbox to simulate one through the intake pipeline.</p>;
+    return <p className="text-[13px] text-[#898294]">No applications in scope. Open the Recruitment Inbox to simulate one through the intake pipeline.</p>;
   return (
     <div className="space-y-3">
       <Table head={['Received', 'Candidate', 'Applied position', 'Job ID', 'CV', 'Match', 'Status']}>
         {data.rows.map((r) => (
           <tr key={r.id}>
-            <td className="td whitespace-nowrap text-[12px] text-[#7a839c]">
-              {new Date(r.receivedAt).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+            <td className="td whitespace-nowrap text-[12px] text-[#898294]">
+              {new Date(r.receivedAt).toLocaleString('en-GB', { timeZone: 'Asia/Dubai', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
             </td>
             <td className="td">
               <Link href={`/inbox/${r.id}`} className="font-medium text-ink-950 hover:text-brand-600">{r.candidate}</Link>
-              <div className="text-[11px] text-[#8b93a9]">{r.fromEmail} · {r.mailbox}</div>
+              <div className="text-[11px] text-[#9892a2]">{r.fromEmail} · {r.mailbox}</div>
               {r.duplicate && <Badge tone="violet">Linked to existing profile</Badge>}
             </td>
-            <td className="td text-[#616b85]">{r.jobTitle ?? <Badge tone="amber">Unassigned</Badge>}</td>
-            <td className="td font-mono text-[11.5px] text-[#7a839c]">{r.jobCode ?? '—'}</td>
-            <td className="td text-[11.5px] text-[#5a6480]">{r.attachment ?? <span className="text-rose-500">None</span>}</td>
-            <td className="td w-32">{r.score !== null ? <Meter value={r.score} right={`${r.score}%`} /> : <span className="text-[#c3c9d8]">—</span>}</td>
+            <td className="td text-[#71697d]">{r.jobTitle ?? <Badge tone="amber">Unassigned</Badge>}</td>
+            <td className="td font-mono text-[11.5px] text-[#898294]">{r.jobCode ?? '—'}</td>
+            <td className="td text-[11.5px] text-[#6b6377]">{r.attachment ?? <span className="text-rose-500">None</span>}</td>
+            <td className="td w-32">{r.score !== null ? <Meter value={r.score} right={`${r.score}%`} /> : <span className="text-[#ccc8d3]">—</span>}</td>
             <td className="td"><Badge tone={stageTone(r.status === 'Needs Assignment' || r.status === 'Needs Review' ? 'Pending' : r.status)} dot>{r.status}</Badge></td>
           </tr>
         ))}

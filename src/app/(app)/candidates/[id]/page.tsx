@@ -57,9 +57,9 @@ export default async function CandidateProfile({ params }: { params: Promise<{ i
                   <ExplainBlock items={screening.concerns} title="Gaps & concerns" />
                 </div>
                 <ExplainBlock items={screening.interviewFocus} title="Recommended interview focus areas" />
-                <div className="rounded-lg border border-[#e6e9f2] bg-[#fafbfe] p-3.5">
+                <div className="rounded-lg border border-[#ebe9ef] bg-[#fcfbfd] p-3.5">
                   <div className="kpi-label mb-1.5">How the overall score was computed</div>
-                  <p className="text-[12.5px] leading-relaxed text-[#4a5470]">{screening.explanation}</p>
+                  <p className="text-[12.5px] leading-relaxed text-[#5b5367]">{screening.explanation}</p>
                 </div>
                 <GuardrailNote>
                   Excluded from every dimension: {screening.attributesExcluded.join(', ')}. The Screening Agent cannot
@@ -81,13 +81,13 @@ export default async function CandidateProfile({ params }: { params: Promise<{ i
                     <td className="td font-medium">{name}</td>
                     <td className="td"><Badge tone={s.level === 'Expert' ? 'mint' : s.level === 'Advanced' ? 'brand' : 'neutral'}>{s.level}</Badge></td>
                     <td className="td">{s.years}</td>
-                    <td className="td">{mandatory ? <Badge tone="brand">Mandatory</Badge> : preferred ? <Badge tone="cyan">Preferred</Badge> : <span className="text-[#9aa2b8]">—</span>}</td>
+                    <td className="td">{mandatory ? <Badge tone="brand">Mandatory</Badge> : preferred ? <Badge tone="cyan">Preferred</Badge> : <span className="text-[#a7a1b1]">—</span>}</td>
                   </tr>
                 );
               })}
             </Table>
             {screening.missingSkills.length > 0 && (
-              <div className="border-t border-[#eef0f6] px-5 py-3.5">
+              <div className="border-t border-[#f2f0f4] px-5 py-3.5">
                 <div className="kpi-label mb-1.5">Required but not evidenced</div>
                 <div className="flex flex-wrap gap-1">
                   {screening.missingSkills.map((s) => <span key={s} className="rounded bg-rose-50 px-2 py-0.5 text-[11px] font-medium text-rose-600">{s}</span>)}
@@ -98,7 +98,7 @@ export default async function CandidateProfile({ params }: { params: Promise<{ i
 
           {/* Résumé */}
           <Card title="Résumé summary">
-            <p className="p-5 text-[13px] leading-relaxed text-[#4a5470]">{candidate.resumeSummary}</p>
+            <p className="p-5 text-[13px] leading-relaxed text-[#5b5367]">{candidate.resumeSummary}</p>
           </Card>
 
           {/* Interviews */}
@@ -108,9 +108,9 @@ export default async function CandidateProfile({ params }: { params: Promise<{ i
                 {candidateInterviews.map((i) => (
                   <tr key={i.id}>
                     <td className="td font-medium">{i.round}</td>
-                    <td className="td text-[#616b85]">{employees.find((e) => e.id === i.interviewerId)?.name}</td>
-                    <td className="td text-[#616b85]">{new Date(i.scheduledAt).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Dubai' })}</td>
-                    <td className="td text-[#616b85]">{i.mode}</td>
+                    <td className="td text-[#71697d]">{employees.find((e) => e.id === i.interviewerId)?.name}</td>
+                    <td className="td text-[#71697d]">{new Date(i.scheduledAt).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Dubai' })}</td>
+                    <td className="td text-[#71697d]">{i.mode}</td>
                     <td className="td"><Badge tone={stageTone(i.status)}>{i.status}</Badge></td>
                     <td className="td">
                       {i.feedback?.recommendation ? <Badge tone={i.feedback.recommendation.includes('Strong') ? 'mint' : i.feedback.recommendation === 'Hire' ? 'brand' : 'neutral'}>{i.feedback.recommendation}</Badge> : <Link href="/evaluations" className="link">Submit feedback</Link>}
@@ -119,15 +119,15 @@ export default async function CandidateProfile({ params }: { params: Promise<{ i
                 ))}
               </Table>
               {candidateInterviews.some((i) => i.feedback?.aiSummary) && (
-                <div className="space-y-3 border-t border-[#eef0f6] p-5">
+                <div className="space-y-3 border-t border-[#f2f0f4] p-5">
                   {candidateInterviews.filter((i) => i.feedback?.aiSummary).map((i) => (
                     <div key={i.id} className="rounded-lg border border-brand-200 bg-brand-50/50 p-4">
                       <div className="mb-1.5 flex items-center gap-2">
                         <span className="flex h-5 w-5 items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white">AI</span>
                         <span className="text-[12.5px] font-semibold text-ink-900">Evaluation summary · {i.round}</span>
                       </div>
-                      <p className="text-[12.5px] leading-relaxed text-[#4a5470]">{i.feedback!.aiSummary}</p>
-                      <p className="mt-2 text-[12px] leading-relaxed text-[#7a839c]"><span className="font-semibold">Reasoning: </span>{i.feedback!.reasoning}</p>
+                      <p className="text-[12.5px] leading-relaxed text-[#5b5367]">{i.feedback!.aiSummary}</p>
+                      <p className="mt-2 text-[12px] leading-relaxed text-[#898294]"><span className="font-semibold">Reasoning: </span>{i.feedback!.reasoning}</p>
                     </div>
                   ))}
                 </div>
@@ -149,10 +149,10 @@ export default async function CandidateProfile({ params }: { params: Promise<{ i
             <div className="flex flex-col items-center px-5 py-6 text-center">
               <Avatar name={candidate.name} size={64} />
               <div className="mt-3 text-[15px] font-semibold text-ink-950">{candidate.name}</div>
-              <div className="text-[12.5px] text-[#7a839c]">{candidate.currentTitle}</div>
+              <div className="text-[12.5px] text-[#898294]">{candidate.currentTitle}</div>
               <div className="mt-2.5"><Badge tone={stageTone(candidate.stage)} dot>{candidate.stage}</Badge></div>
             </div>
-            <div className="divide-y divide-[#f2f4f9] border-t border-[#eef0f6]">
+            <div className="divide-y divide-[#f5f4f7] border-t border-[#f2f0f4]">
               {[
                 ['Applied for', job.title],
                 ['Applied on', candidate.appliedAt],
@@ -164,7 +164,7 @@ export default async function CandidateProfile({ params }: { params: Promise<{ i
                 ['Education', candidate.education],
               ].map(([k, v]) => (
                 <div key={k} className="flex items-start justify-between gap-3 px-5 py-2.5 text-[12.5px]">
-                  <span className="shrink-0 text-[#7a839c]">{k}</span>
+                  <span className="shrink-0 text-[#898294]">{k}</span>
                   <span className="text-right font-medium text-ink-900">{v}</span>
                 </div>
               ))}
@@ -176,28 +176,28 @@ export default async function CandidateProfile({ params }: { params: Promise<{ i
               {candidate.certifications.length ? (
                 <div className="space-y-1.5">
                   {candidate.certifications.map((c) => (
-                    <div key={c} className="rounded-lg border border-[#e6e9f2] px-3 py-2 text-[12.5px] text-[#4a5470]">{c}</div>
+                    <div key={c} className="rounded-lg border border-[#ebe9ef] px-3 py-2 text-[12.5px] text-[#5b5367]">{c}</div>
                   ))}
                 </div>
               ) : (
-                <p className="text-[12.5px] text-[#8b93a9]">No certifications listed on the CV.</p>
+                <p className="text-[12.5px] text-[#9892a2]">No certifications listed on the CV.</p>
               )}
             </div>
           </Card>
 
           <Card title="Data & consent">
-            <div className="divide-y divide-[#f2f4f9]">
+            <div className="divide-y divide-[#f5f4f7]">
               <div className="flex items-center justify-between px-5 py-3 text-[12.5px]">
-                <span className="text-[#7a839c]">Processing consent</span>
+                <span className="text-[#898294]">Processing consent</span>
                 <Badge tone={candidate.consentGiven ? 'mint' : 'rose'}>{candidate.consentGiven ? 'Given' : 'Not given'}</Badge>
               </div>
               <div className="flex items-center justify-between px-5 py-3 text-[12.5px]">
-                <span className="text-[#7a839c]">Retention window</span><span className="font-medium text-ink-900">12 months</span>
+                <span className="text-[#898294]">Retention window</span><span className="font-medium text-ink-900">12 months</span>
               </div>
               <div className="flex items-center justify-between px-5 py-3 text-[12.5px]">
-                <span className="text-[#7a839c]">Contact details</span><span className="font-medium text-ink-900">Masked in list views</span>
+                <span className="text-[#898294]">Contact details</span><span className="font-medium text-ink-900">Masked in list views</span>
               </div>
-              <div className="px-5 py-3 text-[11.5px] leading-relaxed text-[#8b93a9]">
+              <div className="px-5 py-3 text-[11.5px] leading-relaxed text-[#9892a2]">
                 The candidate may request an explanation of any AI-assisted recommendation affecting them, and may
                 request human review, under Employee Data Privacy &amp; AI Use (v1.4).
               </div>

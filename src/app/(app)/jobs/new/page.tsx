@@ -110,14 +110,14 @@ export default function JobCreation() {
               <Field label="Min. yrs"><input type="number" min={0} max={30} className="input" value={form.minExperience} onChange={(e) => setForm({ ...form, minExperience: Number(e.target.value) })} /></Field>
             </div>
             <Field label={`Required skills (${skills.length} selected)`}>
-              <div className="max-h-56 overflow-y-auto rounded-lg border border-[#e6e9f2] p-2">
+              <div className="max-h-56 overflow-y-auto rounded-lg border border-[#ebe9ef] p-2">
                 <div className="flex flex-wrap gap-1">
                   {SKILL_OPTIONS.map((s) => (
                     <button
                       key={s}
                       type="button"
                       onClick={() => toggle(s)}
-                      className={`rounded px-2 py-1 text-[11px] font-medium transition ${skills.includes(s) ? 'bg-brand-600 text-white' : 'bg-[#f0f2f8] text-[#5a6480] hover:bg-[#e6e9f2]'}`}
+                      className={`rounded px-2 py-1 text-[11px] font-medium transition ${skills.includes(s) ? 'bg-brand-600 text-white' : 'bg-[#f4f2f6] text-[#6b6377] hover:bg-[#ebe9ef]'}`}
                     >
                       {s}
                     </button>
@@ -139,7 +139,7 @@ export default function JobCreation() {
             <Card>
               <div className="px-6 py-16 text-center">
                 <p className="text-[14px] font-medium text-ink-900">No draft yet</p>
-                <p className="mx-auto mt-1.5 max-w-md text-[12.5px] leading-relaxed text-[#8b93a9]">
+                <p className="mx-auto mt-1.5 max-w-md text-[12.5px] leading-relaxed text-[#9892a2]">
                   Set the role parameters and generate. The draft appears here fully editable — the agent proposes,
                   you decide what gets published.
                 </p>
@@ -174,7 +174,7 @@ export default function JobCreation() {
                             onChange={(e) => edit('responsibilities', jd.responsibilities.map((x, xi) => (xi === i ? e.target.value : x)))}
                           />
                           <button
-                            className="rounded-lg border border-[#e6e9f2] px-2 text-[#9aa2b8] transition hover:border-rose-200 hover:text-rose-500"
+                            className="rounded-lg border border-[#ebe9ef] px-2 text-[#a7a1b1] transition hover:border-rose-200 hover:text-rose-500"
                             onClick={() => edit('responsibilities', jd.responsibilities.filter((_, xi) => xi !== i))}
                             title="Remove"
                           >
@@ -192,10 +192,10 @@ export default function JobCreation() {
                       </div>
                       <div className="kpi-label mb-1.5 mt-3">Preferred skills</div>
                       <div className="flex flex-wrap gap-1">
-                        {jd.preferredSkills.map((s) => <span key={s} className="rounded bg-[#f0f2f8] px-2 py-0.5 text-[11px] font-medium text-[#5a6480]">{s}</span>)}
+                        {jd.preferredSkills.map((s) => <span key={s} className="rounded bg-[#f4f2f6] px-2 py-0.5 text-[11px] font-medium text-[#6b6377]">{s}</span>)}
                       </div>
                       <div className="kpi-label mb-1.5 mt-3">Education</div>
-                      <p className="text-[12.5px] text-[#5a6480]">{jd.education}</p>
+                      <p className="text-[12.5px] text-[#6b6377]">{jd.education}</p>
                     </div>
                     <div>
                       <div className="kpi-label mb-2">Evaluation criteria (drives scoring)</div>
@@ -211,7 +211,7 @@ export default function JobCreation() {
                 <div className="mb-1 flex items-center gap-2 text-[12.5px] font-semibold text-ink-900">
                   Inclusive-language check <Badge tone={jd.inclusiveLanguage.status === 'Passed' ? 'mint' : 'amber'}>{jd.inclusiveLanguage.status}</Badge>
                 </div>
-                <p className="text-[12.5px] leading-relaxed text-[#5a6480]">{jd.inclusiveLanguage.note}</p>
+                <p className="text-[12.5px] leading-relaxed text-[#6b6377]">{jd.inclusiveLanguage.note}</p>
               </div>
 
               <GuardrailNote>{jd.notice}</GuardrailNote>

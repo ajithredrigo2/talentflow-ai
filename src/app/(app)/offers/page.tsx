@@ -24,7 +24,7 @@ export default async function OffersPage() {
         actions={<Link href="/approvals" className="btn-primary">Approvals queue</Link>}
       />
 
-      <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-4">
         <Kpi label="Total offers" value={offers.length} accent="brand" />
         <Kpi label="Pending approval" value={offers.filter((x) => x.o.status === 'Pending Approval').length} accent="amber" />
         <Kpi label="Sent" value={offers.filter((x) => x.o.status === 'Sent').length} accent="cyan" />
@@ -40,10 +40,10 @@ export default async function OffersPage() {
               {offers.map(({ o, candidate, job }) => (
                 <tr key={o.id}>
                   <td className="td font-medium"><Link href={`/candidates/${candidate.id}`} className="link">{candidate.name}</Link></td>
-                  <td className="td text-[#616b85]">{job.title}</td>
+                  <td className="td text-[#71697d]">{job.title}</td>
                   <td className="td">{o.baseSalary}</td>
-                  <td className="td text-[#616b85]">{o.joiningDate}</td>
-                  <td className="td text-[#616b85]">{new Date(o.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</td>
+                  <td className="td text-[#71697d]">{o.joiningDate}</td>
+                  <td className="td text-[#71697d]">{new Date(o.createdAt).toLocaleDateString('en-GB', { timeZone: 'Asia/Dubai', day: 'numeric', month: 'short' })}</td>
                   <td className="td"><Badge tone={stageTone(o.status)} dot>{o.status}</Badge></td>
                 </tr>
               ))}
@@ -53,7 +53,7 @@ export default async function OffersPage() {
           {offers.map(({ o, candidate, letter }) => (
             <Card key={o.id} title={`Offer letter draft — ${candidate.name}`} subtitle={`${o.baseSalary} · joining ${o.joiningDate}`} actions={<Badge tone={stageTone(o.status)}>{o.status}</Badge>}>
               <div className="p-5">
-                <pre className="max-h-[420px] overflow-y-auto whitespace-pre-wrap rounded-lg border border-[#e6e9f2] bg-[#fafbfe] p-4 font-mono text-[11.5px] leading-relaxed text-[#4a5470]">{letter}</pre>
+                <pre className="max-h-[420px] overflow-y-auto whitespace-pre-wrap rounded-lg border border-[#ebe9ef] bg-[#fcfbfd] p-4 font-mono text-[11.5px] leading-relaxed text-[#5b5367]">{letter}</pre>
               </div>
             </Card>
           ))}

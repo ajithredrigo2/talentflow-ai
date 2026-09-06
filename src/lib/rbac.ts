@@ -39,6 +39,7 @@ export const NAV: NavItem[] = [
   { href: '/offboarding', label: 'Offboarding', icon: 'log-out', group: 'People', roles: HR },
   { href: '/policies', label: 'HR Policies', icon: 'book-open', group: 'People', roles: ALL },
 
+  { href: '/reports', label: 'HR Reports', icon: 'file-bar-chart', group: 'Intelligence', roles: HR_REC_HM },
   { href: '/engagement', label: 'Engagement Analytics', icon: 'heart-pulse', group: 'Intelligence', roles: HR_HM },
   { href: '/workforce', label: 'Workforce Analytics', icon: 'bar-chart-3', group: 'Intelligence', roles: HR_HM },
 

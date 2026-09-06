@@ -20,7 +20,7 @@ export default async function OnboardingPage() {
         subtitle="Every accepted offer becomes a sequenced programme from Day −10 to Day 30, assigned across HR Operations, Compliance, IT Service Desk, Learning & Development and the hiring manager."
       />
 
-      <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-4">
         <Kpi label="Employees onboarding" value={people.length} accent="brand" />
         <Kpi label="Total tasks" value={tasks.length} accent="cyan" />
         <Kpi label="Completed" value={done} accent="mint" />
@@ -43,11 +43,11 @@ export default async function OnboardingPage() {
               <Table head={['Day', 'Task', 'Owner', 'Function', 'Due', 'Status']}>
                 {own.map((t) => (
                   <tr key={t.id}>
-                    <td className="td font-mono text-[12px] text-[#7a839c]">{t.day > 0 ? `D+${t.day}` : `D${t.day}`}</td>
+                    <td className="td font-mono text-[12px] text-[#898294]">{t.day > 0 ? `D+${t.day}` : `D${t.day}`}</td>
                     <td className="td font-medium">{t.task}</td>
-                    <td className="td text-[#616b85]">{t.owner}</td>
+                    <td className="td text-[#71697d]">{t.owner}</td>
                     <td className="td"><Badge tone="neutral">{t.category}</Badge></td>
-                    <td className="td text-[#7a839c]">{t.dueDate}</td>
+                    <td className="td text-[#898294]">{t.dueDate}</td>
                     <td className="td"><Badge tone={stageTone(t.status)} dot>{t.status}</Badge></td>
                   </tr>
                 ))}

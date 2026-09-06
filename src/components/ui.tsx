@@ -21,7 +21,7 @@ export function PageHeader({
       <div>
         {eyebrow && <div className="kpi-label mb-1.5">{eyebrow}</div>}
         <h1 className="text-[22px] font-semibold tracking-[-0.01em] text-ink-950">{title}</h1>
-        {subtitle && <p className="mt-1 max-w-3xl text-[13.5px] leading-relaxed text-[#616b85]">{subtitle}</p>}
+        {subtitle && <p className="mt-1 max-w-3xl text-[13.5px] leading-relaxed text-[#71697d]">{subtitle}</p>}
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
     </div>
@@ -32,10 +32,10 @@ export function Card({ children, className, title, subtitle, actions }: { childr
   return (
     <section className={clsx('card', className)}>
       {(title || actions) && (
-        <header className="flex items-start justify-between gap-3 border-b border-[#eef0f6] px-5 py-3.5">
+        <header className="flex items-start justify-between gap-3 border-b border-[#f2f0f4] px-5 py-3.5">
           <div>
             {title && <h2 className="section-title">{title}</h2>}
-            {subtitle && <p className="mt-0.5 text-[12.5px] text-[#7a839c]">{subtitle}</p>}
+            {subtitle && <p className="mt-0.5 text-[12.5px] text-[#898294]">{subtitle}</p>}
           </div>
           {actions}
         </header>
@@ -64,14 +64,14 @@ export function Kpi({ label, value, delta, hint, accent }: { label: string; valu
           <span className={clsx('text-[12px] font-semibold', delta.startsWith('-') ? 'text-rose-500' : 'text-mint-600')}>{delta}</span>
         )}
       </div>
-      {hint && <div className="mt-1 text-[11.5px] text-[#8b93a9]">{hint}</div>}
+      {hint && <div className="mt-1 text-[11.5px] text-[#9892a2]">{hint}</div>}
     </div>
   );
 }
 
 /* -------------------------------- Badges -------------------------------- */
 const TONES: Record<ToneName, string> = {
-  neutral: 'bg-[#f0f2f8] text-[#5a6480]',
+  neutral: 'bg-[#f4f2f6] text-[#6b6377]',
   brand: 'bg-brand-50 text-brand-700',
   mint: 'bg-emerald-50 text-emerald-700',
   amber: 'bg-amber-50 text-amber-700',
@@ -94,11 +94,11 @@ export function Badge({ children, tone = 'neutral', dot }: { children: ReactNode
 export function ScoreRing({ value, size = 64, label }: { value: number; size?: number; label?: string }) {
   const r = (size - 8) / 2;
   const c = 2 * Math.PI * r;
-  const color = value >= 85 ? '#10b981' : value >= 70 ? '#375ef6' : value >= 55 ? '#f59e0b' : '#f43f5e';
+  const color = value >= 85 ? '#10b981' : value >= 70 ? '#7c3aed' : value >= 55 ? '#f59e0b' : '#f43f5e';
   return (
     <div className="relative inline-flex flex-col items-center" style={{ width: size }}>
       <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={r} stroke="#eef0f6" strokeWidth="6" fill="none" />
+        <circle cx={size / 2} cy={size / 2} r={r} stroke="#f2f0f4" strokeWidth="6" fill="none" />
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -115,7 +115,7 @@ export function ScoreRing({ value, size = 64, label }: { value: number; size?: n
       <span className="absolute inset-0 flex items-center justify-center text-[13px] font-semibold" style={{ color, top: label ? -6 : 0 }}>
         {value}%
       </span>
-      {label && <span className="mt-1 text-[10.5px] font-medium text-[#8b93a9]">{label}</span>}
+      {label && <span className="mt-1 text-[10.5px] font-medium text-[#9892a2]">{label}</span>}
     </div>
   );
 }
@@ -126,11 +126,11 @@ export function Meter({ value, label, right, tone }: { value: number; label?: st
     <div>
       {(label || right) && (
         <div className="mb-1 flex items-center justify-between text-[12px]">
-          <span className="text-[#5a6480]">{label}</span>
+          <span className="text-[#6b6377]">{label}</span>
           <span className="font-semibold text-ink-900">{right}</span>
         </div>
       )}
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#eef0f6]">
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#f2f0f4]">
         <div className={clsx('h-full rounded-full transition-all duration-700', color)} style={{ width: `${Math.min(100, Math.max(0, value))}%` }} />
       </div>
     </div>
@@ -150,18 +150,18 @@ export function AIPanel({ title, children, tone = 'brand' }: { title: string; ch
         <span className="flex h-5 w-5 items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white">AI</span>
         <span className="text-[12.5px] font-semibold text-ink-900">{title}</span>
       </div>
-      <div className="text-[13px] leading-relaxed text-[#3d4763]">{children}</div>
+      <div className="text-[13px] leading-relaxed text-[#4e465a]">{children}</div>
     </div>
   );
 }
 
 export function ExplainBlock({ items, title = 'Why this recommendation' }: { items: string[]; title?: string }) {
   return (
-    <div className="rounded-lg border border-[#e6e9f2] bg-[#fafbfe] p-3.5">
+    <div className="rounded-lg border border-[#ebe9ef] bg-[#fcfbfd] p-3.5">
       <div className="kpi-label mb-2">{title}</div>
       <ul className="space-y-1.5">
         {items.map((i, idx) => (
-          <li key={idx} className="flex gap-2 text-[12.5px] leading-relaxed text-[#4a5470]">
+          <li key={idx} className="flex gap-2 text-[12.5px] leading-relaxed text-[#5b5367]">
             <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-brand-500" />
             <span>{i}</span>
           </li>
@@ -173,7 +173,7 @@ export function ExplainBlock({ items, title = 'Why this recommendation' }: { ite
 
 export function GuardrailNote({ children }: { children: ReactNode }) {
   return (
-    <div className="flex gap-2.5 rounded-lg border border-[#e6e9f2] bg-[#fafbfe] px-3.5 py-3 text-[12px] leading-relaxed text-[#5a6480]">
+    <div className="flex gap-2.5 rounded-lg border border-[#ebe9ef] bg-[#fcfbfd] px-3.5 py-3 text-[12px] leading-relaxed text-[#6b6377]">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" className="mt-[1px] shrink-0 text-brand-600">
         <path d="M12 3l7 3v6c0 4.5-3 7.9-7 9-4-1.1-7-4.5-7-9V6l7-3z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
         <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -186,13 +186,13 @@ export function GuardrailNote({ children }: { children: ReactNode }) {
 export function Empty({ title, hint }: { title: string; hint?: string }) {
   return (
     <div className="flex flex-col items-center justify-center px-6 py-14 text-center">
-      <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#f0f2f8] text-[#9aa2b8]">
+      <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#f4f2f6] text-[#a7a1b1]">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
           <path d="M4 7h16M4 12h10M4 17h7" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
         </svg>
       </div>
       <p className="text-[13.5px] font-medium text-ink-900">{title}</p>
-      {hint && <p className="mt-1 max-w-sm text-[12.5px] text-[#8b93a9]">{hint}</p>}
+      {hint && <p className="mt-1 max-w-sm text-[12.5px] text-[#9892a2]">{hint}</p>}
     </div>
   );
 }
@@ -201,10 +201,10 @@ export function Table({ head, children }: { head: string[]; children: ReactNode 
   return (
     <div className="overflow-x-auto">
       <table className="w-full min-w-[600px] border-collapse">
-        <thead className="border-b border-[#eef0f6] bg-[#fbfcfe]">
+        <thead className="border-b border-[#f2f0f4] bg-[#fcfcfd]">
           <tr>{head.map((h) => <th key={h} className="th">{h}</th>)}</tr>
         </thead>
-        <tbody className="divide-y divide-[#f2f4f9]">{children}</tbody>
+        <tbody className="divide-y divide-[#f5f4f7]">{children}</tbody>
       </table>
     </div>
   );
@@ -212,7 +212,7 @@ export function Table({ head, children }: { head: string[]; children: ReactNode 
 
 export function Avatar({ name, size = 32, color }: { name: string; size?: number; color?: string }) {
   const initials = name.split(' ').slice(0, 2).map((n) => n[0]).join('').toUpperCase();
-  const palette = ['#375ef6', '#06b6d4', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'];
+  const palette = ['#7c3aed', '#06b6d4', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'];
   const bg = color ?? palette[name.charCodeAt(0) % palette.length];
   return (
     <span
@@ -226,7 +226,7 @@ export function Avatar({ name, size = 32, color }: { name: string; size?: number
 
 export function Spinner({ label }: { label?: string }) {
   return (
-    <div className="flex items-center gap-2.5 text-[13px] text-[#616b85]">
+    <div className="flex items-center gap-2.5 text-[13px] text-[#71697d]">
       <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" />
       {label}
     </div>
@@ -235,14 +235,14 @@ export function Spinner({ label }: { label?: string }) {
 
 export function Tabs({ tabs, active, onChange }: { tabs: string[]; active: string; onChange: (t: string) => void }) {
   return (
-    <div className="flex flex-wrap gap-1 rounded-lg bg-[#f0f2f8] p-1">
+    <div className="flex flex-wrap gap-1 rounded-lg bg-[#f4f2f6] p-1">
       {tabs.map((t) => (
         <button
           key={t}
           onClick={() => onChange(t)}
           className={clsx(
             'rounded-md px-3 py-1.5 text-[12.5px] font-medium transition',
-            active === t ? 'bg-white text-ink-900 shadow-sm' : 'text-[#616b85] hover:text-ink-900',
+            active === t ? 'bg-white text-ink-900 shadow-sm' : 'text-[#71697d] hover:text-ink-900',
           )}
         >
           {t}

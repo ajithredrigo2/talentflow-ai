@@ -5,6 +5,7 @@ import { Sparkles, CornerDownLeft } from 'lucide-react';
 import { AgentFlow, ResultBlocks, type ResultBlock } from '@/components/AgentResults';
 import { AIPanel, Badge, Card, PageHeader, Spinner } from '@/components/ui';
 import type { AgentRun } from '@/lib/types';
+import { AGENTS } from '@/lib/agents/registry';
 
 const EXAMPLES = [
   { label: 'Recruit a Senior DevOps Engineer', text: 'We need to hire a Senior DevOps Engineer in Dubai with Kubernetes, AWS, Terraform and CI/CD experience.' },
@@ -56,7 +57,7 @@ export default function CommandCenter() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'The Coordinator could not complete this request.');
       setResult(data);
-      setHistory((h) => [{ request: text, intent: data.run.intent, at: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) }, ...h].slice(0, 8));
+      setHistory((h) => [{ request: text, intent: data.run.intent, at: new Date().toLocaleTimeString('en-GB', { timeZone: 'Asia/Dubai', hour: '2-digit', minute: '2-digit' }) }, ...h].slice(0, 8));
       setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
     } catch (e) {
       setError((e as Error).message);
@@ -76,13 +77,11 @@ export default function CommandCenter() {
       />
 
       {/* Composer */}
-      <div className="relative overflow-hidden rounded-2xl bg-ink-950 p-6 text-white">
-        <div className="absolute inset-0 grid-bg opacity-60" />
-        <div className="absolute inset-x-0 top-0 h-56 glow" />
+      <div className="relative overflow-hidden rounded-2xl border border-[#e7e3ec] bg-gradient-to-b from-brand-50 to-white p-6 shadow-card">
         <div className="relative">
-          <div className="mb-3 flex items-center gap-2 text-[12px] text-white/50">
-            <Sparkles size={14} className="text-accent-400" />
-            HR Coordinator Agent · 16 specialist agents available
+          <div className="mb-3 flex items-center gap-2 text-[12px] text-[#71697d]">
+            <Sparkles size={14} className="text-brand-500" />
+            HR Coordinator Agent · {AGENTS.length} specialist agents available
           </div>
           <form
             onSubmit={(e) => {
@@ -90,15 +89,15 @@ export default function CommandCenter() {
               run(input);
             }}
           >
-            <div className="flex flex-col gap-2 rounded-xl border border-white/15 bg-white/[0.06] p-2.5 sm:flex-row sm:items-center">
+            <div className="flex flex-col gap-2 rounded-xl border border-[#e0dced] bg-white p-2.5 shadow-sm focus-within:border-brand-300 focus-within:ring-4 focus-within:ring-brand-100 sm:flex-row sm:items-center">
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="e.g. We need to hire a Senior DevOps Engineer in Dubai with Kubernetes, AWS and Terraform…"
-                className="flex-1 bg-transparent px-2.5 py-2 text-[14px] text-white outline-none placeholder:text-white/35"
+                className="flex-1 bg-transparent px-2.5 py-2 text-[14px] text-ink-900 outline-none placeholder:text-[#9892a2]"
                 disabled={busy}
               />
-              <button className="btn bg-brand-600 px-5 py-2.5 text-white hover:bg-brand-500 disabled:opacity-60" disabled={busy || !input.trim()}>
+              <button className="btn bg-brand-600 px-5 py-2.5 text-white hover:bg-brand-700 disabled:opacity-60" disabled={busy || !input.trim()}>
                 {busy ? 'Running…' : <>Run <CornerDownLeft size={13} /></>}
               </button>
             </div>
@@ -112,7 +111,7 @@ export default function CommandCenter() {
                   run(e.text);
                 }}
                 disabled={busy}
-                className="rounded-lg border border-white/10 bg-white/[0.05] px-2.5 py-1.5 text-[11.5px] text-white/70 transition hover:border-white/25 hover:bg-white/10 hover:text-white disabled:opacity-40"
+                className="rounded-lg border border-[#e7e3ec] bg-white px-2.5 py-1.5 text-[11.5px] text-[#5b5367] transition hover:border-brand-200 hover:bg-brand-50 hover:text-brand-700 disabled:opacity-40"
               >
                 {e.label}
               </button>
@@ -127,10 +126,10 @@ export default function CommandCenter() {
             <Spinner />
             <div>
               <div className="text-[13.5px] font-medium text-ink-950">{phase}</div>
-              <div className="text-[12px] text-[#8b93a9]">Request → Coordinator → Agents → Tasks → Results → Human approval</div>
+              <div className="text-[12px] text-[#9892a2]">Request → Coordinator → Agents → Tasks → Results → Human approval</div>
             </div>
           </div>
-          <div className="h-0.5 overflow-hidden bg-[#eef0f6]">
+          <div className="h-0.5 overflow-hidden bg-[#f2f0f4]">
             <div className="h-full w-1/3 animate-[shimmer_1.6s_infinite] bg-gradient-to-r from-transparent via-brand-500 to-transparent" />
           </div>
         </Card>
@@ -147,7 +146,7 @@ export default function CommandCenter() {
               </div>
             </Card>
             <Card title="Coordinator reasoning">
-              <div className="p-4 text-[12.5px] leading-relaxed text-[#5a6480]">
+              <div className="p-4 text-[12.5px] leading-relaxed text-[#6b6377]">
                 {result.run.reasoning}
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   <Badge tone={result.run.status === 'Awaiting Approval' ? 'amber' : result.run.status === 'Failed' ? 'rose' : 'mint'}>{result.run.status}</Badge>
@@ -158,11 +157,11 @@ export default function CommandCenter() {
             </Card>
             {history.length > 0 && (
               <Card title="This session">
-                <div className="divide-y divide-[#f2f4f9]">
+                <div className="divide-y divide-[#f5f4f7]">
                   {history.map((h, i) => (
-                    <button key={i} onClick={() => run(h.request)} className="block w-full px-4 py-2.5 text-left transition hover:bg-[#fafbfe]">
+                    <button key={i} onClick={() => run(h.request)} className="block w-full px-4 py-2.5 text-left transition hover:bg-[#fcfbfd]">
                       <div className="line-clamp-2 text-[12.5px] text-ink-800">{h.request}</div>
-                      <div className="mt-0.5 text-[11px] text-[#9aa2b8]">{h.intent} · {h.at}</div>
+                      <div className="mt-0.5 text-[11px] text-[#a7a1b1]">{h.intent} · {h.at}</div>
                     </button>
                   ))}
                 </div>
@@ -189,7 +188,7 @@ export default function CommandCenter() {
             <Card key={c.t} className="card-pad">
               <div className="mb-2 flex h-7 w-7 items-center justify-center rounded-lg bg-brand-50 text-[12px] font-bold text-brand-700">{i + 1}</div>
               <h3 className="text-[13.5px] font-semibold text-ink-950">{c.t}</h3>
-              <p className="mt-1.5 text-[12.5px] leading-relaxed text-[#7a839c]">{c.d}</p>
+              <p className="mt-1.5 text-[12.5px] leading-relaxed text-[#898294]">{c.d}</p>
             </Card>
           ))}
         </div>

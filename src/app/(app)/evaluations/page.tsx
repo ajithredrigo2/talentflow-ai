@@ -68,8 +68,8 @@ export default function Evaluations() {
 
       <div className="grid gap-4 lg:grid-cols-[320px_1fr]">
         <Card title="Interviews" subtitle={`${rows.length} in scope`}>
-          <div className="max-h-[640px] divide-y divide-[#f2f4f9] overflow-y-auto">
-            {rows.length === 0 && <p className="px-5 py-8 text-center text-[12.5px] text-[#8b93a9]">Loading interviews…</p>}
+          <div className="max-h-[640px] divide-y divide-[#f5f4f7] overflow-y-auto">
+            {rows.length === 0 && <p className="px-5 py-8 text-center text-[12.5px] text-[#9892a2]">Loading interviews…</p>}
             {rows.map((r) => (
               <button
                 key={r.id}
@@ -77,7 +77,7 @@ export default function Evaluations() {
                   setActive(r.id);
                   setResult(null);
                 }}
-                className={`block w-full px-4 py-3 text-left transition ${active === r.id ? 'bg-brand-50/60' : 'hover:bg-[#fafbfe]'}`}
+                className={`block w-full px-4 py-3 text-left transition ${active === r.id ? 'bg-brand-50/60' : 'hover:bg-[#fcfbfd]'}`}
               >
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-[12.5px] font-semibold text-ink-950">{r.candidate}</span>
@@ -85,15 +85,15 @@ export default function Evaluations() {
                     ? <Badge tone={r.feedback.recommendation.includes('Strong') ? 'mint' : r.feedback.recommendation === 'No Hire' ? 'rose' : 'brand'}>{r.feedback.recommendation}</Badge>
                     : <Badge tone="amber">Pending</Badge>}
                 </div>
-                <div className="mt-0.5 text-[11.5px] text-[#8b93a9]">{r.round} · {r.job}</div>
-                <div className="text-[11px] text-[#9aa2b8]">{r.interviewer} · {r.when}</div>
+                <div className="mt-0.5 text-[11.5px] text-[#9892a2]">{r.round} · {r.job}</div>
+                <div className="text-[11px] text-[#a7a1b1]">{r.interviewer} · {r.when}</div>
               </button>
             ))}
           </div>
         </Card>
 
         <div className="space-y-4">
-          {!current && <Card><p className="px-5 py-12 text-center text-[13px] text-[#8b93a9]">Select an interview to record or review feedback.</p></Card>}
+          {!current && <Card><p className="px-5 py-12 text-center text-[13px] text-[#9892a2]">Select an interview to record or review feedback.</p></Card>}
 
           {current && (
             <>
@@ -157,7 +157,7 @@ export default function Evaluations() {
                           ['Communication', form.communication],
                           ['Leadership', form.leadership],
                         ] as const).map(([l, v]) => (
-                          <div key={l} className="rounded-lg border border-[#e6e9f2] px-3.5 py-2.5">
+                          <div key={l} className="rounded-lg border border-[#ebe9ef] px-3.5 py-2.5">
                             <div className="kpi-label">{l}</div>
                             <div className="mt-0.5 text-[17px] font-semibold text-ink-950">{v}/10</div>
                           </div>
@@ -166,9 +166,9 @@ export default function Evaluations() {
                     )}
                     {result && <Meter value={result.average * 10} label={`Panel average against role bar of ${result.bar}/10`} right={`${result.average}/10`} />}
                     <AIPanel title="Summary">{result?.summary ?? current.feedback?.aiSummary}</AIPanel>
-                    <div className="rounded-lg border border-[#e6e9f2] bg-[#fafbfe] p-3.5">
+                    <div className="rounded-lg border border-[#ebe9ef] bg-[#fcfbfd] p-3.5">
                       <div className="kpi-label mb-1.5">Reasoning behind the recommendation</div>
-                      <p className="text-[12.5px] leading-relaxed text-[#4a5470]">{result?.reasoning ?? current.feedback?.reasoning}</p>
+                      <p className="text-[12.5px] leading-relaxed text-[#5b5367]">{result?.reasoning ?? current.feedback?.reasoning}</p>
                     </div>
                     <GuardrailNote>
                       The recommendation is advisory. The hiring manager records the final decision, and it is written to

@@ -68,7 +68,7 @@ export default function Learning() {
 
       {data && a && (
         <>
-          <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-4">
             <Kpi label="Role readiness" value={`${a.readiness}%`} hint={`vs ${a.targetRole}`} accent="brand" />
             <Kpi label="Skill gaps" value={a.gaps.length} accent="amber" />
             <Kpi label="Matched interventions" value={a.courses.length} accent="cyan" />
@@ -85,7 +85,7 @@ export default function Learning() {
                         <td className="td font-medium">{g.skill}</td>
                         <td className="td"><Badge tone={g.current === 'None' ? 'rose' : 'neutral'}>{g.current}</Badge></td>
                         <td className="td"><Badge tone="brand">{g.required}</Badge></td>
-                        <td className="td text-[#7a839c]">{g.current === 'None' ? 'Not evidenced' : 'One level below'}</td>
+                        <td className="td text-[#898294]">{g.current === 'None' ? 'Not evidenced' : 'One level below'}</td>
                       </tr>
                     ))}
                   </Table>
@@ -97,11 +97,11 @@ export default function Learning() {
               <Card title="Personalised learning roadmap">
                 <div className="grid gap-3 p-5 md:grid-cols-3">
                   {a.roadmap.map((p) => (
-                    <div key={p.phase} className="rounded-lg border border-[#e6e9f2] p-4">
+                    <div key={p.phase} className="rounded-lg border border-[#ebe9ef] p-4">
                       <div className="text-[13px] font-semibold text-ink-950">{p.phase}</div>
-                      <div className="text-[11px] text-[#9aa2b8]">{p.weeks}</div>
+                      <div className="text-[11px] text-[#a7a1b1]">{p.weeks}</div>
                       <ul className="mt-2.5 space-y-2">
-                        {p.items.map((i) => <li key={i} className="flex gap-2 text-[12px] leading-relaxed text-[#5a6480]"><span className="mt-[6px] h-1 w-1 shrink-0 rounded-full bg-accent-500" />{i}</li>)}
+                        {p.items.map((i) => <li key={i} className="flex gap-2 text-[12px] leading-relaxed text-[#6b6377]"><span className="mt-[6px] h-1 w-1 shrink-0 rounded-full bg-accent-500" />{i}</li>)}
                       </ul>
                     </div>
                   ))}
@@ -114,9 +114,9 @@ export default function Learning() {
                     {a.courses.map((c) => (
                       <tr key={c.id}>
                         <td className="td font-medium">{c.title}</td>
-                        <td className="td text-[#616b85]">{c.provider}</td>
+                        <td className="td text-[#71697d]">{c.provider}</td>
                         <td className="td"><Badge tone={c.format === 'Certification' ? 'brand' : c.format === 'Internal Project' ? 'mint' : 'neutral'}>{c.format}</Badge></td>
-                        <td className="td text-[#616b85]">{c.level}</td>
+                        <td className="td text-[#71697d]">{c.level}</td>
                         <td className="td">{c.hours}h</td>
                         <td className="td w-32"><Meter value={c.completionRate} right={`${c.completionRate}%`} /></td>
                       </tr>
@@ -133,12 +133,12 @@ export default function Learning() {
                 <Card title={`Internal succession — ${targetRole}`} subtitle="Ranked by skill readiness, performance and learning participation">
                   <div className="space-y-3 p-4">
                     {internal.map((r, i) => (
-                      <div key={r.employee.id} className="rounded-lg border border-[#e6e9f2] p-3.5">
+                      <div key={r.employee.id} className="rounded-lg border border-[#ebe9ef] p-3.5">
                         <div className="flex items-start justify-between gap-2">
                           <div>
-                            <span className="mr-1.5 text-[11px] font-bold text-[#9aa2b8]">{i + 1}.</span>
+                            <span className="mr-1.5 text-[11px] font-bold text-[#a7a1b1]">{i + 1}.</span>
                             <Link href={`/employees/${r.employee.id}`} className="text-[13px] font-semibold text-ink-950 hover:text-brand-600">{r.employee.name}</Link>
-                            <div className="text-[11.5px] text-[#8b93a9]">{r.employee.title} · {r.employee.performanceScore}/5</div>
+                            <div className="text-[11.5px] text-[#9892a2]">{r.employee.title} · {r.employee.performanceScore}/5</div>
                           </div>
                           <ScoreRing value={r.score} size={44} />
                         </div>
@@ -153,7 +153,7 @@ export default function Learning() {
               )}
 
               <Card title="How the skill graph works">
-                <div className="space-y-2.5 p-4 text-[12px] leading-relaxed text-[#5a6480]">
+                <div className="space-y-2.5 p-4 text-[12px] leading-relaxed text-[#6b6377]">
                   <p><span className="font-semibold text-ink-900">Four levels.</span> Beginner, Intermediate, Advanced, Expert — held per person, per skill, and updated each performance cycle.</p>
                   <p><span className="font-semibold text-ink-900">Target profiles.</span> Each role defines the level it needs for each skill. Readiness is the average attainment against that profile.</p>
                   <p><span className="font-semibold text-ink-900">Largest gap first.</span> The roadmap sequences the biggest distances into foundations, applied practice and validation.</p>

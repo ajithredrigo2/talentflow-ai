@@ -20,21 +20,21 @@ export default async function InterviewsPage() {
     const j = db.jobs.find((x) => x.id === i.jobId);
     const iv = employees.find((e) => e.id === i.interviewerId);
     return (
-      <tr key={i.id} className="transition hover:bg-[#fafbfe]">
+      <tr key={i.id} className="transition hover:bg-[#fcfbfd]">
         <td className="td">
           <div className="flex items-center gap-2.5">
             <Avatar name={c?.name ?? '?'} size={28} />
             <div>
               <Link href={`/candidates/${c?.id}`} className="font-medium text-ink-950 hover:text-brand-600">{c?.name}</Link>
-              <div className="text-[11.5px] text-[#8b93a9]">{j?.title}</div>
+              <div className="text-[11.5px] text-[#9892a2]">{j?.title}</div>
             </div>
           </div>
         </td>
-        <td className="td text-[#616b85]">{i.round}</td>
-        <td className="td text-[#616b85]">{iv?.name}</td>
-        <td className="td text-[#616b85]">
+        <td className="td text-[#71697d]">{i.round}</td>
+        <td className="td text-[#71697d]">{iv?.name}</td>
+        <td className="td text-[#71697d]">
           {new Date(i.scheduledAt).toLocaleString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Dubai' })}
-          <span className="ml-1 text-[11px] text-[#9aa2b8]">GST</span>
+          <span className="ml-1 text-[11px] text-[#a7a1b1]">GST</span>
         </td>
         <td className="td">{i.durationMins}m</td>
         <td className="td"><Badge tone="neutral">{i.mode}</Badge></td>
@@ -57,7 +57,7 @@ export default async function InterviewsPage() {
         actions={<Link href="/candidates" className="btn-primary">Schedule from a candidate profile</Link>}
       />
 
-      <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-4">
         <Kpi label="Total interviews" value={db.interviews.length} accent="brand" />
         <Kpi label="Next 7 days" value={thisWeek.length} accent="cyan" />
         <Kpi label="Awaiting feedback" value={db.interviews.filter((i) => i.status === 'Awaiting Feedback').length} accent="amber" />

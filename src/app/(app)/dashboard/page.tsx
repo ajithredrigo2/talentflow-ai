@@ -76,7 +76,7 @@ export default async function Dashboard() {
         subtitle="Workforce, recruitment and agent activity in one view. Every AI-generated figure below links back to the evidence behind it."
         actions={
           <>
-            <Link href="/command-center" className="btn-dark">Ask the Coordinator</Link>
+            <Link href="/command-center" className="btn-soft">Ask the Coordinator</Link>
             <Link href="/approvals" className="btn-primary">
               {pendingApprovals.length} approval{pendingApprovals.length === 1 ? '' : 's'} pending
             </Link>
@@ -86,7 +86,7 @@ export default async function Dashboard() {
 
       {/* Workforce KPIs */}
       <div className="kpi-label mb-2.5">Workforce</div>
-      <div className="grid gap-3 stagger sm:grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-3 stagger grid-cols-2 lg:grid-cols-5">
         <Kpi label="Total employees" value={employees.length} hint={`${departments.length} departments`} accent="brand" />
         <Kpi label="New joiners" value={5} delta="+2" hint="in onboarding" accent="cyan" />
         <Kpi label="Employees leaving" value={employees.filter((e) => e.status === 'Notice Period').length} hint="in notice period" accent="amber" />
@@ -96,7 +96,7 @@ export default async function Dashboard() {
 
       {/* Recruitment KPIs */}
       <div className="kpi-label mb-2.5 mt-7">Recruitment</div>
-      <div className="grid gap-3 stagger sm:grid-cols-2 lg:grid-cols-6">
+      <div className="grid gap-3 stagger grid-cols-2 lg:grid-cols-6">
         <Kpi label="Open jobs" value={openJobs.length} accent="brand" />
         <Kpi label="Applications" value={funnel[0].value} accent="cyan" />
         <Kpi label="Shortlisted" value={funnel[2].value} accent="brand" />
@@ -110,7 +110,7 @@ export default async function Dashboard() {
         Zero-Touch Candidate Intake
         <Link href="/inbox" className="text-[10px] font-semibold normal-case tracking-normal text-brand-600 hover:underline">Open Recruitment Inbox →</Link>
       </div>
-      <div className="grid gap-3 stagger sm:grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-3 stagger grid-cols-2 lg:grid-cols-5">
         <Kpi label="Applications today" value={emailsToday.length} hint={`${emails.length} total by email`} accent="brand" />
         <Kpi label="CVs auto-parsed" value={parsedOk} hint={emails.length ? `${Math.round((parsedOk / emails.length) * 100)}% of messages` : 'no mail yet'} accent="cyan" />
         <Kpi label="Auto-matched to a vacancy" value={autoMatched} hint={`${unassigned} unassigned`} accent="mint" />
@@ -118,7 +118,7 @@ export default async function Dashboard() {
         <Kpi label="Automation success rate" value={`${automationRate}%`} hint={minutesSaved ? `≈ ${(minutesSaved / 60).toFixed(1)}h of manual handling saved` : 'no mail yet'} accent="mint" />
       </div>
       {emails.length === 0 && (
-        <div className="mt-3 rounded-xl border border-[#e6e9f2] bg-[#fafbfe] px-4 py-3 text-[12.5px] text-[#7a839c]">
+        <div className="mt-3 rounded-xl border border-[#ebe9ef] bg-[#fcfbfd] px-4 py-3 text-[12.5px] text-[#898294]">
           No inbound applications yet. Open the <Link href="/inbox" className="link">Recruitment Inbox</Link> and use
           <span className="font-medium text-ink-900"> Simulate Incoming Application</span> to run a candidate email through the full intake pipeline.
         </div>
@@ -149,7 +149,7 @@ export default async function Dashboard() {
           </div>
         </Card>
         <Card title="Key metrics">
-          <div className="divide-y divide-[#f2f4f9]">
+          <div className="divide-y divide-[#f5f4f7]">
             {[
               ['Time to hire', '34 days', 'vs 45-day baseline'],
               ['Cost per hire', 'AED 11,400', '−18% YoY'],
@@ -162,7 +162,7 @@ export default async function Dashboard() {
               <div key={k} className="flex items-center justify-between px-5 py-[11px]">
                 <div>
                   <div className="text-[12.5px] font-medium text-ink-900">{k}</div>
-                  <div className="text-[11px] text-[#9aa2b8]">{h}</div>
+                  <div className="text-[11px] text-[#a7a1b1]">{h}</div>
                 </div>
                 <div className="text-[14px] font-semibold text-ink-950">{v}</div>
               </div>
@@ -174,16 +174,16 @@ export default async function Dashboard() {
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
         <Card title="Awaiting your approval" subtitle="Sensitive actions never execute automatically" actions={<Link href="/approvals" className="text-[12.5px] font-medium text-brand-600 hover:underline">View all</Link>}>
           {pendingApprovals.length === 0 ? (
-            <p className="px-5 py-8 text-center text-[13px] text-[#8b93a9]">Nothing pending for your role.</p>
+            <p className="px-5 py-8 text-center text-[13px] text-[#9892a2]">Nothing pending for your role.</p>
           ) : (
-            <div className="divide-y divide-[#f2f4f9]">
+            <div className="divide-y divide-[#f5f4f7]">
               {pendingApprovals.slice(0, 3).map((a) => (
                 <div key={a.id} className="px-5 py-4">
                   <div className="flex flex-wrap items-start justify-between gap-2">
                     <div>
                       <Badge tone="amber">{a.type}</Badge>
                       <div className="mt-1.5 text-[13px] font-semibold text-ink-950">{a.title}</div>
-                      <p className="mt-0.5 text-[12px] text-[#7a839c]">{a.summary}</p>
+                      <p className="mt-0.5 text-[12px] text-[#898294]">{a.summary}</p>
                     </div>
                     <Link href="/approvals" className="btn-ghost">Review</Link>
                   </div>
@@ -204,8 +204,8 @@ export default async function Dashboard() {
                 return (
                   <tr key={i.id}>
                     <td className="td font-medium">{c?.name}</td>
-                    <td className="td text-[#616b85]">{i.round}</td>
-                    <td className="td text-[#616b85]">{new Date(i.scheduledAt).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Dubai' })}</td>
+                    <td className="td text-[#71697d]">{i.round}</td>
+                    <td className="td text-[#71697d]">{new Date(i.scheduledAt).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Dubai' })}</td>
                     <td className="td"><Badge tone="neutral">{i.mode}</Badge></td>
                   </tr>
                 );
@@ -214,13 +214,13 @@ export default async function Dashboard() {
           </Card>
 
           <Card title="Recent agent activity" actions={<Link href="/agent-activity" className="text-[12.5px] font-medium text-brand-600 hover:underline">Full log</Link>}>
-            <div className="divide-y divide-[#f2f4f9]">
+            <div className="divide-y divide-[#f5f4f7]">
               {db.audit.slice(0, 5).map((l) => (
                 <div key={l.id} className="flex items-start gap-3 px-5 py-3">
                   <span className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${l.severity === 'warning' ? 'bg-amberx-500' : l.actorRole === 'AI Agent' ? 'bg-brand-500' : 'bg-mint-500'}`} />
                   <div className="min-w-0">
                     <div className="text-[12.5px] font-medium text-ink-900">{l.actor} · {l.action.replace(/_/g, ' ').toLowerCase()}</div>
-                    <p className="mt-0.5 line-clamp-2 text-[11.5px] leading-relaxed text-[#8b93a9]">{l.detail}</p>
+                    <p className="mt-0.5 line-clamp-2 text-[11.5px] leading-relaxed text-[#9892a2]">{l.detail}</p>
                   </div>
                 </div>
               ))}
@@ -234,8 +234,8 @@ export default async function Dashboard() {
           {openJobs.slice(0, 6).map((j) => (
             <tr key={j.id}>
               <td className="td font-medium"><Link href={`/jobs/${j.id}`} className="link">{j.title}</Link></td>
-              <td className="td text-[#616b85]">{deptName(j.departmentId)}</td>
-              <td className="td text-[#616b85]">{j.location}</td>
+              <td className="td text-[#71697d]">{deptName(j.departmentId)}</td>
+              <td className="td text-[#71697d]">{j.location}</td>
               <td className="td">{j.openings}</td>
               <td className="td"><Badge tone={stageTone(j.priority)}>{j.priority}</Badge></td>
               <td className="td">{db.candidates.filter((c) => c.jobId === j.id).length}</td>

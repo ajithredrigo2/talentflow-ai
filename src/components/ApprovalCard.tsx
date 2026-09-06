@@ -37,9 +37,9 @@ export default function ApprovalCard({ approval }: { approval: ApprovalRequest }
             <Badge tone={decided ? (approval.status === 'Approved' ? 'mint' : approval.status === 'Rejected' ? 'rose' : 'brand') : 'neutral'} dot>{approval.status}</Badge>
           </div>
           <h3 className="mt-2 text-[15px] font-semibold text-ink-950">{approval.title}</h3>
-          <p className="mt-1 text-[12.5px] leading-relaxed text-[#616b85]">{approval.summary}</p>
-          <div className="mt-1.5 text-[11.5px] text-[#9aa2b8]">
-            Raised by {approval.requestedBy} · {new Date(approval.requestedAt).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+          <p className="mt-1 text-[12.5px] leading-relaxed text-[#71697d]">{approval.summary}</p>
+          <div className="mt-1.5 text-[11.5px] text-[#a7a1b1]">
+            Raised by {approval.requestedBy} · {new Date(approval.requestedAt).toLocaleString('en-GB', { timeZone: 'Asia/Dubai', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
           </div>
         </div>
         <div className="text-right">
@@ -53,10 +53,10 @@ export default function ApprovalCard({ approval }: { approval: ApprovalRequest }
       </div>
 
       {decided ? (
-        <div className="mt-4 rounded-lg border border-[#e6e9f2] bg-[#fafbfe] px-3.5 py-3 text-[12.5px] text-[#4a5470]">
+        <div className="mt-4 rounded-lg border border-[#ebe9ef] bg-[#fcfbfd] px-3.5 py-3 text-[12.5px] text-[#5b5367]">
           <span className="font-semibold text-ink-900">{approval.status}</span> by {approval.decidedBy} on{' '}
-          {approval.decidedAt && new Date(approval.decidedAt).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
-          {approval.note && <div className="mt-1 italic text-[#7a839c]">“{approval.note}”</div>}
+          {approval.decidedAt && new Date(approval.decidedAt).toLocaleString('en-GB', { timeZone: 'Asia/Dubai', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+          {approval.note && <div className="mt-1 italic text-[#898294]">“{approval.note}”</div>}
         </div>
       ) : (
         <>

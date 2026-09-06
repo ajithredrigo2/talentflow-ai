@@ -64,14 +64,14 @@ function Analysis() {
 
       {result && (
         <>
-          <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-4">
             <Kpi label="Candidates screened" value={result.ranked.length} accent="brand" />
             <Kpi label="Recommended to advance" value={advance} hint="pending human approval" accent="mint" />
             <Kpi label="Flagged for review" value={review} accent="amber" />
             <Kpi label="Average match" value={`${avg}%`} accent="cyan" />
           </div>
 
-          <div className="mb-4 rounded-xl border border-[#e6e9f2] bg-white p-4">
+          <div className="mb-4 rounded-xl border border-[#ebe9ef] bg-white p-4">
             <div className="kpi-label mb-2">Evaluation criteria in use — from the approved requisition</div>
             <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
               {result.job.evaluationCriteria.map((c) => <Meter key={c.criterion} value={c.weight * 2.5} label={c.criterion} right={`${c.weight}%`} tone="bg-brand-500" />)}
@@ -84,10 +84,10 @@ function Analysis() {
                 <div className="p-5">
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div className="flex items-start gap-3">
-                      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-ink-950 text-[12px] font-bold text-white">{i + 1}</span>
+                      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-600 text-[12px] font-bold text-white">{i + 1}</span>
                       <div>
                         <Link href={`/candidates/${r.candidate.id}`} className="text-[15px] font-semibold text-ink-950 hover:text-brand-600">{r.candidate.name}</Link>
-                        <div className="text-[12.5px] text-[#7a839c]">
+                        <div className="text-[12.5px] text-[#898294]">
                           {r.candidate.currentTitle} · {r.candidate.currentCompany} · {r.candidate.experienceYears} yrs · {r.candidate.location} · notice {r.candidate.noticePeriodDays}d
                         </div>
                         <div className="mt-2 flex flex-wrap gap-1">
@@ -115,7 +115,7 @@ function Analysis() {
                         <ExplainBlock items={r.screening.concerns} title="Gaps & concerns" />
                         <ExplainBlock items={r.screening.interviewFocus} title="Interview focus" />
                       </div>
-                      <div className="rounded-lg border border-[#e6e9f2] bg-[#fafbfe] p-3.5 text-[12.5px] leading-relaxed text-[#4a5470]">{r.screening.explanation}</div>
+                      <div className="rounded-lg border border-[#ebe9ef] bg-[#fcfbfd] p-3.5 text-[12.5px] leading-relaxed text-[#5b5367]">{r.screening.explanation}</div>
                     </div>
                   </details>
                 </div>

@@ -303,7 +303,7 @@ export const empName = (id: string) => employees.find((e) => e.id === id)?.name 
 
 /* -------------------------------- Users ------------------------------- */
 export const users: User[] = [
-  { id: 'usr-1', email: 'demo@talentflow.ai', name: 'Layla Haddad', role: 'HR_ADMIN', employeeId: 'emp-008', avatarColor: '#375ef6' },
+  { id: 'usr-1', email: 'demo@talentflow.ai', name: 'Layla Haddad', role: 'HR_ADMIN', employeeId: 'emp-008', avatarColor: '#7c3aed' },
   { id: 'usr-2', email: 'recruiter@talentflow.ai', name: 'Samir Yusuf', role: 'RECRUITER', employeeId: 'emp-008', avatarColor: '#06b6d4' },
   { id: 'usr-3', email: 'manager@talentflow.ai', name: 'Priya Nair', role: 'HIRING_MANAGER', employeeId: 'emp-003', avatarColor: '#10b981' },
   { id: 'usr-4', email: 'employee@talentflow.ai', name: 'Aisha Al Mansoori', role: 'EMPLOYEE', employeeId: 'emp-001', avatarColor: '#f59e0b' },

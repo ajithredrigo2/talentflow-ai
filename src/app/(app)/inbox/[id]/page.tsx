@@ -84,7 +84,7 @@ export default function EmailDetail() {
       <PageHeader
         eyebrow={`${email.mailboxAddress} · ${email.simulated ? 'Simulated message' : 'Live mailbox'}`}
         title={email.subject}
-        subtitle={`From ${email.fromName} <${email.fromEmail}> · received ${new Date(email.receivedAt).toLocaleString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })}`}
+        subtitle={`From ${email.fromName} <${email.fromEmail}> · received ${new Date(email.receivedAt).toLocaleString('en-GB', { timeZone: 'Asia/Dubai', weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })}`}
         actions={
           <>
             <Link href="/inbox" className="btn-ghost">Back to inbox</Link>
@@ -114,13 +114,13 @@ export default function EmailDetail() {
                 <Avatar name={email.fromName} size={38} />
                 <div>
                   <div className="text-[13.5px] font-semibold text-ink-950">{email.fromName}</div>
-                  <div className="text-[12px] text-[#7a839c]">{email.fromEmail}</div>
+                  <div className="text-[12px] text-[#898294]">{email.fromEmail}</div>
                 </div>
               </div>
-              <pre className="whitespace-pre-wrap font-sans text-[13px] leading-relaxed text-[#4a5470]">{email.body}</pre>
+              <pre className="whitespace-pre-wrap font-sans text-[13px] leading-relaxed text-[#5b5367]">{email.body}</pre>
 
               {attachment && (
-                <div className={`mt-4 rounded-lg border p-3.5 ${attachment.validation.quarantined ? 'border-rose-200 bg-rose-50/60' : 'border-[#e6e9f2] bg-[#fafbfe]'}`}>
+                <div className={`mt-4 rounded-lg border p-3.5 ${attachment.validation.quarantined ? 'border-rose-200 bg-rose-50/60' : 'border-[#ebe9ef] bg-[#fcfbfd]'}`}>
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2.5">
                       <span className={`flex h-8 w-8 items-center justify-center rounded-lg ${attachment.validation.quarantined ? 'bg-rose-100 text-rose-600' : 'bg-white text-brand-600'}`}>
@@ -128,7 +128,7 @@ export default function EmailDetail() {
                       </span>
                       <div>
                         <div className="text-[12.5px] font-semibold text-ink-950">{attachment.filename}</div>
-                        <div className="text-[11px] text-[#8b93a9]">
+                        <div className="text-[11px] text-[#9892a2]">
                           {attachment.mimeType} · {(attachment.sizeBytes / 1024).toFixed(0)} KB · SHA-256 {attachment.sha256.slice(0, 12)}…
                         </div>
                       </div>
@@ -149,7 +149,7 @@ export default function EmailDetail() {
                       {attachment.validation.checks.map((c) => (
                         <div key={c.check} className="flex gap-2 text-[11.5px] leading-snug">
                           <span className={c.passed ? 'text-mint-600' : 'text-rose-500'}>{c.passed ? '✓' : '✕'}</span>
-                          <span><span className="font-medium text-ink-900">{c.check}</span> — <span className="text-[#7a839c]">{c.detail}</span></span>
+                          <span><span className="font-medium text-ink-900">{c.check}</span> — <span className="text-[#898294]">{c.detail}</span></span>
                         </div>
                       ))}
                     </div>
@@ -175,11 +175,11 @@ export default function EmailDetail() {
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div>
                         <div className="text-[13.5px] font-semibold text-ink-950">{email.jobMatch.primary.title}</div>
-                        <div className="font-mono text-[11.5px] text-[#7a839c]">{email.jobMatch.primary.jobCode}</div>
+                        <div className="font-mono text-[11.5px] text-[#898294]">{email.jobMatch.primary.jobCode}</div>
                       </div>
                       <Badge tone="brand">Primary match</Badge>
                     </div>
-                    <p className="mt-2 text-[12px] leading-relaxed text-[#5a6480]">{email.jobMatch.primary.reason}</p>
+                    <p className="mt-2 text-[12px] leading-relaxed text-[#6b6377]">{email.jobMatch.primary.reason}</p>
                   </div>
                 ) : (
                   <div className="rounded-lg border border-amber-200 bg-amber-50/60 p-3.5 text-[12.5px] leading-relaxed text-amber-800">
@@ -193,12 +193,12 @@ export default function EmailDetail() {
                     <div className="kpi-label mb-2">Alternative matches</div>
                     <div className="space-y-1.5">
                       {email.jobMatch.alternatives.map((a) => (
-                        <div key={a.jobId} className="flex items-start justify-between gap-3 rounded-lg border border-[#e6e9f2] px-3 py-2">
+                        <div key={a.jobId} className="flex items-start justify-between gap-3 rounded-lg border border-[#ebe9ef] px-3 py-2">
                           <div>
                             <div className="text-[12.5px] font-medium text-ink-900">{a.title}</div>
-                            <div className="text-[11px] text-[#8b93a9]">{a.reason}</div>
+                            <div className="text-[11px] text-[#9892a2]">{a.reason}</div>
                           </div>
-                          <span className="shrink-0 text-[12px] font-semibold text-[#5a6480]">{(a.confidence * 100).toFixed(0)}%</span>
+                          <span className="shrink-0 text-[12px] font-semibold text-[#6b6377]">{(a.confidence * 100).toFixed(0)}%</span>
                         </div>
                       ))}
                     </div>
@@ -230,16 +230,16 @@ export default function EmailDetail() {
                     ['Notice period', parsing.noticePeriodDays !== undefined ? `${parsing.noticePeriodDays} days` : undefined],
                     ['Expected salary', parsing.expectedSalary],
                   ] as [string, string | undefined][]).map(([k, v]) => (
-                    <div key={k} className="rounded-lg border border-[#e6e9f2] px-3 py-2">
+                    <div key={k} className="rounded-lg border border-[#ebe9ef] px-3 py-2">
                       <div className="kpi-label">{k}</div>
-                      <div className={`mt-0.5 text-[12.5px] ${v ? 'font-medium text-ink-950' : 'text-[#c3c9d8]'}`}>{v ?? 'Not stated'}</div>
+                      <div className={`mt-0.5 text-[12.5px] ${v ? 'font-medium text-ink-950' : 'text-[#ccc8d3]'}`}>{v ?? 'Not stated'}</div>
                     </div>
                   ))}
                 </div>
 
                 <div>
                   <div className="kpi-label mb-1.5">Professional summary</div>
-                  <p className="text-[12.5px] leading-relaxed text-[#4a5470]">{parsing.summary}</p>
+                  <p className="text-[12.5px] leading-relaxed text-[#5b5367]">{parsing.summary}</p>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -252,7 +252,7 @@ export default function EmailDetail() {
                       <>
                         <div className="kpi-label mb-1.5 mt-3">Soft skills</div>
                         <div className="flex flex-wrap gap-1">
-                          {parsing.softSkills.map((s) => <span key={s} className="rounded bg-[#f0f2f8] px-1.5 py-0.5 text-[10.5px] text-[#5a6480]">{s}</span>)}
+                          {parsing.softSkills.map((s) => <span key={s} className="rounded bg-[#f4f2f6] px-1.5 py-0.5 text-[10.5px] text-[#6b6377]">{s}</span>)}
                         </div>
                       </>
                     )}
@@ -266,11 +266,11 @@ export default function EmailDetail() {
                 {parsing.previousEmployers.length > 0 && (
                   <div>
                     <div className="kpi-label mb-1.5">Employment history</div>
-                    <div className="text-[12.5px] text-[#4a5470]">{parsing.relevantExperience || parsing.previousEmployers.join(' · ')}</div>
+                    <div className="text-[12.5px] text-[#5b5367]">{parsing.relevantExperience || parsing.previousEmployers.join(' · ')}</div>
                   </div>
                 )}
 
-                <div className="flex flex-wrap gap-3 text-[11.5px] text-[#7a839c]">
+                <div className="flex flex-wrap gap-3 text-[11.5px] text-[#898294]">
                   {parsing.linkedinUrl && <span>LinkedIn: <span className="text-brand-600">{parsing.linkedinUrl}</span></span>}
                   {parsing.portfolioUrl && <span>Portfolio: <span className="text-brand-600">{parsing.portfolioUrl}</span></span>}
                   {parsing.languages.length > 0 && <span>Languages: {parsing.languages.join(', ')}</span>}
@@ -319,10 +319,10 @@ export default function EmailDetail() {
             <Card title="Interview Intelligence Agent" subtitle="Generated on shortlisting">
               <div className="space-y-3 p-5">
                 {questions.map((q, i) => (
-                  <div key={i} className="rounded-lg border border-[#e6e9f2] p-3.5">
+                  <div key={i} className="rounded-lg border border-[#ebe9ef] p-3.5">
                     <Badge tone="brand">{q.category}</Badge>
                     <p className="mt-1.5 text-[13px] font-medium leading-relaxed text-ink-950">{q.question}</p>
-                    <p className="mt-1.5 text-[11.5px] leading-relaxed text-[#7a839c]"><span className="font-semibold text-[#5a6480]">Why ask this: </span>{q.rationale}</p>
+                    <p className="mt-1.5 text-[11.5px] leading-relaxed text-[#898294]"><span className="font-semibold text-[#6b6377]">Why ask this: </span>{q.rationale}</p>
                   </div>
                 ))}
                 <Link href={candidate ? `/candidates/${candidate.id}` : '/interviews'} className="btn-primary">Book the interview</Link>
@@ -377,7 +377,7 @@ export default function EmailDetail() {
                 </>
               )}
 
-              <div className="border-t border-[#eef0f6] pt-3">
+              <div className="border-t border-[#f2f0f4] pt-3">
                 <div className="kpi-label mb-2">Re-run an agent</div>
                 <div className="flex flex-wrap gap-2">
                   <button className="btn-ghost" disabled={!!busy} onClick={() => act('reparse')}>Re-run parsing</button>
@@ -389,10 +389,10 @@ export default function EmailDetail() {
           </Card>
 
           {decided && (
-            <div className="rounded-xl border border-[#e6e9f2] bg-[#fafbfe] p-4 text-[12.5px] leading-relaxed text-[#4a5470]">
+            <div className="rounded-xl border border-[#ebe9ef] bg-[#fcfbfd] p-4 text-[12.5px] leading-relaxed text-[#5b5367]">
               <span className="font-semibold text-ink-900">{decided.action}</span> recorded by {decided.by} on{' '}
-              {new Date(decided.at).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}.
-              {decided.note && <div className="mt-1 italic text-[#7a839c]">“{decided.note}”</div>}
+              {new Date(decided.at).toLocaleString('en-GB', { timeZone: 'Asia/Dubai', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}.
+              {decided.note && <div className="mt-1 italic text-[#898294]">“{decided.note}”</div>}
             </div>
           )}
 
@@ -402,10 +402,10 @@ export default function EmailDetail() {
               <div className="flex flex-col items-center px-5 py-5 text-center">
                 <Avatar name={candidate.name} size={54} />
                 <div className="mt-2.5 text-[14px] font-semibold text-ink-950">{candidate.name}</div>
-                <div className="text-[12px] text-[#7a839c]">{candidate.currentTitle || 'Title not stated'}</div>
+                <div className="text-[12px] text-[#898294]">{candidate.currentTitle || 'Title not stated'}</div>
                 <div className="mt-2"><Badge tone={stageTone(candidate.stage)} dot>{candidate.stage}</Badge></div>
               </div>
-              <div className="divide-y divide-[#f2f4f9] border-t border-[#eef0f6]">
+              <div className="divide-y divide-[#f5f4f7] border-t border-[#f2f0f4]">
                 {([
                   ['Application ref', application?.reference],
                   ['Source', 'Email'],
@@ -416,12 +416,12 @@ export default function EmailDetail() {
                   ['Expected salary', candidate.expectedSalary],
                 ] as [string, string | undefined][]).map(([k, v]) => (
                   <div key={k} className="flex items-start justify-between gap-3 px-5 py-2.5 text-[12.5px]">
-                    <span className="shrink-0 text-[#7a839c]">{k}</span>
+                    <span className="shrink-0 text-[#898294]">{k}</span>
                     <span className="text-right font-medium text-ink-900">{v ?? '—'}</span>
                   </div>
                 ))}
               </div>
-              <div className="border-t border-[#eef0f6] p-3">
+              <div className="border-t border-[#f2f0f4] p-3">
                 <Link href={`/candidates/${candidate.id}`} className="btn-ghost w-full">Open full profile</Link>
               </div>
             </Card>
@@ -434,7 +434,7 @@ export default function EmailDetail() {
                 {d.otherApplications.map((a) => (
                   <tr key={a.id}>
                     <td className="td font-mono text-[11.5px]">{a.reference}</td>
-                    <td className="td text-[#616b85]">{a.jobTitle}</td>
+                    <td className="td text-[#71697d]">{a.jobTitle}</td>
                     <td className="td"><Badge tone={stageTone(a.stage)}>{a.stage}</Badge></td>
                   </tr>
                 ))}
@@ -447,7 +447,7 @@ export default function EmailDetail() {
             <Card title="Acknowledgement" subtitle={`${acknowledgement.delivery} to ${acknowledgement.to}`}>
               <div className="p-4">
                 <div className="text-[12px] font-semibold text-ink-900">{acknowledgement.subject}</div>
-                <pre className="mt-2 whitespace-pre-wrap font-sans text-[11.5px] leading-relaxed text-[#5a6480]">{acknowledgement.body}</pre>
+                <pre className="mt-2 whitespace-pre-wrap font-sans text-[11.5px] leading-relaxed text-[#6b6377]">{acknowledgement.body}</pre>
                 <div className="mt-2 flex items-center gap-1.5 text-[11px] text-mint-600">
                   <ShieldCheck size={12} /> Confirms receipt only — no shortlisting is implied.
                 </div>

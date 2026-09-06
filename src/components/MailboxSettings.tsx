@@ -38,12 +38,12 @@ export default function MailboxSettings({ canEdit }: { canEdit: boolean }) {
   return (
     <>
       <Card title="Recruitment mailboxes" subtitle="Zero-Touch Candidate Intake" className="mt-4">
-        <div className="divide-y divide-[#f2f4f9]">
+        <div className="divide-y divide-[#f5f4f7]">
           {mailboxes.map((m) => (
             <div key={m.id} className="flex flex-wrap items-center justify-between gap-3 px-5 py-3.5">
               <div>
                 <div className="font-mono text-[12.5px] font-medium text-ink-950">{m.address}</div>
-                <div className="text-[11.5px] text-[#8b93a9]">{m.label} · {m.receivedCount} received</div>
+                <div className="text-[11.5px] text-[#9892a2]">{m.label} · {m.receivedCount} received</div>
               </div>
               <div className="flex items-center gap-4">
                 <Toggle
@@ -62,7 +62,7 @@ export default function MailboxSettings({ canEdit }: { canEdit: boolean }) {
             </div>
           ))}
         </div>
-        <div className="border-t border-[#eef0f6] px-5 py-3.5">
+        <div className="border-t border-[#f2f0f4] px-5 py-3.5">
           <GuardrailNote>
             Acknowledgement emails confirm receipt only and never imply that a candidate has been shortlisted or
             selected. {canEdit ? 'HR administrators control this per mailbox.' : 'Only HR administrators can change these settings.'}
@@ -71,21 +71,21 @@ export default function MailboxSettings({ canEdit }: { canEdit: boolean }) {
       </Card>
 
       <Card title="Email client integrations" subtitle="Credentials are read from server-side environment variables only" className="mt-4">
-        <div className="divide-y divide-[#f2f4f9]">
+        <div className="divide-y divide-[#f5f4f7]">
           {connections.map((c) => (
             <div key={c.id} className="px-5 py-3.5">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-[13px] font-semibold text-ink-950">{c.displayName}</span>
                 <Badge tone={c.status === 'Connected' ? 'mint' : c.status === 'Demo mode' ? 'brand' : 'neutral'} dot>{c.status}</Badge>
               </div>
-              <div className="mt-0.5 text-[11.5px] text-[#9aa2b8]">
+              <div className="mt-0.5 text-[11.5px] text-[#a7a1b1]">
                 {c.authMethod}{c.scopes.length ? ` · scopes: ${c.scopes.join(', ')}` : ''}
               </div>
-              <p className="mt-1.5 text-[12px] leading-relaxed text-[#7a839c]">{c.detail}</p>
+              <p className="mt-1.5 text-[12px] leading-relaxed text-[#898294]">{c.detail}</p>
               {c.envVars.length > 0 && (
                 <div className="mt-2 flex flex-wrap gap-1">
                   {c.envVars.map((v) => (
-                    <code key={v} className="rounded bg-[#f0f2f8] px-1.5 py-0.5 font-mono text-[10.5px] text-[#5a6480]">{v}</code>
+                    <code key={v} className="rounded bg-[#f4f2f6] px-1.5 py-0.5 font-mono text-[10.5px] text-[#6b6377]">{v}</code>
                   ))}
                 </div>
               )}
@@ -100,14 +100,14 @@ export default function MailboxSettings({ canEdit }: { canEdit: boolean }) {
 function Toggle({ label, on, disabled, onChange }: { label: string; on: boolean; disabled?: boolean; onChange: (v: boolean) => void }) {
   return (
     <label className={`flex items-center gap-2 ${disabled ? 'opacity-50' : 'cursor-pointer'}`}>
-      <span className="text-[11.5px] font-medium text-[#5a6480]">{label}</span>
+      <span className="text-[11.5px] font-medium text-[#6b6377]">{label}</span>
       <button
         type="button"
         role="switch"
         aria-checked={on}
         disabled={disabled}
         onClick={() => onChange(!on)}
-        className={`relative h-5 w-9 rounded-full transition ${on ? 'bg-brand-600' : 'bg-[#d5dae6]'}`}
+        className={`relative h-5 w-9 rounded-full transition ${on ? 'bg-brand-600' : 'bg-[#ddd9e2]'}`}
       >
         <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-all ${on ? 'left-[18px]' : 'left-0.5'}`} />
       </button>

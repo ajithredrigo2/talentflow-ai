@@ -32,7 +32,7 @@ export default async function ApprovalsPage() {
         subtitle={`Sensitive HR actions never execute autonomously. As ${ROLE_LABEL[user.role]}, these are the decisions routed to you — with the agent's recommendation, its reasoning, and four ways to respond.`}
       />
 
-      <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-4">
         <Kpi label="Pending your decision" value={pending.length} accent="amber" />
         <Kpi label="Decided" value={decided.length} accent="mint" />
         <Kpi label="Approved" value={decided.filter((a) => a.status === 'Approved').length} accent="brand" />
@@ -59,7 +59,7 @@ export default async function ApprovalsPage() {
           <Card title="Actions that always require a human">
             <ul className="space-y-1.5 p-4">
               {SENSITIVE_ACTIONS.map((s) => (
-                <li key={s} className="flex gap-2 text-[12.5px] text-[#4a5470]">
+                <li key={s} className="flex gap-2 text-[12.5px] text-[#5b5367]">
                   <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-amberx-500" />{s}
                 </li>
               ))}
@@ -67,7 +67,7 @@ export default async function ApprovalsPage() {
           </Card>
 
           <Card title="Your four responses">
-            <div className="space-y-2.5 p-4 text-[12px] leading-relaxed text-[#5a6480]">
+            <div className="space-y-2.5 p-4 text-[12px] leading-relaxed text-[#6b6377]">
               <p><span className="font-semibold text-ink-900">Approve</span> — the action executes and is logged against your name.</p>
               <p><span className="font-semibold text-ink-900">Reject</span> — nothing executes; the reason is recorded for the audit trail.</p>
               <p><span className="font-semibold text-ink-900">Modify</span> — you change the agent&apos;s proposal before it proceeds.</p>

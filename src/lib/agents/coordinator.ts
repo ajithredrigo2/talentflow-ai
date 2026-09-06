@@ -355,7 +355,7 @@ export async function runCoordinator(ctx: RunContext): Promise<{ run: AgentRun; 
         .sort((a, b) => a.scheduledAt.localeCompare(b.scheduledAt));
       add('scheduling', 'Retrieve scheduled interviews', `${week.length} interviews scheduled in the next 7 days.`);
       blocks.push({ kind: 'interviews', title: 'Interviews — next 7 days', data: week });
-      narrative = `${week.length} interviews are scheduled in the next seven days${week.length ? `, starting with ${seedCands.find((c) => c.id === week[0].candidateId)?.name} on ${new Date(week[0].scheduledAt).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}` : ''}.`;
+      narrative = `${week.length} interviews are scheduled in the next seven days${week.length ? `, starting with ${seedCands.find((c) => c.id === week[0].candidateId)?.name} on ${new Date(week[0].scheduledAt).toLocaleDateString('en-GB', { timeZone: 'Asia/Dubai', weekday: 'long', day: 'numeric', month: 'long' })}` : ''}.`;
       break;
     }
 
@@ -380,7 +380,7 @@ export async function runCoordinator(ctx: RunContext): Promise<{ run: AgentRun; 
       add('helpdesk', 'Attach governing policy', `Cited ${parsed.policy.title} (${parsed.policy.version}).`);
       blocks.push({ kind: 'leave', title: 'Leave request prepared', data: { ...parsed, employee: me } });
       approvals = ['Leave approval'];
-      narrative = `I read that as ${parsed.days} working days of ${parsed.type.toLowerCase()} leave from ${new Date(parsed.from).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })} to ${new Date(parsed.to).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })} — weekends excluded. Your balance goes from ${parsed.balance} to ${parsed.balanceAfter} days. ${
+      narrative = `I read that as ${parsed.days} working days of ${parsed.type.toLowerCase()} leave from ${new Date(parsed.from).toLocaleDateString('en-GB', { timeZone: 'Asia/Dubai', day: 'numeric', month: 'long' })} to ${new Date(parsed.to).toLocaleDateString('en-GB', { timeZone: 'Asia/Dubai', day: 'numeric', month: 'long' })} — weekends excluded. Your balance goes from ${parsed.balance} to ${parsed.balanceAfter} days. ${
         parsed.conflicts.length ? `Two things to flag: ${parsed.conflicts.join('; ')}.` : 'No coverage conflicts detected in your team for that window.'
       } The request is routed to ${parsed.approver.name} for approval — I do not approve leave myself.`;
       break;

@@ -30,7 +30,7 @@ export default async function CandidatesPage({ searchParams }: { searchParams: P
         actions={<Link href="/compare" className="btn-primary">Compare candidates</Link>}
       />
 
-      <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-5">
         <Kpi label="Total candidates" value={db.candidates.length} accent="brand" />
         <Kpi label="Shortlisted" value={db.candidates.filter((c) => c.stage === 'Shortlisted').length} accent="cyan" />
         <Kpi label="Interviewing" value={db.candidates.filter((c) => c.stage === 'Interviewing').length} accent="mint" />
@@ -39,9 +39,9 @@ export default async function CandidatesPage({ searchParams }: { searchParams: P
       </div>
 
       <div className="mb-4 flex flex-wrap gap-1.5">
-        <Link href="/candidates" className={`badge ${!sp.stage && !sp.job ? 'bg-ink-900 text-white' : 'bg-[#f0f2f8] text-[#5a6480]'}`}>All ({db.candidates.length})</Link>
+        <Link href="/candidates" className={`badge ${!sp.stage && !sp.job ? 'bg-brand-600 text-white' : 'bg-[#f4f2f6] text-[#6b6377]'}`}>All ({db.candidates.length})</Link>
         {stages.map((s) => (
-          <Link key={s} href={`/candidates?stage=${s}`} className={`badge ${sp.stage === s ? 'bg-ink-900 text-white' : 'bg-[#f0f2f8] text-[#5a6480]'}`}>
+          <Link key={s} href={`/candidates?stage=${s}`} className={`badge ${sp.stage === s ? 'bg-brand-600 text-white' : 'bg-[#f4f2f6] text-[#6b6377]'}`}>
             {s} ({db.candidates.filter((c) => c.stage === s).length})
           </Link>
         ))}
@@ -50,20 +50,20 @@ export default async function CandidatesPage({ searchParams }: { searchParams: P
       <Card>
         <Table head={['Candidate', 'Applied for', 'Experience', 'Location', 'Notice', 'Source', 'Stage', 'AI match']}>
           {scored.map(({ c, s }) => (
-            <tr key={c.id} className="transition hover:bg-[#fafbfe]">
+            <tr key={c.id} className="transition hover:bg-[#fcfbfd]">
               <td className="td">
                 <div className="flex items-center gap-2.5">
                   <Avatar name={c.name} size={30} />
                   <div>
                     <Link href={`/candidates/${c.id}`} className="font-medium text-ink-950 hover:text-brand-600">{c.name}</Link>
-                    <div className="text-[11.5px] text-[#8b93a9]">{c.currentTitle} · {c.currentCompany}</div>
+                    <div className="text-[11.5px] text-[#9892a2]">{c.currentTitle} · {c.currentCompany}</div>
                   </div>
                 </div>
               </td>
-              <td className="td text-[#616b85]">{db.jobs.find((j) => j.id === c.jobId)?.title}</td>
+              <td className="td text-[#71697d]">{db.jobs.find((j) => j.id === c.jobId)?.title}</td>
               <td className="td">{c.experienceYears} yrs</td>
-              <td className="td text-[#616b85]">{c.location}</td>
-              <td className="td text-[#616b85]">{c.noticePeriodDays}d</td>
+              <td className="td text-[#71697d]">{c.location}</td>
+              <td className="td text-[#71697d]">{c.noticePeriodDays}d</td>
               <td className="td"><Badge tone="neutral">{c.source}</Badge></td>
               <td className="td"><Badge tone={stageTone(c.stage)}>{c.stage}</Badge></td>
               <td className="td w-36"><Meter value={s.overall} right={`${s.overall}%`} /></td>

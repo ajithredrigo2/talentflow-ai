@@ -42,7 +42,7 @@ export default function Assistant() {
 
   async function send(text: string) {
     if (!text.trim() || busy) return;
-    const now = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    const now = new Date().toLocaleTimeString('en-GB', { timeZone: 'Asia/Dubai', hour: '2-digit', minute: '2-digit' });
     setMessages((m) => [...m, { role: 'user', text, at: now }]);
     setInput('');
     setBusy(true);
@@ -61,7 +61,7 @@ export default function Assistant() {
           text: data.narrative,
           blocks: (data.blocks as ResultBlock[]).filter((b) => b.kind !== 'policy-answer'),
           intent: data.intent,
-          at: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
+          at: new Date().toLocaleTimeString('en-GB', { timeZone: 'Asia/Dubai', hour: '2-digit', minute: '2-digit' }),
         },
       ]);
       // policy citations get their own rendered block
@@ -96,7 +96,7 @@ export default function Assistant() {
                 <div className={`max-w-[92%] ${m.role === 'user' ? '' : 'w-full'}`}>
                   <div
                     className={`rounded-xl px-4 py-3 text-[13.5px] leading-relaxed ${
-                      m.role === 'user' ? 'bg-brand-600 text-white' : 'border border-[#e6e9f2] bg-white text-[#3d4763]'
+                      m.role === 'user' ? 'bg-brand-600 text-white' : 'border border-[#ebe9ef] bg-white text-[#4e465a]'
                     }`}
                   >
                     {m.role === 'agent' && (
@@ -113,12 +113,12 @@ export default function Assistant() {
                       <ResultBlocks blocks={m.blocks} />
                     </div>
                   )}
-                  {m.at && <div className={`mt-1 text-[10.5px] text-[#9aa2b8] ${m.role === 'user' ? 'text-right' : ''}`}>{m.at}</div>}
+                  {m.at && <div className={`mt-1 text-[10.5px] text-[#a7a1b1] ${m.role === 'user' ? 'text-right' : ''}`}>{m.at}</div>}
                 </div>
               </div>
             ))}
             {busy && (
-              <div className="rounded-xl border border-[#e6e9f2] bg-white px-4 py-3">
+              <div className="rounded-xl border border-[#ebe9ef] bg-white px-4 py-3">
                 <Spinner label="Retrieving from the HR knowledge base…" />
               </div>
             )}
@@ -130,7 +130,7 @@ export default function Assistant() {
               e.preventDefault();
               send(input);
             }}
-            className="border-t border-[#eef0f6] p-3"
+            className="border-t border-[#f2f0f4] p-3"
           >
             <div className="flex gap-2">
               <input
@@ -153,7 +153,7 @@ export default function Assistant() {
                   key={s}
                   onClick={() => send(s)}
                   disabled={busy}
-                  className="block w-full rounded-lg border border-[#e6e9f2] px-3 py-2 text-left text-[12px] leading-snug text-[#5a6480] transition hover:border-brand-300 hover:bg-brand-50/50 hover:text-ink-900 disabled:opacity-50"
+                  className="block w-full rounded-lg border border-[#ebe9ef] px-3 py-2 text-left text-[12px] leading-snug text-[#6b6377] transition hover:border-brand-300 hover:bg-brand-50/50 hover:text-ink-900 disabled:opacity-50"
                 >
                   {s}
                 </button>
@@ -162,7 +162,7 @@ export default function Assistant() {
           </Card>
 
           <Card title="How this works">
-            <div className="space-y-2.5 p-4 text-[12px] leading-relaxed text-[#5a6480]">
+            <div className="space-y-2.5 p-4 text-[12px] leading-relaxed text-[#6b6377]">
               <p><span className="font-semibold text-ink-900">Retrieval first.</span> Your question is matched against the HR policy corpus. The agent answers from the retrieved passages, never from general knowledge.</p>
               <p><span className="font-semibold text-ink-900">Always cited.</span> Every answer names the policy and version it came from, so you can verify it.</p>
               <p><span className="font-semibold text-ink-900">Escalates honestly.</span> If nothing relevant is retrieved, the assistant says so and flags it for your HR Business Partner rather than guessing.</p>

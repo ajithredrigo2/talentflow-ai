@@ -48,7 +48,7 @@ export default async function WorkforcePage() {
         subtitle="Headcount, capability coverage, retention indicators and learning participation across the organisation — the data every agent reasons over."
       />
 
-      <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+      <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-6">
         <Kpi label="Headcount" value={employees.length} accent="brand" />
         <Kpi label="Departments" value={departments.length} accent="cyan" />
         <Kpi label="Avg tenure" value={`${Math.floor(avgTenure / 12)}y ${avgTenure % 12}m`} accent="mint" />
@@ -88,7 +88,7 @@ export default async function WorkforcePage() {
           {skillCoverage.map((s) => (
             <tr key={s.skill}>
               <td className="td font-medium">{s.skill}</td>
-              <td className="td text-[#616b85]">{s.category}</td>
+              <td className="td text-[#71697d]">{s.category}</td>
               <td className="td">{s.holders}</td>
               <td className="td">{s.advanced}</td>
               <td className="td w-36"><Meter value={s.coverage} right={`${s.coverage}%`} /></td>
@@ -112,7 +112,7 @@ export default async function WorkforcePage() {
           </Table>
         </Card>
         <Card title="Recruitment throughput">
-          <div className="divide-y divide-[#f2f4f9]">
+          <div className="divide-y divide-[#f5f4f7]">
             {[
               ['Open requisitions', String(db.jobs.filter((j) => j.status === 'Open').length)],
               ['Candidates in pipeline', String(db.candidates.length)],
@@ -125,7 +125,7 @@ export default async function WorkforcePage() {
               ['Absenteeism', '2.4%'],
             ].map(([k, v]) => (
               <div key={k} className="flex items-center justify-between px-5 py-3 text-[12.5px]">
-                <span className="text-[#7a839c]">{k}</span><span className="font-semibold text-ink-950">{v}</span>
+                <span className="text-[#898294]">{k}</span><span className="font-semibold text-ink-950">{v}</span>
               </div>
             ))}
           </div>

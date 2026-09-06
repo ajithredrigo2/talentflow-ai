@@ -26,11 +26,11 @@ export default async function EmployeeProfile({ params }: { params: Promise<{ id
       <PageHeader
         eyebrow={`${deptName(e.departmentId)} · ${e.level}`}
         title={e.name}
-        subtitle={`${e.title} · ${e.location} · joined ${new Date(e.joinDate).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`}
+        subtitle={`${e.title} · ${e.location} · joined ${new Date(e.joinDate).toLocaleDateString('en-GB', { timeZone: 'Asia/Dubai', month: 'long', year: 'numeric' })}`}
         actions={<Link href="/learning" className="btn-ghost">Learning plan</Link>}
       />
 
-      <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-5">
         <Kpi label="Performance" value={`${e.performanceScore.toFixed(1)}/5`} accent="mint" />
         <Kpi label="Engagement" value={`${e.engagementScore}/100`} accent="brand" />
         <Kpi label="Training completion" value={`${e.trainingCompletion}%`} accent="cyan" />
@@ -46,7 +46,7 @@ export default async function EmployeeProfile({ params }: { params: Promise<{ id
                 <tr key={s.skillId}>
                   <td className="td font-medium">{skillName(s.skillId)}</td>
                   <td className="td"><Badge tone={s.level === 'Expert' ? 'mint' : s.level === 'Advanced' ? 'brand' : 'neutral'}>{s.level}</Badge></td>
-                  <td className="td text-[#7a839c]">{gaps.gaps.some((g) => g.skill === skillName(s.skillId)) ? 'Below target level' : 'Meets target'}</td>
+                  <td className="td text-[#898294]">{gaps.gaps.some((g) => g.skill === skillName(s.skillId)) ? 'Below target level' : 'Meets target'}</td>
                 </tr>
               ))}
             </Table>
@@ -61,11 +61,11 @@ export default async function EmployeeProfile({ params }: { params: Promise<{ id
               )}
               <div className="grid gap-3 md:grid-cols-3">
                 {gaps.roadmap.map((p) => (
-                  <div key={p.phase} className="rounded-lg border border-[#e6e9f2] p-3.5">
+                  <div key={p.phase} className="rounded-lg border border-[#ebe9ef] p-3.5">
                     <div className="text-[12.5px] font-semibold text-ink-950">{p.phase}</div>
-                    <div className="text-[11px] text-[#9aa2b8]">{p.weeks}</div>
+                    <div className="text-[11px] text-[#a7a1b1]">{p.weeks}</div>
                     <ul className="mt-2 space-y-1.5">
-                      {p.items.map((i) => <li key={i} className="flex gap-2 text-[11.5px] leading-relaxed text-[#5a6480]"><span className="mt-[6px] h-1 w-1 shrink-0 rounded-full bg-accent-500" />{i}</li>)}
+                      {p.items.map((i) => <li key={i} className="flex gap-2 text-[11.5px] leading-relaxed text-[#6b6377]"><span className="mt-[6px] h-1 w-1 shrink-0 rounded-full bg-accent-500" />{i}</li>)}
                     </ul>
                   </div>
                 ))}
@@ -93,8 +93,8 @@ export default async function EmployeeProfile({ params }: { params: Promise<{ id
                 {leave.map((l) => (
                   <tr key={l.id}>
                     <td className="td font-medium">{l.type}</td>
-                    <td className="td text-[#616b85]">{l.from}</td>
-                    <td className="td text-[#616b85]">{l.to}</td>
+                    <td className="td text-[#71697d]">{l.from}</td>
+                    <td className="td text-[#71697d]">{l.to}</td>
                     <td className="td">{l.days}</td>
                     <td className="td"><Badge tone={stageTone(l.status)}>{l.status}</Badge></td>
                   </tr>
@@ -109,10 +109,10 @@ export default async function EmployeeProfile({ params }: { params: Promise<{ id
             <div className="flex flex-col items-center px-5 py-6 text-center">
               <Avatar name={e.name} size={64} />
               <div className="mt-3 text-[15px] font-semibold text-ink-950">{e.name}</div>
-              <div className="text-[12.5px] text-[#7a839c]">{e.title}</div>
+              <div className="text-[12.5px] text-[#898294]">{e.title}</div>
               <div className="mt-2.5"><Badge tone={stageTone(e.status)} dot>{e.status}</Badge></div>
             </div>
-            <div className="divide-y divide-[#f2f4f9] border-t border-[#eef0f6]">
+            <div className="divide-y divide-[#f5f4f7] border-t border-[#f2f0f4]">
               {[
                 ['Employee ID', e.id],
                 ['Department', deptName(e.departmentId)],
@@ -125,7 +125,7 @@ export default async function EmployeeProfile({ params }: { params: Promise<{ id
                 ['Sick leave balance', `${e.leaveBalance.sick} days`],
               ].map(([k, v]) => (
                 <div key={k} className="flex items-start justify-between gap-3 px-5 py-2.5 text-[12.5px]">
-                  <span className="shrink-0 text-[#7a839c]">{k}</span><span className="text-right font-medium text-ink-900">{v}</span>
+                  <span className="shrink-0 text-[#898294]">{k}</span><span className="text-right font-medium text-ink-900">{v}</span>
                 </div>
               ))}
             </div>
@@ -137,8 +137,8 @@ export default async function EmployeeProfile({ params }: { params: Promise<{ id
               <div className="space-y-2">
                 {risk.factors.map((f) => (
                   <div key={f.factor} className="flex items-start gap-2.5">
-                    <span className="mt-0.5 w-9 shrink-0 rounded bg-[#f0f2f8] px-1 py-0.5 text-center text-[10.5px] font-bold text-[#5a6480]">+{f.impact}</span>
-                    <div className="text-[11.5px] leading-relaxed"><span className="font-medium text-ink-900">{f.factor}</span> — <span className="text-[#7a839c]">{f.detail}</span></div>
+                    <span className="mt-0.5 w-9 shrink-0 rounded bg-[#f4f2f6] px-1 py-0.5 text-center text-[10.5px] font-bold text-[#6b6377]">+{f.impact}</span>
+                    <div className="text-[11.5px] leading-relaxed"><span className="font-medium text-ink-900">{f.factor}</span> — <span className="text-[#898294]">{f.detail}</span></div>
                   </div>
                 ))}
               </div>

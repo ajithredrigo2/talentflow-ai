@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --bg: #f6f7fb;
+  --bg: #f8f7fa;
   --surface: #ffffff;
-  --border: #e6e9f2;
-  --text: #10162a;
-  --muted: #616b85;
-  --brand: #375ef6;
+  --border: #ebe9ef;
+  --text: #1a0e2c;
+  --muted: #71697d;
+  --brand: #7c3aed;
 }
 
 * {
@@ -25,8 +25,23 @@ body {
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'ss01';
 }
 
+@layer base {
+  /*
+   * Grid and flex items default to `min-width: auto`, so a wide child — a data
+   * table, a chart — refuses to shrink and pushes the whole page into a
+   * horizontal scroll on small screens. Resetting it lets that content scroll
+   * inside its own `overflow-x-auto` container instead, which is what every
+   * table and chart here is already wrapped in. Declared in `base` so explicit
+   * min-w-* utilities still win.
+   */
+  .grid > *,
+  .flex > * {
+    min-width: 0;
+  }
+}
+
 ::selection {
-  background: #375ef6;
+  background: #7c3aed;
   color: #fff;
 }
 
@@ -36,13 +51,13 @@ body {
   height: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cdd3e3;
+  background: #d7d2de;
   border-radius: 8px;
   border: 3px solid transparent;
   background-clip: content-box;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #aeb7cd;
+  background: #b9b2c4;
   background-clip: content-box;
 }
 ::-webkit-scrollbar-track {
@@ -51,40 +66,45 @@ body {
 
 @layer components {
   .card {
-    @apply rounded-xl border border-[#e6e9f2] bg-white shadow-card;
+    @apply rounded-xl border border-[#ebe9ef] bg-white shadow-card;
   }
   .card-pad {
     @apply p-5;
   }
   .kpi-label {
-    @apply text-[11px] font-semibold uppercase tracking-[0.09em] text-[#7a839c];
+    @apply text-[11px] font-semibold uppercase tracking-[0.09em] text-[#898294];
   }
   .section-title {
     @apply text-[15px] font-semibold text-ink-900;
   }
   .muted {
-    @apply text-[#616b85];
+    @apply text-[#71697d];
   }
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-[13px] font-medium transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-primary {
-    @apply btn bg-brand-600 text-white hover:bg-brand-700 shadow-[0_1px_2px_rgba(33,61,235,0.35),0_6px_16px_-8px_rgba(33,61,235,0.6)];
+    @apply btn bg-brand-600 text-white hover:bg-brand-700 shadow-[0_1px_2px_rgba(109,40,217,0.35),0_6px_16px_-8px_rgba(109,40,217,0.6)];
   }
   .btn-ghost {
-    @apply btn border border-[#e0e4ef] bg-white text-ink-800 hover:bg-[#f6f7fb];
+    @apply btn border border-[#e7e3ec] bg-white text-ink-800 hover:bg-[#f8f7fa];
   }
   .btn-dark {
     @apply btn bg-ink-900 text-white hover:bg-ink-800;
+  }
+  /* Soft brand secondary: prominent enough for a signature action, but stays
+     within the light palette so it does not read as an orphaned dark chip. */
+  .btn-soft {
+    @apply btn border border-brand-200 bg-brand-50 text-brand-700 hover:border-brand-300 hover:bg-brand-100;
   }
   .badge {
     @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold;
   }
   .input {
-    @apply w-full rounded-lg border border-[#dfe3ee] bg-white px-3 py-2 text-[13px] text-ink-900 outline-none transition placeholder:text-[#9aa2b8] focus:border-brand-400 focus:ring-4 focus:ring-brand-100;
+    @apply w-full rounded-lg border border-[#e6e2eb] bg-white px-3 py-2 text-[13px] text-ink-900 outline-none transition placeholder:text-[#a7a1b1] focus:border-brand-400 focus:ring-4 focus:ring-brand-100;
   }
   .th {
-    @apply px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-[0.07em] text-[#7a839c];
+    @apply px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-[0.07em] text-[#898294];
   }
   .td {
     @apply px-4 py-3 text-[13px] text-ink-800 align-middle;
@@ -102,7 +122,7 @@ body {
 }
 
 .glow {
-  background: radial-gradient(600px circle at 50% 0%, rgba(55, 94, 246, 0.35), transparent 65%);
+  background: radial-gradient(600px circle at 50% 0%, rgba(124, 58, 237, 0.35), transparent 65%);
 }
 
 .fade-in {
@@ -137,5 +157,5 @@ body {
 }
 .prose-hr strong {
   font-weight: 600;
-  color: #10162a;
+  color: #1a0e2c;
 }

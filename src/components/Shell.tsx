@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import {
   Activity, BarChart3, Bell, Bot, BookOpen, Briefcase, Calendar, CalendarDays, ClipboardCheck, Columns3, Contact,
   FilePlus, FileSignature, GraduationCap, HeartPulse, Inbox, LayoutDashboard, LogOut, Menu, MessageCircle, PlaneTakeoff,
-  ScanSearch, ScrollText, Settings, ShieldCheck, Sparkles, Target, Users, X,
+  ScanSearch, ScrollText, Settings, ShieldCheck, Sparkles, Target, Users, X, FileBarChart,
 } from 'lucide-react';
 import type { Role } from '@/lib/types';
 import { navFor } from '@/lib/rbac';
@@ -21,7 +21,7 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; className?: str
   'clipboard-check': ClipboardCheck, 'file-signature': FileSignature, 'plane-takeoff': PlaneTakeoff, contact: Contact,
   'message-circle': MessageCircle, 'calendar-days': CalendarDays, target: Target, 'graduation-cap': GraduationCap,
   'log-out': LogOut, 'book-open': BookOpen, 'heart-pulse': HeartPulse, 'bar-chart-3': BarChart3,
-  'shield-check': ShieldCheck, 'scroll-text': ScrollText, settings: Settings,
+  'shield-check': ShieldCheck, 'scroll-text': ScrollText, settings: Settings, 'file-bar-chart': FileBarChart,
 };
 
 export default function Shell({
@@ -50,11 +50,11 @@ export default function Shell({
   }
 
   const sidebar = (
-    <div className="flex h-full flex-col bg-ink-950 text-white">
+    <div className="flex h-full flex-col border-r border-[#ebe9ef] bg-white text-ink-900">
       <div className="flex items-center justify-between px-5 py-4">
         <Link href="/" className="flex items-center gap-2.5">
           <svg width="24" height="24" viewBox="0 0 64 64" className="shrink-0">
-            <rect width="64" height="64" rx="14" fill="#375ef6" />
+            <rect width="64" height="64" rx="14" fill="#7c3aed" />
             <path d="M20 24h24M32 24v20" stroke="#fff" strokeWidth="5" strokeLinecap="round" />
             <circle cx="20" cy="24" r="5" fill="#22d3ee" />
             <circle cx="44" cy="24" r="5" fill="#10b981" />
@@ -62,7 +62,7 @@ export default function Shell({
           </svg>
           <span className="text-[14px] font-semibold tracking-[-0.01em]">TalentFlow AI</span>
         </Link>
-        <button className="lg:hidden" onClick={() => setOpen(false)} aria-label="Close navigation">
+        <button className="text-[#71697d] transition hover:text-ink-900 lg:hidden" onClick={() => setOpen(false)} aria-label="Close navigation">
           <X size={18} />
         </button>
       </div>
@@ -70,7 +70,7 @@ export default function Shell({
       <nav className="flex-1 overflow-y-auto px-3 pb-4">
         {groups.map((g) => (
           <div key={g} className="mb-4">
-            <div className="px-2.5 pb-1.5 pt-2 text-[10px] font-semibold uppercase tracking-[0.13em] text-white/30">{g}</div>
+            <div className="px-2.5 pb-1.5 pt-2 text-[10px] font-semibold uppercase tracking-[0.13em] text-[#9892a2]">{g}</div>
             <div className="space-y-0.5">
               {items
                 .filter((i) => i.group === g)
@@ -84,10 +84,10 @@ export default function Shell({
                       onClick={() => setOpen(false)}
                       className={clsx(
                         'group flex items-center gap-2.5 rounded-lg px-2.5 py-[7px] text-[12.5px] transition',
-                        active ? 'bg-white/[0.09] font-medium text-white' : 'text-white/55 hover:bg-white/[0.05] hover:text-white/90',
+                        active ? 'bg-brand-50 font-medium text-brand-700' : 'text-[#5b5367] hover:bg-[#f4f2f6] hover:text-ink-900',
                       )}
                     >
-                      <Icon size={15} className={active ? 'text-brand-400' : 'text-white/40 group-hover:text-white/70'} />
+                      <Icon size={15} className={active ? 'text-brand-600' : 'text-[#9892a2] group-hover:text-[#5b5367]'} />
                       <span className="flex-1 truncate">{i.label}</span>
                       {i.href === '/approvals' && pendingApprovals > 0 && (
                         <span className="rounded-full bg-amberx-500 px-1.5 text-[10px] font-bold text-ink-950">{pendingApprovals}</span>
@@ -100,14 +100,14 @@ export default function Shell({
         ))}
       </nav>
 
-      <div className="border-t border-white/10 p-3">
+      <div className="border-t border-[#ebe9ef] p-3">
         <div className="flex items-center gap-2.5 rounded-lg px-2 py-2">
           <Avatar name={name} size={30} color={avatarColor} />
           <div className="min-w-0 flex-1">
             <div className="truncate text-[12.5px] font-medium">{name}</div>
-            <div className="text-[11px] text-white/40">{ROLE_LABEL[role]}</div>
+            <div className="text-[11px] text-[#9892a2]">{ROLE_LABEL[role]}</div>
           </div>
-          <button onClick={logout} className="rounded-md p-1.5 text-white/40 transition hover:bg-white/10 hover:text-white" title="Sign out">
+          <button onClick={logout} className="rounded-md p-1.5 text-[#9892a2] transition hover:bg-[#f4f2f6] hover:text-ink-900" title="Sign out">
             <LogOut size={15} />
           </button>
         </div>
@@ -129,21 +129,21 @@ export default function Shell({
       )}
 
       <div className="min-w-0 flex-1">
-        <header className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-[#e9ecf4] bg-white/85 px-5 py-2.5 backdrop-blur-xl">
-          <button className="rounded-md p-1.5 text-ink-700 hover:bg-[#f0f2f8] lg:hidden" onClick={() => setOpen(true)} aria-label="Open navigation">
+        <header className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-[#eeebf2] bg-white/85 px-5 py-2.5 backdrop-blur-xl">
+          <button className="rounded-md p-1.5 text-ink-700 hover:bg-[#f4f2f6] lg:hidden" onClick={() => setOpen(true)} aria-label="Open navigation">
             <Menu size={18} />
           </button>
-          <div className="hidden items-center gap-2 text-[12px] text-[#8b93a9] sm:flex">
+          <div className="hidden items-center gap-2 text-[12px] text-[#9892a2] sm:flex">
             <span className="flex h-1.5 w-1.5 rounded-full bg-mint-500" />
             Agent runtime online
-            <span className="text-[#d5dae6]">·</span>
+            <span className="text-[#ddd9e2]">·</span>
             <span>{AGENTS.length} agents registered</span>
           </div>
           <div className="flex items-center gap-2">
-            <Link href="/command-center" className="hidden rounded-lg bg-ink-950 px-3 py-1.5 text-[12.5px] font-medium text-white transition hover:bg-ink-800 sm:inline-flex">
+            <Link href="/command-center" className="hidden rounded-lg border border-brand-200 bg-brand-50 px-3 py-1.5 text-[12.5px] font-medium text-brand-700 transition hover:border-brand-300 hover:bg-brand-100 sm:inline-flex">
               <Sparkles size={13} className="mr-1.5 mt-[2px]" /> Ask the Coordinator
             </Link>
-            <Link href="/approvals" className="relative rounded-lg border border-[#e6e9f2] p-2 text-[#616b85] transition hover:bg-[#f6f7fb]" title="Approvals">
+            <Link href="/approvals" className="relative rounded-lg border border-[#ebe9ef] p-2 text-[#71697d] transition hover:bg-[#f8f7fa]" title="Approvals">
               <Bell size={15} />
               {pendingApprovals > 0 && (
                 <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white">

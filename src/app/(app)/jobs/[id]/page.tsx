@@ -47,7 +47,7 @@ export default async function JobDetail({ params }: { params: Promise<{ id: stri
           <Card title="Responsibilities">
             <ul className="space-y-2 p-5">
               {job.responsibilities.map((r) => (
-                <li key={r} className="flex gap-2.5 text-[13px] leading-relaxed text-[#4a5470]">
+                <li key={r} className="flex gap-2.5 text-[13px] leading-relaxed text-[#5b5367]">
                   <span className="mt-[8px] h-1 w-1 shrink-0 rounded-full bg-brand-500" />{r}
                 </li>
               ))}
@@ -57,14 +57,14 @@ export default async function JobDetail({ params }: { params: Promise<{ id: stri
           <Card title="Candidate pipeline" subtitle={`${pipeline.length} candidates · scored against the approved evaluation criteria`}>
             <Table head={['#', 'Candidate', 'Experience', 'Location', 'Stage', 'Match']}>
               {ranked.map((r, i) => (
-                <tr key={r.candidate.id} className="transition hover:bg-[#fafbfe]">
-                  <td className="td text-[#9aa2b8]">{i + 1}</td>
+                <tr key={r.candidate.id} className="transition hover:bg-[#fcfbfd]">
+                  <td className="td text-[#a7a1b1]">{i + 1}</td>
                   <td className="td font-medium">
                     <Link href={`/candidates/${r.candidate.id}`} className="link">{r.candidate.name}</Link>
-                    <div className="text-[11.5px] font-normal text-[#8b93a9]">{r.candidate.currentTitle} · {r.candidate.currentCompany}</div>
+                    <div className="text-[11.5px] font-normal text-[#9892a2]">{r.candidate.currentTitle} · {r.candidate.currentCompany}</div>
                   </td>
                   <td className="td">{r.candidate.experienceYears} yrs</td>
-                  <td className="td text-[#616b85]">{r.candidate.location}</td>
+                  <td className="td text-[#71697d]">{r.candidate.location}</td>
                   <td className="td"><Badge tone={stageTone(r.candidate.stage)}>{r.candidate.stage}</Badge></td>
                   <td className="td w-40"><Meter value={r.screening.overall} right={`${r.screening.overall}%`} /></td>
                 </tr>
@@ -85,12 +85,12 @@ export default async function JobDetail({ params }: { params: Promise<{ id: stri
               <div>
                 <div className="kpi-label mb-1.5">Preferred skills</div>
                 <div className="flex flex-wrap gap-1">
-                  {job.preferredSkills.map((s) => <span key={s} className="rounded bg-[#f0f2f8] px-2 py-0.5 text-[11px] font-medium text-[#5a6480]">{s}</span>)}
+                  {job.preferredSkills.map((s) => <span key={s} className="rounded bg-[#f4f2f6] px-2 py-0.5 text-[11px] font-medium text-[#6b6377]">{s}</span>)}
                 </div>
               </div>
               <div>
                 <div className="kpi-label mb-1.5">Education</div>
-                <p className="text-[12.5px] leading-relaxed text-[#5a6480]">{job.education}</p>
+                <p className="text-[12.5px] leading-relaxed text-[#6b6377]">{job.education}</p>
               </div>
             </div>
           </Card>
@@ -104,22 +104,22 @@ export default async function JobDetail({ params }: { params: Promise<{ id: stri
           </Card>
 
           <Card title="Hiring team">
-            <div className="divide-y divide-[#f2f4f9]">
+            <div className="divide-y divide-[#f5f4f7]">
               <div className="flex items-center justify-between px-5 py-3 text-[12.5px]">
-                <span className="text-[#7a839c]">Hiring manager</span><span className="font-medium text-ink-900">{empName(job.hiringManagerId)}</span>
+                <span className="text-[#898294]">Hiring manager</span><span className="font-medium text-ink-900">{empName(job.hiringManagerId)}</span>
               </div>
               <div className="flex items-center justify-between px-5 py-3 text-[12.5px]">
-                <span className="text-[#7a839c]">Recruiter</span><span className="font-medium text-ink-900">{empName(job.recruiterId)}</span>
+                <span className="text-[#898294]">Recruiter</span><span className="font-medium text-ink-900">{empName(job.recruiterId)}</span>
               </div>
               <div className="flex items-center justify-between px-5 py-3 text-[12.5px]">
-                <span className="text-[#7a839c]">Posted</span><span className="font-medium text-ink-900">{job.postedAt}</span>
+                <span className="text-[#898294]">Posted</span><span className="font-medium text-ink-900">{job.postedAt}</span>
               </div>
               <div className="flex items-center justify-between px-5 py-3 text-[12.5px]">
-                <span className="text-[#7a839c]">Source</span><span className="font-medium text-ink-900">{job.createdBy}</span>
+                <span className="text-[#898294]">Source</span><span className="font-medium text-ink-900">{job.createdBy}</span>
               </div>
               {job.approvedBy && (
                 <div className="flex items-center justify-between px-5 py-3 text-[12.5px]">
-                  <span className="text-[#7a839c]">Approved by</span><span className="font-medium text-ink-900">{job.approvedBy}</span>
+                  <span className="text-[#898294]">Approved by</span><span className="font-medium text-ink-900">{job.approvedBy}</span>
                 </div>
               )}
             </div>

@@ -18,7 +18,7 @@ export default async function OffboardingPage() {
         subtitle="A clean, auditable exit for every leaver: interview, assets, access revocation, knowledge transfer, payroll and documentation, with live completion tracking."
       />
 
-      <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-4">
         <Kpi label="Active cases" value={cases.length} accent="brand" />
         <Kpi label="Average completion" value={`${avg}%`} accent="mint" />
         <Kpi label="Exit interviews done" value={cases.filter((x) => x.c.exitInterviewDone).length} accent="cyan" />
@@ -40,12 +40,12 @@ export default async function OffboardingPage() {
                 {c.tasks.map((t) => (
                   <tr key={t.task}>
                     <td className="td font-medium">{t.task}</td>
-                    <td className="td text-[#616b85]">{t.owner}</td>
+                    <td className="td text-[#71697d]">{t.owner}</td>
                     <td className="td"><Badge tone={t.status === 'Completed' ? 'mint' : 'amber'} dot>{t.status}</Badge></td>
                   </tr>
                 ))}
               </Table>
-              <div className="border-t border-[#eef0f6] px-5 py-3 text-[12px] text-[#7a839c]">
+              <div className="border-t border-[#f2f0f4] px-5 py-3 text-[12px] text-[#898294]">
                 <Link href={`/employees/${e.id}`} className="link">View employee record</Link>
               </div>
             </Card>

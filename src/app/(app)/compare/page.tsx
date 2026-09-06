@@ -49,7 +49,7 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
     { label: 'Overall match', get: (r) => <ScoreRing value={r.screening.overall} size={52} /> },
     { label: 'Recommendation', get: (r) => <Badge tone={r.screening.recommendation === 'Advance' ? 'mint' : r.screening.recommendation === 'Review' ? 'amber' : 'neutral'}>{r.screening.recommendation}</Badge> },
     { label: 'Experience', get: (r) => `${r.candidate.experienceYears} yrs` },
-    { label: 'Current role', get: (r) => <span className="text-[12px]">{r.candidate.currentTitle}<br /><span className="text-[#8b93a9]">{r.candidate.currentCompany}</span></span> },
+    { label: 'Current role', get: (r) => <span className="text-[12px]">{r.candidate.currentTitle}<br /><span className="text-[#9892a2]">{r.candidate.currentCompany}</span></span> },
     { label: 'Location', get: (r) => r.candidate.location },
     { label: 'Notice period', get: (r) => `${r.candidate.noticePeriodDays} days` },
     { label: 'Expected salary', get: (r) => r.candidate.expectedSalary },
@@ -57,8 +57,8 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
     {
       label: 'Certifications',
       get: (r) => r.candidate.certifications.length
-        ? <div className="space-y-1">{r.candidate.certifications.map((c) => <div key={c} className="text-[11.5px] text-[#4a5470]">{c}</div>)}</div>
-        : <span className="text-[#9aa2b8]">None</span>,
+        ? <div className="space-y-1">{r.candidate.certifications.map((c) => <div key={c} className="text-[11.5px] text-[#5b5367]">{c}</div>)}</div>
+        : <span className="text-[#a7a1b1]">None</span>,
     },
     ...criteriaSkills.map((name) => ({
       label: name,
@@ -66,7 +66,7 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
         const s = r.candidate.skills.find((x) => skillName(x.skillId) === name);
         return s
           ? <Badge tone={s.level === 'Expert' ? 'mint' : s.level === 'Advanced' ? 'brand' : 'neutral'}>{s.level}</Badge>
-          : <span className="text-[#c3c9d8]">—</span>;
+          : <span className="text-[#ccc8d3]">—</span>;
       },
     })),
     { label: 'Missing requirements', get: (r) => r.screening.missingSkills.length ? <div className="flex flex-wrap gap-1">{r.screening.missingSkills.map((s) => <span key={s} className="rounded bg-rose-50 px-1.5 py-0.5 text-[10.5px] font-medium text-rose-600">{s}</span>)}</div> : <span className="text-mint-600">None</span> },
@@ -91,19 +91,19 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
               <Link
                 key={r.candidate.id}
                 href={`/compare?job=${job.id}&ids=${next.join(',')}`}
-                className={`flex items-center gap-2 rounded-lg border px-3 py-1.5 text-[12.5px] transition ${on ? 'border-brand-400 bg-brand-50 font-medium text-brand-700' : 'border-[#e6e9f2] text-[#5a6480] hover:border-[#cdd3e3]'}`}
+                className={`flex items-center gap-2 rounded-lg border px-3 py-1.5 text-[12.5px] transition ${on ? 'border-brand-400 bg-brand-50 font-medium text-brand-700' : 'border-[#ebe9ef] text-[#6b6377] hover:border-[#d7d2de]'}`}
               >
                 <Avatar name={r.candidate.name} size={20} />
                 {r.candidate.name}
-                <span className="text-[11px] text-[#9aa2b8]">{r.screening.overall}%</span>
+                <span className="text-[11px] text-[#a7a1b1]">{r.screening.overall}%</span>
               </Link>
             );
           })}
         </div>
-        <div className="border-t border-[#eef0f6] px-4 py-2.5">
+        <div className="border-t border-[#f2f0f4] px-4 py-2.5">
           <div className="flex flex-wrap gap-1.5">
             {db.jobs.filter((j) => j.status === 'Open').map((j) => (
-              <Link key={j.id} href={`/compare?job=${j.id}`} className={`badge ${j.id === job.id ? 'bg-ink-900 text-white' : 'bg-[#f0f2f8] text-[#5a6480]'}`}>{j.title}</Link>
+              <Link key={j.id} href={`/compare?job=${j.id}`} className={`badge ${j.id === job.id ? 'bg-brand-600 text-white' : 'bg-[#f4f2f6] text-[#6b6377]'}`}>{j.title}</Link>
             ))}
           </div>
         </div>
@@ -113,7 +113,7 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
         <Card title="Comparison matrix">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[620px] border-collapse">
-              <thead className="border-b border-[#eef0f6] bg-[#fbfcfe]">
+              <thead className="border-b border-[#f2f0f4] bg-[#fcfcfd]">
                 <tr>
                   <th className="th w-44">Criteria</th>
                   {selected.map((r) => (
@@ -123,10 +123,10 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#f2f4f9]">
+              <tbody className="divide-y divide-[#f5f4f7]">
                 {rows.map((row) => (
                   <tr key={row.label}>
-                    <td className="td font-medium text-[#5a6480]">{row.label}</td>
+                    <td className="td font-medium text-[#6b6377]">{row.label}</td>
                     {selected.map((r) => <td key={r.candidate.id} className="td">{row.get(r)}</td>)}
                   </tr>
                 ))}

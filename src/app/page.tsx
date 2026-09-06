@@ -75,7 +75,7 @@ export default function Landing() {
               employment decision.
             </p>
             <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-              <Link href="/login" className="rounded-xl bg-brand-600 px-6 py-3 text-[14px] font-semibold text-white shadow-[0_8px_30px_-8px_rgba(55,94,246,0.9)] transition hover:bg-brand-500">
+              <Link href="/login" className="rounded-xl bg-brand-600 px-6 py-3 text-[14px] font-semibold text-white shadow-[0_8px_30px_-8px_rgba(124,58,237,0.9)] transition hover:bg-brand-500">
                 Launch HR Command Center
               </Link>
               <Link href="/login?demo=1" className="rounded-xl border border-white/20 bg-white/5 px-6 py-3 text-[14px] font-semibold text-white transition hover:bg-white/10">
@@ -108,7 +108,7 @@ export default function Landing() {
         <h2 className="mt-3 max-w-3xl text-[32px] font-semibold leading-tight tracking-[-0.02em] text-ink-950">
           HR platforms today are systems of record. The work still lands on people.
         </h2>
-        <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[#616b85]">
+        <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[#71697d]">
           An HRMS stores the requisition. It does not write the job description, read 200 CVs, prepare the interview,
           chase the documents or answer the same leave question for the fortieth time. That work is where HR capacity
           goes — and where hiring speed and employee experience are lost.
@@ -118,14 +118,14 @@ export default function Landing() {
             <div key={p.stat} className="card card-pad">
               <div className="text-[30px] font-semibold tracking-[-0.02em] text-ink-950">{p.stat}</div>
               <div className="kpi-label mt-0.5">{p.label}</div>
-              <p className="mt-3 text-[13px] leading-relaxed text-[#616b85]">{p.text}</p>
+              <p className="mt-3 text-[13px] leading-relaxed text-[#71697d]">{p.text}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ------------------------------------------------------ Solution */}
-      <section className="border-y border-[#e9ecf4] bg-[#fafbfe] py-20">
+      <section className="border-y border-[#eeebf2] bg-[#fcfbfd] py-20">
         <div className="mx-auto max-w-7xl px-6">
           <Eyebrow>The solution</Eyebrow>
           <h2 className="mt-3 max-w-3xl text-[32px] font-semibold leading-tight tracking-[-0.02em] text-ink-950">
@@ -140,7 +140,7 @@ export default function Landing() {
               <div key={c.t} className="card card-pad">
                 <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-[13px] font-bold text-white">{i + 1}</div>
                 <h3 className="text-[15px] font-semibold text-ink-950">{c.t}</h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-[#616b85]">{c.b}</p>
+                <p className="mt-2 text-[13px] leading-relaxed text-[#71697d]">{c.b}</p>
               </div>
             ))}
           </div>
@@ -151,7 +151,7 @@ export default function Landing() {
       <section id="agents" className="mx-auto max-w-7xl px-6 py-20">
         <Eyebrow>The agent workforce</Eyebrow>
         <h2 className="mt-3 text-[32px] font-semibold leading-tight tracking-[-0.02em] text-ink-950">Sixteen agents, four functions</h2>
-        <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[#616b85]">
+        <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[#71697d]">
           Each agent owns a narrow, well-defined slice of HR work, with its own inputs, outputs and guardrails. The
           Coordinator composes them into workflows.
         </p>
@@ -160,10 +160,10 @@ export default function Landing() {
             <div key={a.id} className="card p-4 transition hover:shadow-pop">
               <div className="mb-2 flex items-center gap-2">
                 <span className={`h-2 w-2 rounded-full ${a.category === 'Orchestration' ? 'bg-brand-500' : a.category === 'Talent Acquisition' ? 'bg-accent-500' : a.category === 'Employee Experience' ? 'bg-mint-500' : 'bg-amberx-500'}`} />
-                <span className="text-[10.5px] font-semibold uppercase tracking-wider text-[#8b93a9]">{a.category}</span>
+                <span className="text-[10.5px] font-semibold uppercase tracking-wider text-[#9892a2]">{a.category}</span>
               </div>
               <h3 className="text-[13.5px] font-semibold text-ink-950">{a.name}</h3>
-              <p className="mt-1.5 line-clamp-4 text-[12px] leading-relaxed text-[#7a839c]">{a.mission}</p>
+              <p className="mt-1.5 line-clamp-4 text-[12px] leading-relaxed text-[#898294]">{a.mission}</p>
               {a.requiresApproval && (
                 <span className="mt-3 inline-block rounded-full bg-amber-50 px-2 py-0.5 text-[10.5px] font-semibold text-amber-700">Human approval gate</span>
               )}
@@ -173,7 +173,7 @@ export default function Landing() {
       </section>
 
       {/* ---------------------------------------------------- How it works */}
-      <section id="how" className="border-y border-[#e9ecf4] bg-ink-950 py-20 text-white">
+      <section id="how" className="border-y border-[#eeebf2] bg-ink-950 py-20 text-white">
         <div className="mx-auto max-w-7xl px-6">
           <Eyebrow dark>How it works</Eyebrow>
           <h2 className="mt-3 text-[32px] font-semibold leading-tight tracking-[-0.02em]">One request, seven agents, two approval gates</h2>
@@ -208,7 +208,7 @@ export default function Landing() {
         <h2 className="mt-3 max-w-3xl text-[32px] font-semibold leading-tight tracking-[-0.02em] text-ink-950">
           Automation without transferring authority
         </h2>
-        <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[#616b85]">
+        <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[#71697d]">
           HR is a regulated, high-stakes domain. The constraint is not what an agent can do — it is what an agent is
           permitted to decide.
         </p>
@@ -216,18 +216,18 @@ export default function Landing() {
           {RESPONSIBLE.map((r) => (
             <div key={r.title} className="card card-pad">
               <h3 className="text-[14px] font-semibold text-ink-950">{r.title}</h3>
-              <p className="mt-2 text-[13px] leading-relaxed text-[#616b85]">{r.body}</p>
+              <p className="mt-2 text-[13px] leading-relaxed text-[#71697d]">{r.body}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ------------------------------------------------------- Impact */}
-      <section id="impact" className="border-y border-[#e9ecf4] bg-[#fafbfe] py-20">
+      <section id="impact" className="border-y border-[#eeebf2] bg-[#fcfbfd] py-20">
         <div className="mx-auto max-w-7xl px-6">
           <Eyebrow>Business impact</Eyebrow>
           <h2 className="mt-3 text-[32px] font-semibold leading-tight tracking-[-0.02em] text-ink-950">Prototype target outcomes</h2>
-          <p className="mt-3 max-w-2xl text-[14px] text-[#616b85]">
+          <p className="mt-3 max-w-2xl text-[14px] text-[#71697d]">
             Modelled from the workflow time removed in the prototype against published HR benchmarks. These are target
             outcomes for a production pilot, not verified production results.
           </p>
@@ -235,7 +235,7 @@ export default function Landing() {
             {IMPACT.map((i) => (
               <div key={i.label} className="card card-pad">
                 <div className="text-[34px] font-semibold tracking-[-0.03em] text-brand-600">{i.value}</div>
-                <p className="mt-1 text-[13.5px] text-[#4a5470]">{i.label}</p>
+                <p className="mt-1 text-[13.5px] text-[#5b5367]">{i.label}</p>
               </div>
             ))}
           </div>
@@ -279,8 +279,8 @@ export default function Landing() {
         </div>
       </section>
 
-      <footer className="border-t border-[#e9ecf4] py-10">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 text-[12.5px] text-[#8b93a9]">
+      <footer className="border-t border-[#eeebf2] py-10">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 text-[12.5px] text-[#9892a2]">
           <div className="flex items-center gap-2.5">
             <Logo dark />
             <span className="font-semibold text-ink-900">TalentFlow AI</span>
@@ -304,11 +304,11 @@ function Eyebrow({ children, dark }: { children: React.ReactNode; dark?: boolean
 function Logo({ dark }: { dark?: boolean }) {
   return (
     <svg width="26" height="26" viewBox="0 0 64 64" className="shrink-0">
-      <rect width="64" height="64" rx="14" fill={dark ? '#0a0e1a' : '#375ef6'} />
-      <path d="M20 24h24M32 24v20" stroke={dark ? '#375ef6' : '#ffffff'} strokeWidth="5" strokeLinecap="round" />
+      <rect width="64" height="64" rx="14" fill={dark ? '#10091b' : '#7c3aed'} />
+      <path d="M20 24h24M32 24v20" stroke={dark ? '#7c3aed' : '#ffffff'} strokeWidth="5" strokeLinecap="round" />
       <circle cx="20" cy="24" r="5" fill="#22d3ee" />
       <circle cx="44" cy="24" r="5" fill="#10b981" />
-      <circle cx="32" cy="44" r="5" fill={dark ? '#375ef6' : '#ffffff'} />
+      <circle cx="32" cy="44" r="5" fill={dark ? '#7c3aed' : '#ffffff'} />
     </svg>
   );
 }

@@ -26,7 +26,7 @@ export default async function LeavePage() {
         subtitle="Describe leave in plain language. The agent extracts the dates, calculates working days against the Gulf weekend, checks your balance and team coverage, and routes the request to your line manager — it never self-approves."
       />
 
-      <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-4">
         <Kpi label="Annual leave balance" value={`${me.leaveBalance.annual} days`} accent="brand" />
         <Kpi label="Sick leave balance" value={`${me.leaveBalance.sick} days`} accent="cyan" />
         <Kpi label="My requests" value={mine.length} accent="mint" />
@@ -40,16 +40,16 @@ export default async function LeavePage() {
               {toApprove.length === 0 ? (
                 <Empty title="No leave requests pending your decision" />
               ) : (
-                <div className="divide-y divide-[#f2f4f9]">
+                <div className="divide-y divide-[#f5f4f7]">
                   {toApprove.map((l) => (
                     <div key={l.id} className="p-5">
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <div>
                           <div className="text-[13.5px] font-semibold text-ink-950">{empName(l.employeeId)}</div>
-                          <div className="text-[12px] text-[#7a839c]">
+                          <div className="text-[12px] text-[#898294]">
                             {l.type} leave · {l.from} → {l.to} · {l.days} working day{l.days === 1 ? '' : 's'} · balance after: {l.balanceAfter}
                           </div>
-                          <div className="mt-1 text-[12px] text-[#8b93a9]">{l.reason}</div>
+                          <div className="mt-1 text-[12px] text-[#9892a2]">{l.reason}</div>
                           {l.conflicts.length > 0 && (
                             <ul className="mt-2 space-y-1">
                               {l.conflicts.map((c) => (
@@ -75,10 +75,10 @@ export default async function LeavePage() {
                 {mine.map((l) => (
                   <tr key={l.id}>
                     <td className="td font-medium">{l.type}</td>
-                    <td className="td text-[#616b85]">{l.from}</td>
-                    <td className="td text-[#616b85]">{l.to}</td>
+                    <td className="td text-[#71697d]">{l.from}</td>
+                    <td className="td text-[#71697d]">{l.to}</td>
                     <td className="td">{l.days}</td>
-                    <td className="td text-[#616b85]">{empName(l.approverId)}</td>
+                    <td className="td text-[#71697d]">{empName(l.approverId)}</td>
                     <td className="td"><Badge tone={stageTone(l.status)} dot>{l.status}</Badge></td>
                   </tr>
                 ))}
@@ -94,10 +94,10 @@ export default async function LeavePage() {
                   return (
                     <tr key={l.id}>
                       <td className="td font-medium"><Link href={`/employees/${emp.id}`} className="link">{emp.name}</Link></td>
-                      <td className="td text-[#616b85]">{deptName(emp.departmentId)}</td>
+                      <td className="td text-[#71697d]">{deptName(emp.departmentId)}</td>
                       <td className="td">{l.type}</td>
-                      <td className="td text-[#616b85]">{l.from}</td>
-                      <td className="td text-[#616b85]">{l.to}</td>
+                      <td className="td text-[#71697d]">{l.from}</td>
+                      <td className="td text-[#71697d]">{l.to}</td>
                       <td className="td">{l.days}</td>
                       <td className="td"><Badge tone={stageTone(l.status)}>{l.status}</Badge></td>
                     </tr>

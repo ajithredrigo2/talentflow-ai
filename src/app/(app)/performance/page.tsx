@@ -19,7 +19,7 @@ export default async function PerformancePage() {
     return (
       <>
         <PageHeader eyebrow="Performance Management Agent" title="My Performance" subtitle="Your goals, evidence and the draft review pack your manager will work from. Ratings are set by your manager, not by an agent." />
-        <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-4">
           <Kpi label="Goals achieved" value={`${pack.goalsAchieved}/${pack.goalsTotal}`} accent="brand" />
           <Kpi label="Current rating" value={`${me.performanceScore.toFixed(1)}/5`} accent="mint" />
           <Kpi label="Training completion" value={`${me.trainingCompletion}%`} accent="cyan" />
@@ -33,7 +33,7 @@ export default async function PerformancePage() {
                   <tr key={g.id}>
                     <td className="td font-medium">{g.title}</td>
                     <td className="td w-44"><Meter value={g.progress} right={`${g.progress}%`} /></td>
-                    <td className="td text-[#616b85]">{g.due}</td>
+                    <td className="td text-[#71697d]">{g.due}</td>
                     <td className="td"><Badge tone={g.status === 'At Risk' ? 'amber' : g.status === 'Completed' ? 'mint' : 'brand'}>{g.status}</Badge></td>
                   </tr>
                 ))}
@@ -53,7 +53,7 @@ export default async function PerformancePage() {
             </Card>
           </div>
           <Card title="How your review works">
-            <div className="space-y-2.5 p-4 text-[12px] leading-relaxed text-[#5a6480]">
+            <div className="space-y-2.5 p-4 text-[12px] leading-relaxed text-[#6b6377]">
               <p><span className="font-semibold text-ink-900">Half-yearly cycle</span> with continuous check-ins between.</p>
               <p><span className="font-semibold text-ink-900">Evidence, not impressions.</span> The agent assembles goals, training and feedback; it does not judge you.</p>
               <p><span className="font-semibold text-ink-900">Your manager decides.</span> The rating is set by your manager and approved by HR, then calibrated at department level.</p>
@@ -74,7 +74,7 @@ export default async function PerformancePage() {
         subtitle="Evidence-based review packs prepared for managers. Every draft rating is advisory: the manager sets it and HR approves it under Performance Management Policy v4.0."
         actions={<Link href="/approvals" className="btn-primary">Rating approvals</Link>}
       />
-      <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-5 grid gap-3 grid-cols-2 lg:grid-cols-4">
         <Kpi label="Reviews in cycle" value={reviews.length} accent="brand" />
         <Kpi label="Pending approval" value={reviews.filter((r) => r.status === 'Pending Approval').length} accent="amber" />
         <Kpi label="Avg goals achieved" value={`${(reviews.reduce((a, r) => a + r.goalsAchieved, 0) / reviews.length).toFixed(1)}/10`} accent="cyan" />
@@ -86,12 +86,12 @@ export default async function PerformancePage() {
           {reviews.map((r) => {
             const e = employees.find((x) => x.id === r.employeeId)!;
             return (
-              <tr key={r.id} className="transition hover:bg-[#fafbfe]">
+              <tr key={r.id} className="transition hover:bg-[#fcfbfd]">
                 <td className="td font-medium"><Link href={`/employees/${e.id}`} className="link">{e.name}</Link></td>
-                <td className="td text-[#616b85]">{deptName(e.departmentId)}</td>
+                <td className="td text-[#71697d]">{deptName(e.departmentId)}</td>
                 <td className="td w-40"><Meter value={(r.goalsAchieved / r.goalsTotal) * 100} right={`${r.goalsAchieved}/${r.goalsTotal}`} /></td>
                 <td className="td">{r.rating.toFixed(1)}</td>
-                <td className="td text-[#616b85]">{empName(r.managerId)}</td>
+                <td className="td text-[#71697d]">{empName(r.managerId)}</td>
                 <td className="td"><Badge tone={stageTone(r.status)} dot>{r.status}</Badge></td>
               </tr>
             );

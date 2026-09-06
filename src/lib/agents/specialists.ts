@@ -407,7 +407,7 @@ export function suggestSlots(interviewerId: string, fromDayOffset = 1, count = 5
 
 export function draftOfferLetter(candidate: Candidate, job: Job, salary: string, joiningDate: string) {
   return `PRIVATE & CONFIDENTIAL
-${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+${new Date().toLocaleDateString('en-GB', { timeZone: 'Asia/Dubai', day: 'numeric', month: 'long', year: 'numeric' })}
 
 ${candidate.name}
 ${candidate.location}
@@ -424,7 +424,7 @@ Position:           ${job.title} (${job.seniority})
 Employment type:    ${job.employmentType}
 Reporting to:       ${employees.find((e) => e.id === job.hiringManagerId)?.title ?? 'Hiring Manager'}
 Base salary:        ${salary}
-Proposed start:     ${new Date(joiningDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+Proposed start:     ${new Date(joiningDate).toLocaleDateString('en-GB', { timeZone: 'Asia/Dubai', day: 'numeric', month: 'long', year: 'numeric' })}
 Probation:          6 months, per the Probation Policy (v2.4)
 Annual leave:       25 working days per calendar year
 Benefits:           Corporate medical scheme from date of joining, including dependant enrolment within 30 days
@@ -567,8 +567,8 @@ export function answerFromPolicies(query: string, employee?: Employee) {
       const end = employee.probationEnd;
       return {
         answer: end
-          ? `Your probation period ends on **${new Date(end).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}**.\n\nProbation runs for 6 months from your joining date, with 30/60/90-day check-ins recorded by your manager. Confirmation requires a manager recommendation and HR approval, communicated in writing before the end date.`
-          : `Your probation period is already complete — you joined on ${new Date(employee.joinDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} and the standard probation is 6 months.\n\nIf you need written confirmation of employment, HR Operations can issue it on request.`,
+          ? `Your probation period ends on **${new Date(end).toLocaleDateString('en-GB', { timeZone: 'Asia/Dubai', day: 'numeric', month: 'long', year: 'numeric' })}**.\n\nProbation runs for 6 months from your joining date, with 30/60/90-day check-ins recorded by your manager. Confirmation requires a manager recommendation and HR approval, communicated in writing before the end date.`
+          : `Your probation period is already complete — you joined on ${new Date(employee.joinDate).toLocaleDateString('en-GB', { timeZone: 'Asia/Dubai', day: 'numeric', month: 'long', year: 'numeric' })} and the standard probation is 6 months.\n\nIf you need written confirmation of employment, HR Operations can issue it on request.`,
         citations: [{ id: p.id, title: p.title, version: p.version, passage: p.content.split('\n')[0] }],
         confidence: 0.92,
         escalate: false,

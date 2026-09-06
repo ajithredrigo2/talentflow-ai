@@ -51,7 +51,7 @@ export default function LeaveComposer() {
         <textarea className="input min-h-[76px]" value={text} onChange={(e) => setText(e.target.value)} />
         <div className="flex flex-wrap gap-1.5">
           {EXAMPLES.map((x) => (
-            <button key={x} onClick={() => setText(x)} className="rounded border border-[#e6e9f2] px-2 py-1 text-[11px] text-[#5a6480] transition hover:border-brand-300 hover:bg-brand-50/50">
+            <button key={x} onClick={() => setText(x)} className="rounded border border-[#ebe9ef] px-2 py-1 text-[11px] text-[#6b6377] transition hover:border-brand-300 hover:bg-brand-50/50">
               {x.slice(0, 34)}…
             </button>
           ))}
@@ -64,13 +64,13 @@ export default function LeaveComposer() {
         {done && <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-[12.5px] text-emerald-700">{done}</div>}
 
         {parsed && (
-          <div className="space-y-3 rounded-lg border border-[#e6e9f2] bg-[#fafbfe] p-3.5">
+          <div className="space-y-3 rounded-lg border border-[#ebe9ef] bg-[#fcfbfd] p-3.5">
             <div className="flex flex-wrap gap-1.5">
               <Badge tone="brand">{parsed.type}</Badge>
               <Badge tone="neutral">{parsed.from} → {parsed.to}</Badge>
               <Badge tone="neutral">{parsed.days} working days</Badge>
             </div>
-            <div className="text-[12.5px] text-[#4a5470]">
+            <div className="text-[12.5px] text-[#5b5367]">
               Balance {parsed.balance} → <span className={parsed.balanceAfter < 0 ? 'font-semibold text-rose-600' : 'font-semibold text-emerald-600'}>{parsed.balanceAfter}</span> days ·
               routed to <span className="font-medium text-ink-900">{parsed.approver.name}</span> ({parsed.approver.title})
             </div>
@@ -80,7 +80,7 @@ export default function LeaveComposer() {
               </ul>
             )}
             <input className="input" placeholder="Reason (optional)" value={reason} onChange={(e) => setReason(e.target.value)} />
-            <div className="text-[11px] text-[#8b93a9]">Governed by {parsed.policy.title} ({parsed.policy.version}).</div>
+            <div className="text-[11px] text-[#9892a2]">Governed by {parsed.policy.title} ({parsed.policy.version}).</div>
             <div className="flex gap-2">
               <button className="btn-primary flex-1" onClick={() => call(true)} disabled={busy}>Submit for approval</button>
               <button className="btn-ghost" onClick={() => setParsed(null)}>Cancel</button>
